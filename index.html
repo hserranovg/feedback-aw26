@@ -187,6 +187,8 @@ td.off select,td.off input{opacity:.25;pointer-events:none;}
       <div class="num-row"><span class="num-badge">2</span><input type="text" id="cp2"></div>
       <div class="num-row"><span class="num-badge">3</span><input type="text" id="cp3"></div>
     </div></div>
+    <div style="margin-bottom:1.5rem"><span class="field-label" id="l_compbetter"></span><textarea class="textarea-field" id="comp_better" style="min-height:70px"></textarea></div>
+    <div style="margin-bottom:1.5rem"><span class="field-label" id="l_losanbetter"></span><textarea class="textarea-field" id="losan_better" style="min-height:70px"></textarea></div>
     <div><span class="field-label" id="l_trend"></span><div class="num-list">
       <div class="num-row"><span class="num-badge">1</span><input type="text" id="td1"></div>
       <div class="num-row"><span class="num-badge">2</span><input type="text" id="td2"></div>
@@ -326,7 +328,7 @@ const UI = {
     l_agent:'Agente comercial', l_country:'País / zona', l_date:'Fecha', l_season:'Temporada',
     l_famctrl:'Marca las familias que <span class="hl">NO trabajas</span> — se anula su columna entera:',
     sec_rat:'01 — Valoración general', sec_rat_h:'Impresión global de cada familia (1 flojo · 5 excelente).',
-    sec_rng:'02 — Rangos de producto', sec_rng_h:'Ordena las prendas por orden de selección en cada familia (1 = la más relevante).', rank_key:'Número = orden de selección · 1 = primera.',
+    sec_rng:'02 — Rangos de producto', sec_rng_h:'Ordena las prendas por orden de selección en cada familia (1 = la más relevante).', rank_key:'Número = orden de selección · 1 = primera.', rng_success:'Rangos más exitosos — ¿por qué?', rng_weak:'Rangos más débiles — ¿por qué?', rng_why_ph:'Cuáles y por qué…', pre_caros_lbl:'Demasiado caros — cuáles e importes', pre_comp_lbl:'Especialmente competitivos — cuáles e importes', pre_txt_ph:'Prendas / importes…', l_compbetter:'¿Qué hace la competencia mejor que LOSAN?', l_losanbetter:'¿Qué hace LOSAN mejor que la competencia?', ph_compbetter:'Lo que hacen mejor…', ph_losanbetter:'Lo que hacemos mejor…',
     sec_sur:'03 — Análisis del surtido', sec_sur_h:'Por prenda y familia: ¿estaba excesivamente o insuficientemente representada?',
     sec_pre:'04 — Precio', sec_pre_h:'Por prenda: percepción de precio en cada familia. Al final, ventas perdidas por precio.', pre_lost:'¿Ventas perdidas por posicionamiento de precio?', pre_amount:'Importe aproximado perdido', pre_amount_ph:'€ aprox.',
     sec_fit:'05 — Calidad / fit', sec_fit_h:'Marca los aspectos sobre los que has recibido comentarios en cada familia, y añade lo que quieras.', fit_comlbl:'Comentarios recibidos', com_ph:'Comentario…',
@@ -343,7 +345,7 @@ const UI = {
     l_agent:'Sales agent', l_country:'Country / area', l_date:'Date', l_season:'Season',
     l_famctrl:'Tick the families you do <span class="hl">NOT carry</span> — their whole column is voided:',
     sec_rat:'01 — Overall rating', sec_rat_h:'Overall impression of each family (1 poor · 5 excellent).',
-    sec_rng:'02 — Product ranges', sec_rng_h:'Rank the garments by selection order in each family (1 = most relevant).', rank_key:'Number = selection order · 1 = first.',
+    sec_rng:'02 — Product ranges', sec_rng_h:'Rank the garments by selection order in each family (1 = most relevant).', rank_key:'Number = selection order · 1 = first.', rng_success:'Most successful ranges — why?', rng_weak:'Weakest ranges — why?', rng_why_ph:'Which ones and why…', pre_caros_lbl:'Too expensive — which & amounts', pre_comp_lbl:'Especially competitive — which & amounts', pre_txt_ph:'Garments / amounts…', l_compbetter:'What do competitors do better than LOSAN?', l_losanbetter:'What does LOSAN do better than them?', ph_compbetter:'What they do better…', ph_losanbetter:'What we do better…',
     sec_sur:'03 — Assortment analysis', sec_sur_h:'Per garment and family: over- or under-represented?',
     sec_pre:'04 — Price', sec_pre_h:'Per garment: price perception in each family. At the end, sales lost to price.', pre_lost:'Sales lost to price positioning?', pre_amount:'Approx. amount lost', pre_amount_ph:'approx. €',
     sec_fit:'05 — Quality / fit', sec_fit_h:'Tick the aspects you received comments about in each family, and add anything.', fit_comlbl:'Comments received', com_ph:'Comment…',
@@ -360,7 +362,7 @@ const UI = {
     l_agent:'Agente di vendita', l_country:'Paese / zona', l_date:'Data', l_season:'Stagione',
     l_famctrl:'Spunta le famiglie che <span class="hl">NON tratti</span> — l\u2019intera colonna viene annullata:',
     sec_rat:'01 — Valutazione generale', sec_rat_h:'Impressione generale di ogni famiglia (1 scarso · 5 eccellente).',
-    sec_rng:'02 — Gamme di prodotto', sec_rng_h:'Ordina i capi per ordine di selezione in ogni famiglia (1 = il più rilevante).', rank_key:'Numero = ordine di selezione · 1 = primo.',
+    sec_rng:'02 — Gamme di prodotto', sec_rng_h:'Ordina i capi per ordine di selezione in ogni famiglia (1 = il più rilevante).', rank_key:'Numero = ordine di selezione · 1 = primo.', rng_success:'Gamme di maggior successo — perché?', rng_weak:'Gamme più deboli — perché?', rng_why_ph:'Quali e perché…', pre_caros_lbl:'Troppo care — quali e importi', pre_comp_lbl:'Molto competitive — quali e importi', pre_txt_ph:'Capi / importi…', l_compbetter:'Cosa fanno i concorrenti meglio di LOSAN?', l_losanbetter:'Cosa fa LOSAN meglio di loro?', ph_compbetter:'Cosa fanno meglio…', ph_losanbetter:'Cosa facciamo meglio…',
     sec_sur:'03 — Analisi dell\u2019assortimento', sec_sur_h:'Per capo e famiglia: era eccessivo o insufficiente?',
     sec_pre:'04 — Prezzo', sec_pre_h:'Per capo: percezione del prezzo in ogni famiglia. Alla fine, vendite perse per il prezzo.', pre_lost:'Vendite perse per posizionamento di prezzo?', pre_amount:'Importo approssimativo perso', pre_amount_ph:'€ circa',
     sec_fit:'05 — Qualità / vestibilità', sec_fit_h:'Segna gli aspetti su cui hai ricevuto commenti in ogni famiglia, e aggiungi ciò che vuoi.', fit_comlbl:'Commenti ricevuti', com_ph:'Commento…',
@@ -417,7 +419,8 @@ function buildTable(rows, type, group, opts){
   let tb='';
   rows.forEach(r => {
     const t = r._type || type, o = (r._opts!==undefined) ? r._opts : opts;
-    tb += `<tr><td class="rowlab">${esc(nm(r))}</td>`;
+    const lab = r._bold ? `<strong>${esc(nm(r))}</strong>` : esc(nm(r));
+    tb += `<tr><td class="rowlab">${lab}</td>`;
     SEGMENTS.forEach(s => { const off=skipped.has(s.id)?' off':''; tb += `<td class="mcell${off}" data-fam="${s.id}">${cellHTML(t,`${group}_${r.id}_${s.id}`,o)}</td>`; });
     tb += '</tr>';
   });
@@ -431,10 +434,17 @@ function oneRow(label, id){ return [{id:id, es:label, en:label, it:label}]; }
 function renderSections(){
   const u=U(); let h='';
   h += sectionWrap(u.sec_rat, bare(u.sec_rat), u.sec_rat_h, buildTable(RATINGS,'rating','rat'), `<p class="scale-key">${u.scale}</p>`);
-  h += sectionWrap(u.sec_rng, bare(u.sec_rng), u.sec_rng_h, buildTable(RANGES,'rank','rng'), `<p class="scale-key">${u.rank_key}</p>`);
+  h += sectionWrap(u.sec_rng, bare(u.sec_rng), u.sec_rng_h,
+        buildTable(RANGES,'rank','rng') + buildTable([
+          {id:'exito', es:u.rng_success, en:u.rng_success, it:u.rng_success, _type:'text', _opts:u.rng_why_ph, _bold:true},
+          {id:'debil', es:u.rng_weak, en:u.rng_weak, it:u.rng_weak, _type:'text', _opts:u.rng_why_ph, _bold:true}
+        ],'text','rngm'), `<p class="scale-key">${u.rank_key}</p>`);
   h += sectionWrap(u.sec_sur, bare(u.sec_sur), u.sec_sur_h, buildTable(RANGES,'select','sur',SURTIDO_OPTS[currentLang]));
   h += sectionWrap(u.sec_pre, bare(u.sec_pre), u.sec_pre_h,
         buildTable(RANGES,'select','pre',PRECIO_PERCEP_OPTS[currentLang]) + buildTable([
+          {id:'caros', es:u.pre_caros_lbl, en:u.pre_caros_lbl, it:u.pre_caros_lbl, _type:'text', _opts:u.pre_txt_ph, _bold:true},
+          {id:'comp', es:u.pre_comp_lbl, en:u.pre_comp_lbl, it:u.pre_comp_lbl, _type:'text', _opts:u.pre_txt_ph, _bold:true}
+        ],'text','pret') + buildTable([
           {id:'perdida', es:u.pre_lost, en:u.pre_lost, it:u.pre_lost, _type:'select', _opts:PRECIO_PERDIDA_OPTS[currentLang]},
           {id:'importe', es:u.pre_amount, en:u.pre_amount, it:u.pre_amount, _type:'text', _opts:u.pre_amount_ph}
         ],'select','prl'));
@@ -477,6 +487,9 @@ function applyUI(){
   setH('l_famctrl',u.l_famctrl);
   set('x_eyebrow',u.x_eyebrow); set('x_title',u.x_title); set('x_hint',u.x_hint);
   set('l_comp',u.l_comp); set('l_trend',u.l_trend); set('l_rec',u.l_rec); set('l_final',u.l_final);
+  set('l_compbetter',u.l_compbetter); set('l_losanbetter',u.l_losanbetter);
+  const cb=document.getElementById('comp_better'); if(cb) cb.placeholder=u.ph_compbetter;
+  const lb=document.getElementById('losan_better'); if(lb) lb.placeholder=u.ph_losanbetter;
   set('submitBtn',u.btn_submit); set('printBtn',u.btn_print); set('clearBtn',u.btn_clear);
   set('ok_title',u.ok_title); set('ok_desc',u.ok_desc); set('ok_btn',u.ok_btn);
   ['cp1','cp2','cp3'].forEach(id=>{const e=document.getElementById(id);if(e)e.placeholder=u.ph_brand;});
@@ -520,14 +533,18 @@ function collectFamilies(){
     let has=false;
     const ratings={}; RATINGS.forEach(r=>{ const v=selVal(`rat_${r.id}_${s.id}`); if(v){ ratings[r.id]=v; has=true; } });
     const ranges={};  RANGES.forEach(r=>{ const v=selVal(`rng_${r.id}_${s.id}`); if(v){ ranges[r.id]=v; has=true; } });
+    const rng_exito=txt(`rngm_exito_${s.id}`); if(rng_exito) has=true;
+    const rng_debil=txt(`rngm_debil_${s.id}`); if(rng_debil) has=true;
     const surtido={}; RANGES.forEach(r=>{ const v=valOf(`sur_${r.id}_${s.id}`); if(v){ surtido[r.id]=v; has=true; } });
     const precio={};  RANGES.forEach(r=>{ const v=valOf(`pre_${r.id}_${s.id}`); if(v){ precio[r.id]=v; has=true; } });
+    const pre_caros=txt(`pret_caros_${s.id}`); if(pre_caros) has=true;
+    const pre_comp=txt(`pret_comp_${s.id}`); if(pre_comp) has=true;
     const precio_perdida=valOf(`prl_perdida_${s.id}`); if(precio_perdida) has=true;
     const precio_importe=txt(`prl_importe_${s.id}`); if(precio_importe) has=true;
     const fit=FIT.filter(r=>{const e=document.getElementById(`fit_${r.id}_${s.id}`);return e&&e.checked;}).map(r=>r.id); if(fit.length) has=true;
     const fit_com=txt(`fitc_com_${s.id}`); if(fit_com) has=true;
     const referencias=txt(`ref_falta_${s.id}`); if(referencias) has=true;
-    if (has) fams[s.id]={ ratings, ranges, surtido, precio, precio_perdida, precio_importe, fit, fit_com, referencias };
+    if (has) fams[s.id]={ ratings, ranges, rng_exito, rng_debil, surtido, precio, pre_caros, pre_comp, precio_perdida, precio_importe, fit, fit_com, referencias };
   });
   return fams;
 }
@@ -537,6 +554,8 @@ function collectResponse(){
     agente: txt('m_agente'), pais: txt('m_pais'), fecha: txt('m_fecha'), temporada: txt('m_temporada'),
     families: collectFamilies(),
     competidores:[txt('cp1'),txt('cp2'),txt('cp3')].filter(Boolean),
+    comp_better: txt('comp_better'),
+    losan_better: txt('losan_better'),
     tendencias:[txt('td1'),txt('td2'),txt('td3')].filter(Boolean),
     recomendaciones:[txt('rc1'),txt('rc2'),txt('rc3')].filter(Boolean),
     comentarios: txt('comentarios')
@@ -556,7 +575,7 @@ async function submitForm(){
 }
 function limpiar(){
   document.getElementById('m_agente').value=''; document.getElementById('m_pais').value='';
-  ['cp1','cp2','cp3','td1','td2','td3','rc1','rc2','rc3','comentarios'].forEach(id=>document.getElementById(id).value='');
+  ['cp1','cp2','cp3','td1','td2','td3','rc1','rc2','rc3','comentarios','comp_better','losan_better'].forEach(id=>document.getElementById(id).value='');
   skipped.clear(); renderFamControls(); renderSections(); applyUI(); updateProgress();
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -659,18 +678,22 @@ function formatResponse(r){
     o+='Valoración: '+RATINGS.map(d=>`${nm(d)} ${(x.ratings||{})[d.id]||'—'}`).join(' · ')+'\n';
     const ord=Object.entries(x.ranges||{}).filter(([,v])=>v>0).sort((a,b)=>a[1]-b[1]).map(([id,v])=>`${v}. ${rnm(id)}`);
     o+='Orden de rangos: '+(ord.length?ord.join('  '):'—')+'\n';
+    if(x.rng_exito) o+='  Más exitosos (por qué): '+x.rng_exito+'\n';
+    if(x.rng_debil) o+='  Más débiles (por qué): '+x.rng_debil+'\n';
     const exc=Object.entries(x.surtido||{}).filter(([,v])=>v==='exceso').map(([id])=>rnm(id));
     const fal=Object.entries(x.surtido||{}).filter(([,v])=>v==='falta').map(([id])=>rnm(id));
     o+='Surtido — Exceso: '+(exc.join(', ')||'—')+' | Insuficiente: '+(fal.join(', ')||'—')+'\n';
     const caro=Object.entries(x.precio||{}).filter(([,v])=>v==='caro').map(([id])=>rnm(id));
     const comp=Object.entries(x.precio||{}).filter(([,v])=>v==='competitivo').map(([id])=>rnm(id));
     o+='Precio — Caros: '+(caro.join(', ')||'—')+' | Competitivos: '+(comp.join(', ')||'—')+'\n';
+    if(x.pre_caros) o+='  Detalle caros: '+x.pre_caros+'\n';
+    if(x.pre_comp) o+='  Detalle competitivos: '+x.pre_comp+'\n';
     o+='Ventas perdidas por precio: '+(x.precio_perdida||'—')+(x.precio_importe?` (importe aprox.: ${x.precio_importe})`:'')+'\n';
     o+='Comentarios recibidos (fit/calidad): '+((x.fit||[]).map(id=>{const a=FIT.find(z=>z.id===id);return a?nm(a):id;}).join(', ')||'—')+'\n';
     if(x.fit_com) o+=`   « ${x.fit_com} »\n`;
     if(x.referencias) o+='Referencias echadas en falta: '+x.referencias+'\n';
   });
-  o+=`\n${S}\nTransversal\n${S}\nCompetidores: ${(r.competidores||[]).join(', ')||'—'}\nTendencias: ${(r.tendencias||[]).join(', ')||'—'}\nRecomendaciones: ${(r.recomendaciones||[]).join(', ')||'—'}\nComentarios: ${r.comentarios||'—'}\n${H}`;
+  o+=`\n${S}\nTransversal\n${S}\nCompetidores: ${(r.competidores||[]).join(', ')||'—'}\nHacen mejor que LOSAN: ${r.comp_better||'—'}\nLOSAN hace mejor: ${r.losan_better||'—'}\nTendencias: ${(r.tendencias||[]).join(', ')||'—'}\nRecomendaciones: ${(r.recomendaciones||[]).join(', ')||'—'}\nComentarios: ${r.comentarios||'—'}\n${H}`;
   return o;
 }
 function copiar(){ navigator.clipboard.writeText(document.getElementById('textoExportado').textContent); }
@@ -681,12 +704,13 @@ function exportCSV(){
   if(!adminRows.length){alert('No hay respuestas.');return;}
   const rows=adminRows.slice().sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
   const hdr=['Enviado','Idioma','Agente','Pais','Temporada','Familia','Banda',
-    ...RATINGS.map(d=>'V_'+d.id), 'VentasPerdidasPrecio','ImporteAproxPerdido','ComentariosFit','ComentarioLibreFit','ReferenciasEnFalta'].join(';');
+    ...RATINGS.map(d=>'V_'+d.id), 'RangosExitososMotivo','RangosDebilesMotivo','PrecioCarosDetalle','PrecioCompetitivosDetalle','VentasPerdidasPrecio','ImporteAproxPerdido','ComentariosFit','ComentarioLibreFit','ReferenciasEnFalta'].join(';');
   const lines=[];
   rows.forEach(r=>{ const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES'):''; const f=r.families||{};
     SEGMENTS.forEach(s=>{ const x=f[s.id]; if(!x)return;
       lines.push([dt,(r.lang||'').toUpperCase(),r.agente,r.pais,r.temporada,s.es,s.band,
         ...RATINGS.map(d=>(x.ratings||{})[d.id]||''),
+        x.rng_exito||'',x.rng_debil||'',x.pre_caros||'',x.pre_comp||'',
         x.precio_perdida||'',x.precio_importe||'',(x.fit||[]).join(' | '),x.fit_com||'',x.referencias||''].map(sc).join(';')); }); });
   if(!lines.length){alert('Sin datos por familia.');return;}
   dl('\uFEFF'+hdr+'\n'+lines.join('\n'),`LOSAN_AW26_familias_${new Date().toISOString().slice(0,10)}.csv`);
