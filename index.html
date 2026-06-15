@@ -45,6 +45,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-we
 .fam-skip-item input{width:15px;height:15px;accent-color:var(--danger);cursor:pointer;margin:0;}
 .fam-skip-item:hover{background:var(--surface);}
 .fam-skip-item.on{border-color:var(--danger);color:var(--muted);text-decoration:line-through;background:var(--off);}
+.hl{color:var(--danger);font-weight:600;}
+.del-btn{font-family:inherit;font-size:0.68rem;font-weight:500;padding:0.3rem 0.6rem;border:1px solid var(--line-dark);background:var(--bg);color:var(--danger);cursor:pointer;}
+.del-btn:hover{background:var(--danger);color:var(--bg);border-color:var(--danger);}
 /* sections + matrices */
 .section{margin-bottom:2.75rem;}
 .s-eyebrow{font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;}
@@ -321,11 +324,11 @@ const UI = {
   es:{ header_meta:'AW26 · Por familia', i_eyebrow:'AW26 — Informe de fin de temporada',
     i_title:'Feedback <em>familia a familia</em>', i_desc:'Valora el cuestionario completo para cada familia que trabajes. Desactiva arriba las que no vendas y sus columnas se bloquean.',
     l_agent:'Agente comercial', l_country:'País / zona', l_date:'Fecha', l_season:'Temporada',
-    l_famctrl:'Marca las familias que NO trabajas — se anula su columna entera:',
+    l_famctrl:'Marca las familias que <span class="hl">NO trabajas</span> — se anula su columna entera:',
     sec_rat:'01 — Valoración general', sec_rat_h:'Impresión global de cada familia (1 flojo · 5 excelente).',
     sec_rng:'02 — Rangos de producto', sec_rng_h:'Ordena las prendas por orden de selección en cada familia (1 = la más relevante).', rank_key:'Número = orden de selección · 1 = primera.',
     sec_sur:'03 — Análisis del surtido', sec_sur_h:'Por prenda y familia: ¿estaba excesivamente o insuficientemente representada?',
-    sec_pre:'04 — Precio', sec_pre_h:'Por prenda: percepción de precio en cada familia. Al final, ventas perdidas por precio.', pre_lost:'¿Ventas perdidas por posicionamiento de precio?',
+    sec_pre:'04 — Precio', sec_pre_h:'Por prenda: percepción de precio en cada familia. Al final, ventas perdidas por precio.', pre_lost:'¿Ventas perdidas por posicionamiento de precio?', pre_amount:'Importe aproximado perdido', pre_amount_ph:'€ aprox.',
     sec_fit:'05 — Calidad / fit', sec_fit_h:'Marca los aspectos sobre los que has recibido comentarios en cada familia, y añade lo que quieras.', fit_comlbl:'Comentarios recibidos', com_ph:'Comentario…',
     sec_ref:'06 — Referencias echadas en falta', sec_ref_h:'Productos o referencias que te habría gustado tener y no estaban, por familia.', ref_rowlbl:'Referencias echadas en falta', ref_ph:'Referencias que faltaron…',
     x_eyebrow:'07 — Visión de mercado', x_title:'Transversal (no por familia)', x_hint:'Aplica al conjunto, se pregunta una vez.',
@@ -338,11 +341,11 @@ const UI = {
   en:{ header_meta:'AW26 · By family', i_eyebrow:'AW26 — End of season report',
     i_title:'Feedback <em>family by family</em>', i_desc:'Fill the full questionnaire for each family you carry. Disable the ones you don’t — their columns lock.',
     l_agent:'Sales agent', l_country:'Country / area', l_date:'Date', l_season:'Season',
-    l_famctrl:'Tick the families you do NOT carry — their whole column is voided:',
+    l_famctrl:'Tick the families you do <span class="hl">NOT carry</span> — their whole column is voided:',
     sec_rat:'01 — Overall rating', sec_rat_h:'Overall impression of each family (1 poor · 5 excellent).',
     sec_rng:'02 — Product ranges', sec_rng_h:'Rank the garments by selection order in each family (1 = most relevant).', rank_key:'Number = selection order · 1 = first.',
     sec_sur:'03 — Assortment analysis', sec_sur_h:'Per garment and family: over- or under-represented?',
-    sec_pre:'04 — Price', sec_pre_h:'Per garment: price perception in each family. At the end, sales lost to price.', pre_lost:'Sales lost to price positioning?',
+    sec_pre:'04 — Price', sec_pre_h:'Per garment: price perception in each family. At the end, sales lost to price.', pre_lost:'Sales lost to price positioning?', pre_amount:'Approx. amount lost', pre_amount_ph:'approx. €',
     sec_fit:'05 — Quality / fit', sec_fit_h:'Tick the aspects you received comments about in each family, and add anything.', fit_comlbl:'Comments received', com_ph:'Comment…',
     sec_ref:'06 — References you missed', sec_ref_h:'Products or references you wish you had had, per family.', ref_rowlbl:'References missed', ref_ph:'References that were missing…',
     x_eyebrow:'07 — Market view', x_title:'Cross-cutting (not per family)', x_hint:'Applies overall, asked once.',
@@ -355,11 +358,11 @@ const UI = {
   it:{ header_meta:'AW26 · Per famiglia', i_eyebrow:'AW26 — Report di fine stagione',
     i_title:'Feedback <em>famiglia per famiglia</em>', i_desc:'Compila il questionario completo per ogni famiglia che tratti. Disattiva le altre: le colonne si bloccano.',
     l_agent:'Agente di vendita', l_country:'Paese / zona', l_date:'Data', l_season:'Stagione',
-    l_famctrl:'Spunta le famiglie che NON tratti — l\u2019intera colonna viene annullata:',
+    l_famctrl:'Spunta le famiglie che <span class="hl">NON tratti</span> — l\u2019intera colonna viene annullata:',
     sec_rat:'01 — Valutazione generale', sec_rat_h:'Impressione generale di ogni famiglia (1 scarso · 5 eccellente).',
     sec_rng:'02 — Gamme di prodotto', sec_rng_h:'Ordina i capi per ordine di selezione in ogni famiglia (1 = il più rilevante).', rank_key:'Numero = ordine di selezione · 1 = primo.',
     sec_sur:'03 — Analisi dell\u2019assortimento', sec_sur_h:'Per capo e famiglia: era eccessivo o insufficiente?',
-    sec_pre:'04 — Prezzo', sec_pre_h:'Per capo: percezione del prezzo in ogni famiglia. Alla fine, vendite perse per il prezzo.', pre_lost:'Vendite perse per posizionamento di prezzo?',
+    sec_pre:'04 — Prezzo', sec_pre_h:'Per capo: percezione del prezzo in ogni famiglia. Alla fine, vendite perse per il prezzo.', pre_lost:'Vendite perse per posizionamento di prezzo?', pre_amount:'Importo approssimativo perso', pre_amount_ph:'€ circa',
     sec_fit:'05 — Qualità / vestibilità', sec_fit_h:'Segna gli aspetti su cui hai ricevuto commenti in ogni famiglia, e aggiungi ciò che vuoi.', fit_comlbl:'Commenti ricevuti', com_ph:'Commento…',
     sec_ref:'06 — Referenze mancate', sec_ref_h:'Prodotti o referenze che avresti voluto avere e non c\u2019erano, per famiglia.', ref_rowlbl:'Referenze mancate', ref_ph:'Referenze mancanti…',
     x_eyebrow:'07 — Visione di mercato', x_title:'Trasversale (non per famiglia)', x_hint:'Vale nel complesso, chiesto una volta.',
@@ -413,8 +416,9 @@ function cellHTML(type, id, opts){
 function buildTable(rows, type, group, opts){
   let tb='';
   rows.forEach(r => {
+    const t = r._type || type, o = (r._opts!==undefined) ? r._opts : opts;
     tb += `<tr><td class="rowlab">${esc(nm(r))}</td>`;
-    SEGMENTS.forEach(s => { const off=skipped.has(s.id)?' off':''; tb += `<td class="mcell${off}" data-fam="${s.id}">${cellHTML(type,`${group}_${r.id}_${s.id}`,opts)}</td>`; });
+    SEGMENTS.forEach(s => { const off=skipped.has(s.id)?' off':''; tb += `<td class="mcell${off}" data-fam="${s.id}">${cellHTML(t,`${group}_${r.id}_${s.id}`,o)}</td>`; });
     tb += '</tr>';
   });
   return `<table class="matrix">${colHeader()}<tbody>${tb}</tbody></table>`;
@@ -430,7 +434,10 @@ function renderSections(){
   h += sectionWrap(u.sec_rng, bare(u.sec_rng), u.sec_rng_h, buildTable(RANGES,'rank','rng'), `<p class="scale-key">${u.rank_key}</p>`);
   h += sectionWrap(u.sec_sur, bare(u.sec_sur), u.sec_sur_h, buildTable(RANGES,'select','sur',SURTIDO_OPTS[currentLang]));
   h += sectionWrap(u.sec_pre, bare(u.sec_pre), u.sec_pre_h,
-        buildTable(RANGES,'select','pre',PRECIO_PERCEP_OPTS[currentLang]) + buildTable(oneRow(u.pre_lost,'perdida'),'select','prl',PRECIO_PERDIDA_OPTS[currentLang]));
+        buildTable(RANGES,'select','pre',PRECIO_PERCEP_OPTS[currentLang]) + buildTable([
+          {id:'perdida', es:u.pre_lost, en:u.pre_lost, it:u.pre_lost, _type:'select', _opts:PRECIO_PERDIDA_OPTS[currentLang]},
+          {id:'importe', es:u.pre_amount, en:u.pre_amount, it:u.pre_amount, _type:'text', _opts:u.pre_amount_ph}
+        ],'select','prl'));
   h += sectionWrap(u.sec_fit, bare(u.sec_fit), u.sec_fit_h,
         buildTable(FIT,'check','fit') + buildTable(oneRow(u.fit_comlbl,'com'),'text','fitc',u.com_ph));
   h += sectionWrap(u.sec_ref, bare(u.sec_ref), u.sec_ref_h, buildTable(oneRow(u.ref_rowlbl,'falta'),'text','ref',u.ref_ph));
@@ -467,7 +474,7 @@ function applyUI(){
   const setH=(id,v)=>{ const e=document.getElementById(id); if(e) e.innerHTML=v; };
   set('hd-meta',u.header_meta); set('i_eyebrow',u.i_eyebrow); setH('i_title',u.i_title); set('i_desc',u.i_desc);
   set('l_agent',u.l_agent); set('l_country',u.l_country); set('l_date',u.l_date); set('l_season',u.l_season);
-  set('l_famctrl',u.l_famctrl);
+  setH('l_famctrl',u.l_famctrl);
   set('x_eyebrow',u.x_eyebrow); set('x_title',u.x_title); set('x_hint',u.x_hint);
   set('l_comp',u.l_comp); set('l_trend',u.l_trend); set('l_rec',u.l_rec); set('l_final',u.l_final);
   set('submitBtn',u.btn_submit); set('printBtn',u.btn_print); set('clearBtn',u.btn_clear);
@@ -516,10 +523,11 @@ function collectFamilies(){
     const surtido={}; RANGES.forEach(r=>{ const v=valOf(`sur_${r.id}_${s.id}`); if(v){ surtido[r.id]=v; has=true; } });
     const precio={};  RANGES.forEach(r=>{ const v=valOf(`pre_${r.id}_${s.id}`); if(v){ precio[r.id]=v; has=true; } });
     const precio_perdida=valOf(`prl_perdida_${s.id}`); if(precio_perdida) has=true;
+    const precio_importe=txt(`prl_importe_${s.id}`); if(precio_importe) has=true;
     const fit=FIT.filter(r=>{const e=document.getElementById(`fit_${r.id}_${s.id}`);return e&&e.checked;}).map(r=>r.id); if(fit.length) has=true;
     const fit_com=txt(`fitc_com_${s.id}`); if(fit_com) has=true;
     const referencias=txt(`ref_falta_${s.id}`); if(referencias) has=true;
-    if (has) fams[s.id]={ ratings, ranges, surtido, precio, precio_perdida, fit, fit_com, referencias };
+    if (has) fams[s.id]={ ratings, ranges, surtido, precio, precio_perdida, precio_importe, fit, fit_com, referencias };
   });
   return fams;
 }
@@ -625,8 +633,14 @@ function renderTable(rows){
   const trs=rows.map(r=>{ const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES',{dateStyle:'short',timeStyle:'short'}):'—';
     const f=r.families||{}; const ids=Object.keys(f); let all=[]; ids.forEach(id=>RATINGS.forEach(d=>{const v=(f[id].ratings||{})[d.id];if(v>0)all.push(v);}));
     const avg=all.length?(all.reduce((a,b)=>a+b,0)/all.length).toFixed(1):'·';
-    return `<tr><td style="white-space:nowrap">${dt}</td><td>${(r.lang||'—').toUpperCase()}</td><td class="l"><strong>${esc(r.agente)||'—'}</strong></td><td class="l">${esc(r.pais)||'—'}</td><td>${ids.length||'·'}</td><td><strong>${avg}</strong></td><td><button class="view-btn" onclick="viewDetail('${r._key}')">Ver</button></td></tr>`; }).join('');
-  w.innerHTML=`<table class="atable"><thead><tr><th class="l">Fecha</th><th>Idioma</th><th class="l">Agente</th><th class="l">País</th><th>Familias</th><th>Media</th><th>Detalle</th></tr></thead><tbody>${trs}</tbody></table>`;
+    return `<tr><td style="white-space:nowrap">${dt}</td><td>${(r.lang||'—').toUpperCase()}</td><td class="l"><strong>${esc(r.agente)||'—'}</strong></td><td class="l">${esc(r.pais)||'—'}</td><td>${ids.length||'·'}</td><td><strong>${avg}</strong></td><td><button class="view-btn" onclick="viewDetail('${r._key}')">Ver</button></td><td><button class="del-btn" onclick="deleteResponse('${r._key}')">Borrar</button></td></tr>`; }).join('');
+  w.innerHTML=`<table class="atable"><thead><tr><th class="l">Fecha</th><th>Idioma</th><th class="l">Agente</th><th class="l">País</th><th>Familias</th><th>Media</th><th>Detalle</th><th></th></tr></thead><tbody>${trs}</tbody></table>`;
+}
+function deleteResponse(key){
+  if(!db) return;
+  const r=adminRows.find(x=>x._key===key); const who=r?(r.agente||'(sin nombre)'):key;
+  if(!confirm(`¿Borrar definitivamente la respuesta de "${who}"? Esta acción no se puede deshacer.`)) return;
+  db.ref(FEEDBACK_PATH+'/'+key).remove().catch(e=>{ console.error(e); alert('No se pudo borrar.'); });
 }
 function viewDetail(key){
   const r=adminRows.find(x=>x._key===key); if(!r)return;
@@ -651,7 +665,7 @@ function formatResponse(r){
     const caro=Object.entries(x.precio||{}).filter(([,v])=>v==='caro').map(([id])=>rnm(id));
     const comp=Object.entries(x.precio||{}).filter(([,v])=>v==='competitivo').map(([id])=>rnm(id));
     o+='Precio — Caros: '+(caro.join(', ')||'—')+' | Competitivos: '+(comp.join(', ')||'—')+'\n';
-    o+='Ventas perdidas por precio: '+(x.precio_perdida||'—')+'\n';
+    o+='Ventas perdidas por precio: '+(x.precio_perdida||'—')+(x.precio_importe?` (importe aprox.: ${x.precio_importe})`:'')+'\n';
     o+='Comentarios recibidos (fit/calidad): '+((x.fit||[]).map(id=>{const a=FIT.find(z=>z.id===id);return a?nm(a):id;}).join(', ')||'—')+'\n';
     if(x.fit_com) o+=`   « ${x.fit_com} »\n`;
     if(x.referencias) o+='Referencias echadas en falta: '+x.referencias+'\n';
@@ -667,13 +681,13 @@ function exportCSV(){
   if(!adminRows.length){alert('No hay respuestas.');return;}
   const rows=adminRows.slice().sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
   const hdr=['Enviado','Idioma','Agente','Pais','Temporada','Familia','Banda',
-    ...RATINGS.map(d=>'V_'+d.id), 'VentasPerdidasPrecio','ComentariosFit','ComentarioLibreFit','ReferenciasEnFalta'].join(';');
+    ...RATINGS.map(d=>'V_'+d.id), 'VentasPerdidasPrecio','ImporteAproxPerdido','ComentariosFit','ComentarioLibreFit','ReferenciasEnFalta'].join(';');
   const lines=[];
   rows.forEach(r=>{ const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES'):''; const f=r.families||{};
     SEGMENTS.forEach(s=>{ const x=f[s.id]; if(!x)return;
       lines.push([dt,(r.lang||'').toUpperCase(),r.agente,r.pais,r.temporada,s.es,s.band,
         ...RATINGS.map(d=>(x.ratings||{})[d.id]||''),
-        x.precio_perdida||'',(x.fit||[]).join(' | '),x.fit_com||'',x.referencias||''].map(sc).join(';')); }); });
+        x.precio_perdida||'',x.precio_importe||'',(x.fit||[]).join(' | '),x.fit_com||'',x.referencias||''].map(sc).join(';')); }); });
   if(!lines.length){alert('Sin datos por familia.');return;}
   dl('\uFEFF'+hdr+'\n'+lines.join('\n'),`LOSAN_AW26_familias_${new Date().toISOString().slice(0,10)}.csv`);
 }
