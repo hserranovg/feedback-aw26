@@ -3,172 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="LOSAN MEN — AW26 End of Season Feedback">
+<meta name="description" content="LOSAN — AW26 Feedback por familia (matriz)">
 <title>LOSAN — Feedback AW26</title>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fff;--surface:#fafafa;--text:#0a0a0a;--muted:#8a8a8a;--line:#e8e8e8;--line-dark:#d0d0d0;--danger:#c8102e;}
+:root{--bg:#fff;--surface:#fafafa;--text:#0a0a0a;--muted:#8a8a8a;--line:#e8e8e8;--line-dark:#d0d0d0;--danger:#c8102e;--off:#f4f4f4;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;}
 .header{padding:1.25rem 2rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg);z-index:100;gap:1rem;}
-.logo-wordmark{font-size:1.15rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--text);flex-shrink:0;}
+.logo-wordmark{font-size:1.15rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;flex-shrink:0;}
 .header-right{display:flex;align-items:center;gap:1.25rem;}
 .header-meta{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
 .lang-switcher{display:flex;}
-.lang-btn{font-family:'DM Sans',sans-serif;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid var(--line-dark);background:transparent;color:var(--muted);padding:0.3rem 0.65rem;cursor:pointer;transition:all 0.15s;margin-left:-1px;}
+.lang-btn{font-family:inherit;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid var(--line-dark);background:transparent;color:var(--muted);padding:0.3rem 0.65rem;cursor:pointer;transition:all .15s;margin-left:-1px;}
 .lang-btn:first-child{margin-left:0;}
 .lang-btn:hover{background:var(--surface);color:var(--text);}
-.lang-btn.active{background:var(--text);color:var(--bg);border-color:var(--text);z-index:1;position:relative;}
+.lang-btn.active{background:var(--text);color:var(--bg);border-color:var(--text);}
 .progress-bar{height:2px;background:var(--line);width:100%;position:sticky;top:62px;z-index:99;}
-.progress-fill{height:100%;background:var(--text);width:0%;transition:width 0.4s ease;}
-.form-body{max-width:680px;width:100%;margin:0 auto;padding:3.5rem 2rem 8rem;display:flex;flex-direction:column;}
-.intro{padding-bottom:3rem;border-bottom:1px solid var(--line);margin-bottom:3rem;}
+.progress-fill{height:100%;background:var(--text);width:0%;transition:width .4s ease;}
+.form-body{max-width:980px;width:100%;margin:0 auto;padding:3rem 2rem 8rem;}
+.intro{padding-bottom:2.5rem;border-bottom:1px solid var(--line);margin-bottom:2.5rem;}
 .eyebrow{font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--muted);margin-bottom:0.85rem;display:block;}
-.intro-title{font-size:clamp(1.65rem,4vw,2.4rem);font-weight:400;line-height:1.2;letter-spacing:-0.02em;margin-bottom:1.25rem;}
+.intro-title{font-size:clamp(1.6rem,4vw,2.3rem);font-weight:400;line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem;}
 .intro-title em{font-style:italic;font-weight:300;}
-.intro-desc{font-size:0.88rem;color:var(--muted);line-height:1.75;max-width:520px;}
-.meta-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);margin-bottom:3.5rem;}
+.intro-desc{font-size:0.88rem;color:var(--muted);line-height:1.7;max-width:620px;}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);margin-bottom:2.5rem;}
 .meta-cell{padding:1rem 1.25rem;border-right:1px solid var(--line);}
 .meta-cell:nth-child(2){border-right:none;}
 .meta-cell:nth-child(3),.meta-cell:nth-child(4){border-top:1px solid var(--line);}
 .meta-cell:nth-child(4){border-right:none;}
 .meta-cell label{display:block;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:0.45rem;}
-.meta-cell input{width:100%;border:none;border-bottom:1px solid var(--line-dark);background:transparent;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--text);outline:none;padding:0.3rem 0;transition:border-color 0.2s;}
+.meta-cell input{width:100%;border:none;border-bottom:1px solid var(--line-dark);background:transparent;font-family:inherit;font-size:0.9rem;color:var(--text);outline:none;padding:0.3rem 0;}
 .meta-cell input:focus{border-bottom-color:var(--text);}
-.meta-cell input::placeholder{color:var(--muted);}
-.section{padding:2.75rem 0;border-bottom:1px solid var(--line);}
-.section:last-of-type{border-bottom:none;}
-.s-eyebrow{font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:0.65rem;display:flex;align-items:center;gap:0.75rem;}
-.key-badge{font-size:0.56rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--danger);border:1px solid var(--danger);padding:0.12rem 0.45rem;}
-.s-title{font-size:1.2rem;font-weight:400;line-height:1.35;letter-spacing:-0.01em;margin-bottom:0.6rem;}
-.s-title em{font-style:italic;font-weight:300;}
-.s-hint{font-size:0.83rem;color:var(--muted);margin-bottom:2rem;line-height:1.55;}
-.rating-block{display:flex;flex-direction:column;border-top:1px solid var(--line);border-left:1px solid var(--line);}
-.rating-row{display:flex;align-items:center;border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
-.rating-label{flex:1;padding:0.8rem 1rem;font-size:0.86rem;}
-.rating-opts{display:flex;border-left:1px solid var(--line);}
-.rating-opts input[type="radio"]{display:none;}
-.rating-opts label{width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:500;color:var(--muted);cursor:pointer;border-right:1px solid var(--line);transition:all 0.15s;user-select:none;}
-.rating-opts label:last-child{border-right:none;}
-.rating-opts label:hover{background:var(--surface);color:var(--text);}
-.rating-opts input[type="radio"]:checked + label{background:var(--text);color:var(--bg);}
-.family-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);border-left:1px solid var(--line);margin-bottom:0;}
-.fam-row{display:flex;align-items:center;border-right:1px solid var(--line);border-bottom:1px solid var(--line);cursor:pointer;transition:background 0.12s;user-select:none;}
-.fam-row:hover{background:var(--surface);}
-.fam-indicator{width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:600;color:var(--muted);border-right:1px solid var(--line);flex-shrink:0;transition:all 0.15s;}
-.fam-row.ranked .fam-indicator{background:var(--text);color:var(--bg);}
-.fam-row input[type="checkbox"]{display:none;}
-.fam-name{padding:0 0.9rem;font-size:0.86rem;flex:1;line-height:1.3;}
-.check-group{display:flex;flex-direction:column;border-top:1px solid var(--line);border-left:1px solid var(--line);}
-.check-group-2col{display:grid;grid-template-columns:1fr 1fr;}
-.check-row{display:flex;align-items:center;border-right:1px solid var(--line);border-bottom:1px solid var(--line);cursor:pointer;transition:background 0.12s;user-select:none;}
-.check-row:hover{background:var(--surface);}
-.check-row input[type="checkbox"]{display:none;}
-.check-ind{width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:600;color:var(--muted);border-right:1px solid var(--line);flex-shrink:0;transition:all 0.15s;}
-.check-row input[type="checkbox"]:checked ~ .check-ind{background:var(--text);color:var(--bg);}
-.check-row input[type="checkbox"]:checked ~ .check-ind::before{content:'✓';}
-.check-label{padding:0 0.9rem;font-size:0.86rem;flex:1;}
-.num-list{display:flex;flex-direction:column;border-top:1px solid var(--line);border-left:1px solid var(--line);}
-.num-row{display:flex;align-items:center;border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
-.num-badge{width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:600;color:var(--muted);border-right:1px solid var(--line);flex-shrink:0;}
-.num-row input[type="text"]{flex:1;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.88rem;color:var(--text);outline:none;padding:0 1rem;height:42px;}
-.num-row input[type="text"]::placeholder{color:var(--muted);}
-.num-row input[type="text"]:focus{background:var(--surface);}
-.textarea-wrap{margin-top:1.5rem;}
+/* family controls */
+.fam-controls-lbl{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:0.7rem;}
+.fam-controls{display:flex;flex-wrap:wrap;gap:0.45rem;margin-bottom:2.5rem;}
+.fam-skip-item{display:inline-flex;align-items:center;gap:0.45rem;font-size:0.78rem;border:1px solid var(--line-dark);padding:0.4rem 0.75rem;cursor:pointer;user-select:none;transition:all .15s;}
+.fam-skip-item input{width:15px;height:15px;accent-color:var(--danger);cursor:pointer;margin:0;}
+.fam-skip-item:hover{background:var(--surface);}
+.fam-skip-item.on{border-color:var(--danger);color:var(--muted);text-decoration:line-through;background:var(--off);}
+/* sections + matrices */
+.section{margin-bottom:2.75rem;}
+.s-eyebrow{font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;}
+.s-title{font-size:1.15rem;font-weight:400;letter-spacing:-0.01em;margin-bottom:0.5rem;}
+.s-hint{font-size:0.82rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.5;}
+.matrix-wrap{overflow-x:auto;border:1px solid var(--line);scrollbar-width:thin;}
+.matrix-wrap::-webkit-scrollbar{height:7px;}
+.matrix-wrap::-webkit-scrollbar-thumb{background:var(--line-dark);}
+.matrix{border-collapse:collapse;font-size:0.8rem;}
+.matrix th,.matrix td{border:1px solid var(--line);padding:0.4rem 0.55rem;text-align:center;white-space:nowrap;}
+.matrix thead .band th{background:var(--text);color:var(--bg);font-size:0.52rem;letter-spacing:0.16em;text-transform:uppercase;font-weight:500;padding:0.3rem;}
+.matrix thead .fam th{background:var(--surface);font-size:0.66rem;font-weight:500;}
+.matrix th.rowlab,.matrix td.rowlab{position:sticky;left:0;text-align:left;font-size:0.8rem;min-width:165px;background:var(--bg);z-index:2;box-shadow:1px 0 0 var(--line);}
+.matrix thead th.rowlab{background:var(--surface);z-index:3;}
+.matrix tbody tr:nth-child(even) td.rowlab{background:var(--surface);}
+.matrix tbody tr:nth-child(even) td{background:#fcfcfc;}
+.matrix select{font-family:inherit;font-size:0.78rem;border:1px solid var(--line-dark);background:var(--bg);padding:0.18rem 0.1rem;width:48px;cursor:pointer;}
+.matrix input[type=checkbox]{width:16px;height:16px;accent-color:var(--text);cursor:pointer;}
+.matrix .txt{width:130px;border:none;border-bottom:1px solid var(--line-dark);font-family:inherit;font-size:0.78rem;padding:0.2rem;background:transparent;outline:none;}
+.matrix .txt:focus{border-bottom-color:var(--text);}
+td.off,.matrix tbody tr:nth-child(even) td.off{background:var(--off);}
+td.off select,td.off input{opacity:.25;pointer-events:none;}
+.scale-key{font-size:0.72rem;color:var(--muted);margin-top:0.6rem;}
+/* cross-cutting */
 .field-label{display:block;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:0.55rem;}
-.textarea-field{width:100%;border:1px solid var(--line-dark);background:var(--surface);padding:0.9rem 1rem;font-family:'DM Sans',sans-serif;font-size:0.88rem;color:var(--text);outline:none;resize:vertical;min-height:90px;transition:border-color 0.2s;line-height:1.65;}
+.num-list{display:flex;flex-direction:column;border-top:1px solid var(--line);border-left:1px solid var(--line);margin-bottom:1.5rem;}
+.num-row{display:flex;align-items:center;border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
+.num-badge{width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:600;color:var(--muted);border-right:1px solid var(--line);flex-shrink:0;}
+.num-row input{flex:1;border:none;background:transparent;font-family:inherit;font-size:0.88rem;padding:0 1rem;height:40px;outline:none;}
+.textarea-field{width:100%;border:1px solid var(--line-dark);background:var(--surface);padding:0.9rem 1rem;font-family:inherit;font-size:0.88rem;outline:none;resize:vertical;min-height:90px;line-height:1.6;}
 .textarea-field:focus{border-color:var(--text);}
-.textarea-field::placeholder{color:var(--muted);}
-.input-wrap{margin-top:1.25rem;}
-.input-line{width:100%;border:none;border-bottom:1px solid var(--line-dark);background:transparent;font-family:'DM Sans',sans-serif;font-size:0.88rem;color:var(--text);outline:none;padding:0.55rem 0;transition:border-color 0.2s;}
-.input-line:focus{border-bottom-color:var(--text);}
-.input-line::placeholder{color:var(--muted);}
-.yesno-row{display:flex;border:1px solid var(--line-dark);width:fit-content;margin:1rem 0 1.25rem;}
-.yesno-row input[type="radio"]{display:none;}
-.yesno-row label{padding:0.6rem 1.35rem;font-size:0.76rem;font-weight:500;letter-spacing:0.06em;cursor:pointer;border-right:1px solid var(--line-dark);color:var(--muted);transition:all 0.15s;white-space:nowrap;}
-.yesno-row label:last-child{border-right:none;}
-.yesno-row input[type="radio"]:checked + label{background:var(--text);color:var(--bg);}
 .actions-bar{position:fixed;bottom:0;left:0;right:0;background:var(--bg);border-top:1px solid var(--line);padding:1.1rem 2rem;display:flex;align-items:center;gap:0.85rem;z-index:50;}
-.btn{font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:500;padding:0.75rem 1.6rem;border:1px solid var(--line-dark);background:var(--bg);color:var(--text);cursor:pointer;transition:all 0.2s;letter-spacing:0.04em;}
+.btn{font-family:inherit;font-size:0.84rem;font-weight:500;padding:0.75rem 1.6rem;border:1px solid var(--line-dark);background:var(--bg);color:var(--text);cursor:pointer;transition:all .2s;}
 .btn:hover{background:var(--surface);}
 .btn-primary{background:var(--text);color:var(--bg);border-color:var(--text);}
-.btn-primary:hover{opacity:0.82;}
-.btn-ghost{border:none;background:none;color:var(--muted);padding:0.75rem 0;}
+.btn-primary:hover{opacity:.82;}
+.btn-ghost{border:none;background:none;color:var(--muted);}
 .btn-ghost:hover{color:var(--text);}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,10,0.75);z-index:200;align-items:center;justify-content:center;}
-.modal-overlay.active{display:flex;}
-.modal{background:var(--bg);max-width:620px;width:92%;max-height:84vh;overflow-y:auto;border:1px solid var(--line);}
-.modal-head{padding:1.15rem 1.6rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg);}
-.modal-head h2{font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;font-weight:500;}
-.modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;padding:0;}
-.modal-close:hover{color:var(--text);}
-.modal-body{padding:1.5rem 1.6rem;}
-.modal-note{font-size:0.8rem;color:var(--muted);line-height:1.65;margin-bottom:1rem;}
-.modal-pre{white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:0.75rem;line-height:1.75;color:var(--text);background:var(--surface);padding:1.15rem;max-height:360px;overflow-y:auto;border:1px solid var(--line);}
-.modal-foot{padding:0.9rem 1.6rem;border-top:1px solid var(--line);display:flex;gap:0.7rem;flex-wrap:wrap;position:sticky;bottom:0;background:var(--bg);}
-.modal-foot .btn{font-size:0.78rem;padding:0.65rem 1.3rem;}
-@media(max-width:580px){
-  .meta-grid{grid-template-columns:1fr;}
-  .meta-cell:nth-child(2){border-right:none;}
-  .meta-cell:nth-child(3),.meta-cell:nth-child(4){border-top:1px solid var(--line);}
-  .family-grid,.check-group-2col{grid-template-columns:1fr;}
-  .form-body{padding:2.5rem 1.25rem 8rem;}
-  .header{padding:1rem 1.25rem;}
-  .actions-bar{padding:0.9rem 1.25rem;flex-wrap:wrap;}
-  .lang-btn{padding:0.25rem 0.5rem;}
-  .header-meta{display:none;}
-}
-/* ── SUBMIT SUCCESS OVERLAY ── */
+.spacer{flex:1;}
+/* overlay + modal */
 .submit-overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:2rem;}
 .submit-overlay.active{display:flex;}
-.submit-icon{font-size:2.5rem;margin-bottom:1.5rem;}
-.submit-title{font-size:clamp(1.4rem,4vw,2rem);font-weight:400;letter-spacing:-0.02em;margin-bottom:0.75rem;}
-.submit-desc{font-size:0.9rem;color:var(--muted);line-height:1.65;max-width:400px;margin-bottom:2.5rem;}
-/* ── ADMIN VIEW ── */
+.submit-icon{font-size:2.5rem;margin-bottom:1.25rem;}
+.submit-title{font-size:clamp(1.4rem,4vw,2rem);font-weight:400;margin-bottom:0.6rem;}
+.submit-desc{font-size:0.9rem;color:var(--muted);line-height:1.6;max-width:400px;margin-bottom:2rem;}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,10,.75);z-index:200;align-items:center;justify-content:center;}
+.modal-overlay.active{display:flex;}
+.modal{background:var(--bg);max-width:640px;width:92%;max-height:84vh;overflow-y:auto;border:1px solid var(--line);}
+.modal-head{padding:1.1rem 1.5rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg);}
+.modal-head h2{font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;font-weight:500;}
+.modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);}
+.modal-body{padding:1.4rem 1.5rem;}
+.modal-pre{white-space:pre-wrap;font-family:inherit;font-size:0.74rem;line-height:1.7;background:var(--surface);padding:1.1rem;max-height:440px;overflow:auto;border:1px solid var(--line);}
+.modal-foot{padding:0.85rem 1.5rem;border-top:1px solid var(--line);display:flex;gap:0.7rem;position:sticky;bottom:0;background:var(--bg);}
+.modal-foot .btn{font-size:0.78rem;padding:0.6rem 1.2rem;}
+/* admin */
 #admin-view{display:none;min-height:100vh;}
-.admin-header{padding:1.25rem 2rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:1rem;background:var(--bg);}
+.admin-header{padding:1.25rem 2rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:1rem;}
 .admin-badge{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--danger);border:1px solid var(--danger);padding:0.15rem 0.5rem;margin-left:0.75rem;}
-.admin-body{max-width:780px;margin:0 auto;padding:3rem 2rem 6rem;}
-.admin-section-title{font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem;}
-.admin-pre{white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:0.78rem;line-height:1.8;color:var(--text);background:var(--surface);padding:1.5rem;border:1px solid var(--line);max-height:70vh;overflow-y:auto;}
-.admin-actions{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1.25rem;}
-.admin-note{font-size:0.75rem;color:var(--muted);margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--line);line-height:1.65;}
-@media(max-width:580px){
-  .admin-header{padding:1rem 1.25rem;}
-  .admin-body{padding:2rem 1.25rem 5rem;}
-}
-@media print{
-  .actions-bar,.modal-overlay,.progress-bar,.lang-switcher{display:none!important;}
-  .header{position:static;}
-}
-/* ── ADMIN: SUMMARY + TABLE + CSV ── */
+.admin-body{max-width:1040px;margin:0 auto;padding:2.5rem 2rem 6rem;}
 .admin-toolbar{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;}
-.admin-title{font-size:1.3rem;font-weight:400;letter-spacing:-0.01em;}
+.admin-title{font-size:1.3rem;font-weight:400;}
 .admin-meta{font-size:0.8rem;color:var(--muted);margin-top:0.2rem;}
-.export-btn{font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;padding:0.6rem 1.25rem;background:var(--text);color:var(--bg);border:none;cursor:pointer;letter-spacing:0.05em;}
-.export-btn:hover{opacity:0.82;}
-.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line);margin-bottom:2rem;}
+.admin-block-title{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin:2.25rem 0 1rem;}
+.export-btn{font-family:inherit;font-size:0.78rem;font-weight:500;padding:0.6rem 1.2rem;background:var(--text);color:var(--bg);border:none;cursor:pointer;}
+.export-btn.alt{background:var(--bg);color:var(--text);border:1px solid var(--line-dark);}
+.export-btn:hover{opacity:.85;}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line);margin-bottom:1rem;}
 .summary-card{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:1rem 1.25rem;}
 .summary-label{font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;}
-.summary-value{font-size:1.4rem;font-weight:400;letter-spacing:-0.02em;line-height:1.15;}
+.summary-value{font-size:1.4rem;font-weight:400;line-height:1.15;}
 .summary-sub{font-size:0.68rem;color:var(--muted);margin-top:0.25rem;}
-.responses-table{width:100%;border-collapse:collapse;font-size:0.76rem;}
-.responses-table th{text-align:left;padding:0.55rem 0.7rem;background:var(--surface);border:1px solid var(--line);font-size:0.56rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:400;white-space:nowrap;}
-.responses-table td{padding:0.55rem 0.7rem;border:1px solid var(--line);vertical-align:top;line-height:1.4;white-space:nowrap;}
-.responses-table tr:nth-child(even) td{background:var(--surface);}
-.responses-table .num{text-align:center;font-variant-numeric:tabular-nums;}
-.view-btn{font-family:'DM Sans',sans-serif;font-size:0.68rem;font-weight:500;padding:0.3rem 0.7rem;border:1px solid var(--line-dark);background:var(--bg);color:var(--text);cursor:pointer;}
-.view-btn:hover{background:var(--text);color:var(--bg);border-color:var(--text);}
-.no-data{text-align:center;padding:4rem 1rem;color:var(--muted);font-style:italic;}
-.admin-scroll{overflow-x:auto;padding-bottom:2px;scrollbar-width:thin;scrollbar-color:var(--line-dark) var(--line);}
-.admin-scroll::-webkit-scrollbar{height:5px;}
-.admin-scroll::-webkit-scrollbar-track{background:var(--line);}
-.admin-scroll::-webkit-scrollbar-thumb{background:var(--line-dark);border-radius:2px;}
-.scroll-hint{position:absolute;right:0;top:0;bottom:0;width:60px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:var(--danger);background:linear-gradient(to right,transparent,var(--bg) 55%);pointer-events:none;animation:scrollPulse 1.8s ease-in-out infinite;}
-@keyframes scrollPulse{0%,100%{opacity:1;transform:translateX(0);}50%{opacity:0.2;transform:translateX(6px);}}
+.atable{border-collapse:collapse;font-size:0.76rem;width:100%;}
+.atable th,.atable td{border:1px solid var(--line);padding:0.45rem 0.6rem;text-align:center;white-space:nowrap;}
+.atable th{background:var(--surface);font-size:0.54rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:400;}
+.atable td.l,.atable th.l{text-align:left;}
+.atable .band-row td{background:var(--text);color:var(--bg);font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;}
+.atable tbody tr:nth-child(even) td{background:#fcfcfc;}
+.heat{font-variant-numeric:tabular-nums;}
+.view-btn{font-family:inherit;font-size:0.68rem;font-weight:500;padding:0.3rem 0.7rem;border:1px solid var(--line-dark);background:var(--bg);cursor:pointer;}
+.view-btn:hover{background:var(--text);color:var(--bg);}
+.no-data{text-align:center;padding:3.5rem 1rem;color:var(--muted);font-style:italic;}
+.admin-scroll{overflow-x:auto;border:1px solid var(--line);}
+.admin-note{font-size:0.75rem;color:var(--muted);margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--line);line-height:1.6;}
+@media(max-width:580px){
+  .header,.admin-header{padding:1rem 1.25rem;}
+  .form-body,.admin-body{padding:2rem 1rem 8rem;}
+  .meta-grid{grid-template-columns:1fr;}
+  .meta-cell:nth-child(2){border-right:none;}
+  .header-meta{display:none;}
+}
+@media print{.actions-bar,.modal-overlay,.progress-bar,.lang-switcher,.fam-controls{display:none!important;}}
 </style>
 </head>
 <body>
@@ -178,1106 +146,558 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-we
   <div class="header-right">
     <span class="header-meta" id="hd-meta"></span>
     <div class="lang-switcher">
-      <button class="lang-btn active" data-lang="es" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
       <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
       <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
     </div>
   </div>
 </header>
-
 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
 <main class="form-body">
-
   <div class="intro">
-    <span class="eyebrow" data-i18n="intro_eyebrow"></span>
-    <h1 class="intro-title" data-i18n-html="intro_title"></h1>
-    <p class="intro-desc" data-i18n="intro_desc"></p>
+    <span class="eyebrow" id="i_eyebrow"></span>
+    <h1 class="intro-title" id="i_title"></h1>
+    <p class="intro-desc" id="i_desc"></p>
   </div>
 
   <div class="meta-grid">
-    <div class="meta-cell"><label data-i18n="lbl_season"></label><input type="text" id="m_temporada" value="AW26"></div>
-    <div class="meta-cell"><label data-i18n="lbl_agent"></label><input type="text" id="m_agente" data-i18n-placeholder="ph_agent"></div>
-    <div class="meta-cell"><label data-i18n="lbl_country"></label><input type="text" id="m_pais" data-i18n-placeholder="ph_country"></div>
-    <div class="meta-cell"><label data-i18n="lbl_date"></label><input type="date" id="m_fecha"></div>
+    <div class="meta-cell"><label id="l_agent"></label><input type="text" id="m_agente" autocomplete="name"></div>
+    <div class="meta-cell"><label id="l_country"></label><input type="text" id="m_pais"></div>
+    <div class="meta-cell"><label id="l_date"></label><input type="date" id="m_fecha"></div>
+    <div class="meta-cell"><label id="l_season"></label><input type="text" id="m_temporada" value="AW26"></div>
   </div>
 
-  <!-- S1 -->
-  <div class="section" data-sec="1">
-    <p class="s-eyebrow" data-i18n="s1_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s1_title"></h2>
-    <p class="s-hint" data-i18n="s1_hint"></p>
-    <div class="rating-block">
-      <div class="rating-row"><span class="rating-label" data-i18n="r_atractivo"></span><div class="rating-opts"><input type="radio" name="r_atractivo" id="r_at1" value="1"><label for="r_at1">1</label><input type="radio" name="r_atractivo" id="r_at2" value="2"><label for="r_at2">2</label><input type="radio" name="r_atractivo" id="r_at3" value="3"><label for="r_at3">3</label><input type="radio" name="r_atractivo" id="r_at4" value="4"><label for="r_at4">4</label><input type="radio" name="r_atractivo" id="r_at5" value="5"><label for="r_at5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_moda"></span><div class="rating-opts"><input type="radio" name="r_moda" id="r_mo1" value="1"><label for="r_mo1">1</label><input type="radio" name="r_moda" id="r_mo2" value="2"><label for="r_mo2">2</label><input type="radio" name="r_moda" id="r_mo3" value="3"><label for="r_mo3">3</label><input type="radio" name="r_moda" id="r_mo4" value="4"><label for="r_mo4">4</label><input type="radio" name="r_moda" id="r_mo5" value="5"><label for="r_mo5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_comercial"></span><div class="rating-opts"><input type="radio" name="r_comercial" id="r_co1" value="1"><label for="r_co1">1</label><input type="radio" name="r_comercial" id="r_co2" value="2"><label for="r_co2">2</label><input type="radio" name="r_comercial" id="r_co3" value="3"><label for="r_co3">3</label><input type="radio" name="r_comercial" id="r_co4" value="4"><label for="r_co4">4</label><input type="radio" name="r_comercial" id="r_co5" value="5"><label for="r_co5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_precio"></span><div class="rating-opts"><input type="radio" name="r_precio" id="r_pr1" value="1"><label for="r_pr1">1</label><input type="radio" name="r_precio" id="r_pr2" value="2"><label for="r_pr2">2</label><input type="radio" name="r_precio" id="r_pr3" value="3"><label for="r_pr3">3</label><input type="radio" name="r_precio" id="r_pr4" value="4"><label for="r_pr4">4</label><input type="radio" name="r_precio" id="r_pr5" value="5"><label for="r_pr5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_equilibrio"></span><div class="rating-opts"><input type="radio" name="r_equilibrio" id="r_eq1" value="1"><label for="r_eq1">1</label><input type="radio" name="r_equilibrio" id="r_eq2" value="2"><label for="r_eq2">2</label><input type="radio" name="r_equilibrio" id="r_eq3" value="3"><label for="r_eq3">3</label><input type="radio" name="r_equilibrio" id="r_eq4" value="4"><label for="r_eq4">4</label><input type="radio" name="r_equilibrio" id="r_eq5" value="5"><label for="r_eq5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_color"></span><div class="rating-opts"><input type="radio" name="r_color" id="r_cl1" value="1"><label for="r_cl1">1</label><input type="radio" name="r_color" id="r_cl2" value="2"><label for="r_cl2">2</label><input type="radio" name="r_color" id="r_cl3" value="3"><label for="r_cl3">3</label><input type="radio" name="r_color" id="r_cl4" value="4"><label for="r_cl4">4</label><input type="radio" name="r_color" id="r_cl5" value="5"><label for="r_cl5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_relacion"></span><div class="rating-opts"><input type="radio" name="r_relacion" id="r_re1" value="1"><label for="r_re1">1</label><input type="radio" name="r_relacion" id="r_re2" value="2"><label for="r_re2">2</label><input type="radio" name="r_relacion" id="r_re3" value="3"><label for="r_re3">3</label><input type="radio" name="r_relacion" id="r_re4" value="4"><label for="r_re4">4</label><input type="radio" name="r_relacion" id="r_re5" value="5"><label for="r_re5">5</label></div></div>
-    </div>
-  </div>
+  <p class="fam-controls-lbl" id="l_famctrl"></p>
+  <div class="fam-controls" id="famControls"></div>
 
-  <!-- S2 -->
-  <div class="section" data-sec="2">
-    <p class="s-eyebrow" data-i18n="s2_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s2_title"></h2>
-    <p class="s-hint" data-i18n="s2_hint"></p>
-    <div class="family-grid" id="grid-success"></div>
-    <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s2_why_lbl"></span>
-      <textarea class="textarea-field" id="ex_porque" data-i18n-placeholder="s2_why_ph"></textarea>
-    </div>
-  </div>
+  <div id="sections"></div>
 
-  <!-- S3 -->
-  <div class="section" data-sec="3">
-    <p class="s-eyebrow" data-i18n="s3_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s3_title"></h2>
-    <p class="s-hint" data-i18n="s3_hint"></p>
-    <div class="family-grid" id="grid-weak"></div>
-    <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s3_why_lbl"></span>
-      <div class="check-group check-group-2col">
-        <label class="check-row"><input type="checkbox" name="motivo" value="precio"><span class="check-ind"></span><span class="check-label" data-i18n="mot_precio"></span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="diseno"><span class="check-ind"></span><span class="check-label" data-i18n="mot_diseno"></span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="tendencia"><span class="check-ind"></span><span class="check-label" data-i18n="mot_tendencia"></span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="colorido"><span class="check-ind"></span><span class="check-label" data-i18n="mot_color"></span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="tejido"><span class="check-ind"></span><span class="check-label" data-i18n="mot_tejido"></span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="fit"><span class="check-ind"></span><span class="check-label" data-i18n="mot_fit"></span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="competencia"><span class="check-ind"></span><span class="check-label" data-i18n="mot_competencia"></span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="otro"><span class="check-ind"></span><span class="check-label" data-i18n="mot_otro"></span></label>
-      </div>
-    </div>
-    <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s3_com_lbl"></span>
-      <textarea class="textarea-field" id="db_com" data-i18n-placeholder="s3_com_ph"></textarea>
-    </div>
-  </div>
-
-  <!-- S4 -->
-  <div class="section" data-sec="4">
-    <p class="s-eyebrow" data-i18n="s4_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s4_title"></h2>
-    <p class="s-hint" data-i18n="s4_hint"></p>
-    <div class="check-group check-group-2col">
-      <label class="check-row"><input type="checkbox" name="carencia" value="basic_tee"><span class="check-ind"></span><span class="check-label" data-i18n="f_basic_tee"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="graphic_tee"><span class="check-ind"></span><span class="check-label" data-i18n="f_graphic_tee"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="polo"><span class="check-ind"></span><span class="check-label">Polo</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="casual_shirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_casual_shirt"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="dress_shirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_dress_shirt"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="overshirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_overshirt"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="sweatshirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_sweatshirt"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="hoodie"><span class="check-ind"></span><span class="check-label" data-i18n="f_hoodie"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="knitwear"><span class="check-ind"></span><span class="check-label" data-i18n="f_knitwear"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="cardigan"><span class="check-ind"></span><span class="check-label">Cardigan</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="denim"><span class="check-ind"></span><span class="check-label" data-i18n="f_denim"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="chino"><span class="check-ind"></span><span class="check-label" data-i18n="f_chino"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="knit_trs"><span class="check-ind"></span><span class="check-label" data-i18n="f_knit_trs"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="coat"><span class="check-ind"></span><span class="check-label" data-i18n="f_coat"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="jacket"><span class="check-ind"></span><span class="check-label" data-i18n="f_jacket"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="windbreaker"><span class="check-ind"></span><span class="check-label" data-i18n="f_wind"></span></label>
-    </div>
-    <div class="input-wrap">
-      <label class="field-label" data-i18n="s4_otros_lbl"></label>
-      <input type="text" class="input-line" id="car_otros" data-i18n-placeholder="s4_otros_ph">
-    </div>
-  </div>
-
-  <!-- S5 -->
-  <div class="section" data-sec="5">
-    <p class="s-eyebrow" data-i18n="s5_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s5_title"></h2>
-    <p class="s-hint" data-i18n="s5_hint"></p>
-    <div class="textarea-wrap" style="margin-top:0;">
-      <span class="field-label" data-i18n="s5_exceso_lbl"></span>
-      <textarea class="textarea-field" id="sur_exceso" data-i18n-placeholder="s5_exceso_ph"></textarea>
-    </div>
-    <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s5_falta_lbl"></span>
-      <textarea class="textarea-field" id="sur_falta" data-i18n-placeholder="s5_falta_ph"></textarea>
-    </div>
-  </div>
-
-  <!-- S6 -->
-  <div class="section" data-sec="6">
-    <p class="s-eyebrow" data-i18n="s6_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s6_title"></h2>
-    <div class="textarea-wrap" style="margin-top:0;">
-      <span class="field-label" data-i18n="s6_caros_lbl"></span>
-      <textarea class="textarea-field" id="pre_caros" data-i18n-placeholder="s6_caros_ph"></textarea>
-    </div>
-    <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s6_comp_lbl"></span>
-      <textarea class="textarea-field" id="pre_comp" data-i18n-placeholder="s6_comp_ph"></textarea>
-    </div>
-    <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s6_perdida_lbl"></span>
-      <div class="yesno-row">
-        <input type="radio" name="pre_perdida" id="yn_si" value="si"><label for="yn_si" data-i18n="yn_yes"></label>
-        <input type="radio" name="pre_perdida" id="yn_no" value="no"><label for="yn_no" data-i18n="yn_no"></label>
-        <input type="radio" name="pre_perdida" id="yn_av" value="algunos"><label for="yn_av" data-i18n="yn_some"></label>
-      </div>
-      <textarea class="textarea-field" id="pre_explica" data-i18n-placeholder="s6_explica_ph"></textarea>
-    </div>
-  </div>
-
-  <!-- S7 -->
-  <div class="section" data-sec="7">
-    <p class="s-eyebrow" data-i18n="s7_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s7_title"></h2>
-    <p class="s-hint" data-i18n="s7_hint"></p>
-    <div class="check-group check-group-2col">
-      <label class="check-row"><input type="checkbox" name="fit" value="tallaje"><span class="check-ind"></span><span class="check-label" data-i18n="ft_tallaje"></span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="patronaje"><span class="check-ind"></span><span class="check-label" data-i18n="ft_patronaje"></span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="largo"><span class="check-ind"></span><span class="check-label" data-i18n="ft_largo"></span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="calidad"><span class="check-ind"></span><span class="check-label" data-i18n="ft_calidad"></span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="tejidos"><span class="check-ind"></span><span class="check-label" data-i18n="ft_tejidos"></span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="acabados"><span class="check-ind"></span><span class="check-label" data-i18n="ft_acabados"></span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="packaging"><span class="check-ind"></span><span class="check-label">Packaging</span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="etiquetado"><span class="check-ind"></span><span class="check-label" data-i18n="ft_etiquetado"></span></label>
-    </div>
-    <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s7_com_lbl"></span>
-      <textarea class="textarea-field" id="fit_com" data-i18n-placeholder="s7_com_ph"></textarea>
-    </div>
-  </div>
-
-  <!-- S8 -->
-  <div class="section" data-sec="8">
-    <p class="s-eyebrow" data-i18n="s8_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s8_title"></h2>
-    <p class="s-hint" data-i18n="s8_hint"></p>
-    <div class="num-list">
-      <label class="num-row"><span class="num-badge">01</span><input type="text" id="cp1" data-i18n-placeholder="cp_ph"></label>
-      <label class="num-row"><span class="num-badge">02</span><input type="text" id="cp2" data-i18n-placeholder="cp_ph"></label>
-      <label class="num-row"><span class="num-badge">03</span><input type="text" id="cp3" data-i18n-placeholder="cp_ph"></label>
-      <label class="num-row"><span class="num-badge">04</span><input type="text" id="cp4" data-i18n-placeholder="cp_ph"></label>
-      <label class="num-row"><span class="num-badge">05</span><input type="text" id="cp5" data-i18n-placeholder="cp_ph"></label>
-    </div>
-    <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s8_better_lbl"></span>
-      <textarea class="textarea-field" id="cp_mejor" data-i18n-placeholder="s8_better_ph"></textarea>
-    </div>
-    <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s8_losan_lbl"></span>
-      <textarea class="textarea-field" id="cp_losan" data-i18n-placeholder="s8_losan_ph"></textarea>
-    </div>
-  </div>
-
-  <!-- S9 -->
-  <div class="section" data-sec="9">
-    <p class="s-eyebrow" data-i18n="s9_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s9_title"></h2>
-    <p class="s-hint" data-i18n="s9_hint"></p>
-    <div class="num-list">
-      <label class="num-row"><span class="num-badge">01</span><input type="text" id="td1" data-i18n-placeholder="td_ph"></label>
-      <label class="num-row"><span class="num-badge">02</span><input type="text" id="td2" data-i18n-placeholder="td_ph"></label>
-      <label class="num-row"><span class="num-badge">03</span><input type="text" id="td3" data-i18n-placeholder="td_ph"></label>
-      <label class="num-row"><span class="num-badge">04</span><input type="text" id="td4" data-i18n-placeholder="td_ph"></label>
-      <label class="num-row"><span class="num-badge">05</span><input type="text" id="td5" data-i18n-placeholder="td_ph"></label>
-    </div>
-  </div>
-
-  <!-- S10 -->
-  <div class="section" data-sec="10">
-    <p class="s-eyebrow"><span data-i18n="s10_eyebrow"></span> <span class="key-badge" data-i18n="key_badge"></span></p>
-    <h2 class="s-title" data-i18n-html="s10_title"></h2>
-    <p class="s-hint" data-i18n="s10_hint"></p>
-    <div class="textarea-wrap" style="margin-top:0;">
-      <span class="field-label" data-i18n="s10_falta_lbl"></span>
-      <textarea class="textarea-field" id="ref_falta" data-i18n-placeholder="s10_falta_ph"></textarea>
-    </div>
-    <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s10_oport_lbl"></span>
-      <textarea class="textarea-field" id="ref_oport" data-i18n-placeholder="s10_oport_ph"></textarea>
-    </div>
-  </div>
-
-  <!-- CIERRE -->
+  <!-- cross-cutting -->
   <div class="section">
-    <p class="s-eyebrow" data-i18n="sc_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="sc_title"></h2>
-    <div class="num-list">
-      <label class="num-row"><span class="num-badge">01</span><input type="text" id="rc1" data-i18n-placeholder="rc_ph"></label>
-      <label class="num-row"><span class="num-badge">02</span><input type="text" id="rc2" data-i18n-placeholder="rc_ph"></label>
-      <label class="num-row"><span class="num-badge">03</span><input type="text" id="rc3" data-i18n-placeholder="rc_ph"></label>
-      <label class="num-row"><span class="num-badge">04</span><input type="text" id="rc4" data-i18n-placeholder="rc_ph"></label>
-      <label class="num-row"><span class="num-badge">05</span><input type="text" id="rc5" data-i18n-placeholder="rc_ph"></label>
-    </div>
-    <div class="textarea-wrap">
-      <span class="field-label" data-i18n="sc_com_lbl"></span>
-      <textarea class="textarea-field" id="comentarios" data-i18n-placeholder="sc_com_ph"></textarea>
-    </div>
+    <p class="s-eyebrow" id="x_eyebrow"></p>
+    <h2 class="s-title" id="x_title"></h2>
+    <p class="s-hint" id="x_hint"></p>
+    <div><span class="field-label" id="l_comp"></span><div class="num-list">
+      <div class="num-row"><span class="num-badge">1</span><input type="text" id="cp1"></div>
+      <div class="num-row"><span class="num-badge">2</span><input type="text" id="cp2"></div>
+      <div class="num-row"><span class="num-badge">3</span><input type="text" id="cp3"></div>
+    </div></div>
+    <div><span class="field-label" id="l_trend"></span><div class="num-list">
+      <div class="num-row"><span class="num-badge">1</span><input type="text" id="td1"></div>
+      <div class="num-row"><span class="num-badge">2</span><input type="text" id="td2"></div>
+      <div class="num-row"><span class="num-badge">3</span><input type="text" id="td3"></div>
+    </div></div>
+    <div><span class="field-label" id="l_rec"></span><div class="num-list">
+      <div class="num-row"><span class="num-badge">1</span><input type="text" id="rc1"></div>
+      <div class="num-row"><span class="num-badge">2</span><input type="text" id="rc2"></div>
+      <div class="num-row"><span class="num-badge">3</span><input type="text" id="rc3"></div>
+    </div></div>
+    <div><span class="field-label" id="l_final"></span><textarea class="textarea-field" id="comentarios"></textarea></div>
   </div>
-
 </main>
 
 <div class="actions-bar">
-  <button class="btn btn-primary" id="submitBtn" onclick="submitForm()" data-i18n="btn_submit"></button>
-  <button class="btn" onclick="window.print()" data-i18n="btn_print"></button>
-  <button class="btn-ghost btn" onclick="limpiar()" data-i18n="btn_clear"></button>
+  <button class="btn btn-primary" id="submitBtn" onclick="submitForm()"></button>
+  <button class="btn" id="printBtn" onclick="window.print()"></button>
+  <div class="spacer"></div>
+  <button class="btn-ghost btn" id="clearBtn" onclick="limpiar()"></button>
 </div>
 
-<!-- SUBMIT SUCCESS OVERLAY -->
 <div class="submit-overlay" id="submitOverlay">
   <div class="submit-icon">✓</div>
-  <h2 class="submit-title" data-i18n="submit_ok_title"></h2>
-  <p class="submit-desc" data-i18n="submit_ok_desc"></p>
-  <button class="btn" onclick="closeSubmitOverlay()" data-i18n="submit_ok_btn"></button>
+  <h2 class="submit-title" id="ok_title"></h2>
+  <p class="submit-desc" id="ok_desc"></p>
+  <button class="btn btn-primary" id="ok_btn" onclick="document.getElementById('submitOverlay').classList.remove('active')"></button>
 </div>
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
-    <div class="modal-head">
-      <h2 id="modalTitle" data-i18n="modal_title"></h2>
-      <button class="modal-close" onclick="cerrarModal()">×</button>
-    </div>
-    <div class="modal-body">
-      <p class="modal-note" id="modalNote" data-i18n="modal_note"></p>
-      <pre class="modal-pre" id="textoExportado"></pre>
-    </div>
-    <div class="modal-foot">
-      <button class="btn btn-primary" onclick="copiar()" data-i18n="btn_copy"></button>
-      <button class="btn-ghost btn" onclick="cerrarModal()" data-i18n="btn_close"></button>
-    </div>
+    <div class="modal-head"><h2 id="modalTitle"></h2><button class="modal-close" onclick="cerrarModal()">×</button></div>
+    <div class="modal-body"><pre class="modal-pre" id="textoExportado"></pre></div>
+    <div class="modal-foot"><button class="btn btn-primary" onclick="copiar()">Copiar</button><button class="btn-ghost btn" onclick="cerrarModal()">Cerrar</button></div>
   </div>
 </div>
 
-<!-- ADMIN VIEW -->
 <div id="admin-view">
-  <header class="admin-header">
-    <div style="display:flex;align-items:center;">
-      <span class="logo-wordmark">LOSAN</span>
-      <span class="admin-badge" data-i18n="admin_badge"></span>
-    </div>
-    <div style="display:flex;align-items:center;gap:1rem;">
+  <div class="admin-header">
+    <span class="logo-wordmark">LOSAN<span class="admin-badge">Admin</span></span>
+    <div class="header-right">
       <div class="lang-switcher">
         <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
         <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
         <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
       </div>
-      <button class="btn" onclick="goToForm()" data-i18n="admin_back"></button>
+      <button class="btn" onclick="goToForm()">← Encuesta</button>
     </div>
-  </header>
+  </div>
   <div class="admin-body">
     <div class="admin-toolbar">
-      <div>
-        <h2 class="admin-title">Resultados — Feedback AW26</h2>
-        <p class="admin-meta" id="adminMeta">Cargando…</p>
+      <div><h2 class="admin-title">Resultados — AW26 por familia</h2><p class="admin-meta" id="adminMeta">Cargando…</p></div>
+      <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+        <button class="export-btn" onclick="exportCSV()">CSV por familia</button>
+        <button class="export-btn alt" onclick="exportRangesCSV()">CSV rangos</button>
       </div>
-      <button class="export-btn" onclick="exportCSV()">Exportar CSV</button>
     </div>
     <div id="summaryWrap"></div>
-    <div id="tableWrap"><div class="no-data">Cargando respuestas…</div></div>
-    <p class="admin-note">Las respuestas se guardan automáticamente al enviar el formulario. Esta vista se actualiza en tiempo real. Accede añadiendo <strong>?admin=losan27</strong> a la URL.</p>
+    <p class="admin-block-title">Medias por familia</p>
+    <div class="admin-scroll"><div id="famAvgWrap"><div class="no-data">Cargando…</div></div></div>
+    <p class="admin-block-title">Rendimiento de rangos por familia (media)</p>
+    <div class="admin-scroll"><div id="rangeHeatWrap"><div class="no-data">Cargando…</div></div></div>
+    <p class="admin-block-title">Respuestas</p>
+    <div class="admin-scroll"><div id="tableWrap"><div class="no-data">Cargando respuestas…</div></div></div>
+    <p class="admin-note">Acceso al panel: <strong>?admin=losan27</strong>. Los CSV se exportan en formato largo (una fila por agente y familia) para tablas dinámicas. Datos guardados en tiempo real.</p>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════
-// PRODUCT FAMILIES
-// ═══════════════════════════════════════════════
-const FAMILIES = [
-  { id:'f_basic_tee',    es:'Camiseta básica',     en:'Basic T-shirt',       it:'T-shirt basic' },
-  { id:'f_graphic_tee',  es:'Camiseta estampada',   en:'Graphic T-shirt',     it:'T-shirt stampata' },
-  { id:'f_polo',         es:'Polo',                 en:'Polo',                it:'Polo' },
-  { id:'f_casual_shirt', es:'Camisa casual',        en:'Casual shirt',        it:'Camicia casual' },
-  { id:'f_dress_shirt',  es:'Camisa vestir',        en:'Dress shirt',         it:'Camicia formale' },
-  { id:'f_overshirt',    es:'Sobrecamisa',          en:'Overshirt',           it:'Overshirt' },
-  { id:'f_sweatshirt',   es:'Sudadera',             en:'Sweatshirt',          it:'Felpa' },
-  { id:'f_hoodie',       es:'Sudadera capucha',     en:'Hoodie',              it:'Felpa con cappuccio' },
-  { id:'f_knitwear',     es:'Jersey / Punto',       en:'Knitwear',            it:'Maglieria' },
-  { id:'f_cardigan',     es:'Cardigan',             en:'Cardigan',            it:'Cardigan' },
-  { id:'f_denim',        es:'Denim / Vaquero',      en:'Denim',               it:'Denim / Jeans' },
-  { id:'f_chino',        es:'Pantalón chino',       en:'Chino trousers',      it:'Pantaloni chino' },
-  { id:'f_knit_trs',     es:'Pantalón punto',       en:'Knit trousers',       it:'Pantaloni in maglia' },
-  { id:'f_coat',         es:'Abrigo',               en:'Coat',                it:'Cappotto' },
-  { id:'f_jacket',       es:'Chaqueta',             en:'Jacket',              it:'Giacca' },
-  { id:'f_wind',         es:'Cortavientos',         en:'Windbreaker',         it:'Giacca a vento' },
+// ═══════════════ CONFIG ═══════════════
+const SEGMENTS = [
+  {id:'baby_boy', band:'baby', es:'Bebé Niño', en:'Baby Boy', it:'Baby Bimbo'},
+  {id:'baby_girl',band:'baby', es:'Bebé Niña', en:'Baby Girl',it:'Baby Bimba'},
+  {id:'kids_boy', band:'kids', es:'Niño',      en:'Kids Boy', it:'Bambino'},
+  {id:'kids_girl',band:'kids', es:'Niña',      en:'Kids Girl',it:'Bambina'},
+  {id:'teen_boy', band:'teen', es:'Teen Chico',en:'Teen Boy', it:'Teen Ragazzo'},
+  {id:'teen_girl',band:'teen', es:'Teen Chica',en:'Teen Girl',it:'Teen Ragazza'},
+  {id:'man',      band:'adult',es:'Hombre',    en:'Man',      it:'Uomo'},
+  {id:'woman',    band:'adult',es:'Mujer',     en:'Woman',    it:'Donna'}
 ];
-
-// ═══════════════════════════════════════════════
-// i18n
-// ═══════════════════════════════════════════════
-const LANGS = {
-  es:{
-    intro_eyebrow:'AW26 — Informe de feedback comercial',
-    intro_title:'Tu visión de mercado<br><em>hace mejores colecciones.</em>',
-    intro_desc:'Rellena este formulario al finalizar la campaña de ventas. Tus respuestas, junto con las del resto de agentes, nos permitirán tomar decisiones de producto y colección mucho más precisas. 15–20 minutos.',
-    lbl_season:'Temporada',lbl_agent:'Agente',lbl_country:'País / Mercado',lbl_date:'Fecha',
-    ph_agent:'Tu nombre completo',ph_country:'País o territorio',
-    s1_eyebrow:'Sección 1 de 10',s1_title:'Valoración general<br><em>de la colección.</em>',s1_hint:'Puntúa cada área de 1 (muy bajo) a 5 (excelente).',
-    r_atractivo:'Atractivo general',r_moda:'Nivel de moda',r_comercial:'Potencial comercial',r_precio:'Posicionamiento de precio',r_equilibrio:'Equilibrio de la colección',r_color:'Paleta de color',r_relacion:'Relación moda / básico',
-    s2_eyebrow:'Sección 2 de 10',s2_title:'Rangos de producto<br><em>más exitosos.</em>',s2_hint:'Selecciona los rangos que mejor acogida han tenido. El número indica el orden de selección.',s2_why_lbl:'¿Por qué han funcionado especialmente bien?',s2_why_ph:'Explica los factores de éxito...',
-    s3_eyebrow:'Sección 3 de 10',s3_title:'Rangos de producto<br><em>más débiles.</em>',s3_hint:'Selecciona los rangos que han generado menor interés. El número indica el orden de selección.',s3_why_lbl:'¿Cuáles han sido los motivos?',s3_com_lbl:'Comentarios adicionales',s3_com_ph:'Detalla si lo consideras necesario...',
-    mot_precio:'Precio',mot_diseno:'Diseño',mot_tendencia:'Falta de tendencia',mot_color:'Colorido',mot_tejido:'Tejido',mot_fit:'Fit / Patronaje',mot_competencia:'Competencia',mot_otro:'Otro',
-    s4_eyebrow:'Sección 4 de 10',s4_title:'Carencias<br><em>de producto.</em>',s4_hint:'¿Qué productos han solicitado los clientes que no estaban suficientemente representados?',s4_otros_lbl:'Otros productos no listados',s4_otros_ph:'Especifica...',
-    s5_eyebrow:'Sección 5 de 10',s5_title:'Análisis<br><em>del surtido.</em>',s5_hint:'¿Qué categorías considera que estaban mal representadas en amplitud o profundidad?',s5_exceso_lbl:'Excesivamente representadas',s5_exceso_ph:'Categorías con demasiado surtido...',s5_falta_lbl:'Insuficientemente representadas',s5_falta_ph:'Categorías con poco surtido...',
-    s6_eyebrow:'Sección 6 de 10',s6_title:'Feedback<br><em>sobre precios.</em>',s6_caros_lbl:'¿Qué rangos se perciben como demasiado caros?',s6_caros_ph:'Indica los rangos...',s6_comp_lbl:'¿Qué rangos se perciben como especialmente competitivos?',s6_comp_ph:'Indica los rangos...',s6_perdida_lbl:'¿Ha perdido ventas por posicionamiento de precio?',s6_explica_ph:'Si aplica, detalla los casos...',yn_yes:'Sí',yn_no:'No',yn_some:'En algunos casos',
-    s7_eyebrow:'Sección 7 de 10',s7_title:'Fit, calidad<br><em>y tejidos.</em>',s7_hint:'¿Ha recibido comentarios de clientes sobre alguno de estos aspectos?',ft_tallaje:'Tallaje',ft_patronaje:'Patronaje',ft_largo:'Largo de prendas',ft_calidad:'Calidad percibida',ft_tejidos:'Tejidos',ft_acabados:'Acabados',ft_etiquetado:'Etiquetado',s7_com_lbl:'Detalle los comentarios más repetidos',s7_com_ph:'¿Qué es lo que más han mencionado?',
-    s8_eyebrow:'Sección 8 de 10',s8_title:'Análisis<br><em>de la competencia.</em>',s8_hint:'Marcas más frecuentes en las comparaciones de los clientes.',cp_ph:'Marca competidora',s8_better_lbl:'¿Qué hacen mejor que LOSAN?',s8_better_ph:'Puntos fuertes de la competencia...',s8_losan_lbl:'¿Qué hacemos mejor que ellos?',s8_losan_ph:'Ventajas diferenciales de LOSAN...',
-    s9_eyebrow:'Sección 9 de 10',s9_title:'Tendencias y<br><em>oportunidades de mercado.</em>',s9_hint:'Las 5 tendencias que detectas en tu mercado que deberían incorporarse en futuras colecciones.',td_ph:'Tendencia de mercado',
-    s10_eyebrow:'Sección 10 de 10',s10_title:'Referencias<br><em>echadas en falta.</em>',s10_hint:'Pensando en toda la campaña de ventas.',s10_falta_lbl:'¿Qué referencias o productos has echado de menos? Indica ejemplos concretos.',s10_falta_ph:'Sé específico: tejidos, siluetas, precios, categorías...',s10_oport_lbl:'¿Qué oportunidades crees que hemos perdido?',s10_oport_ph:'Estima el impacto si puedes...',key_badge:'Pregunta clave',
-    sc_eyebrow:'Para cerrar',sc_title:'Top 5 recomendaciones<br><em>para la próxima temporada.</em>',rc_ph:'Tu recomendación',sc_com_lbl:'Comentarios finales',sc_com_ph:'Cualquier observación adicional que pueda ayudarnos a mejorar...',
-    btn_submit:'Enviar respuesta →',btn_print:'Imprimir',btn_clear:'Limpiar',
-    submit_ok_title:'¡Respuesta enviada!',submit_ok_desc:'Hemos recibido tus respuestas. Gracias por tu feedback.',submit_ok_btn:'Cerrar',
-    submit_warn:'Por favor, introduce tu nombre antes de enviar.',
-    admin_badge:'Admin',admin_back:'← Formulario',admin_section_lbl:'Exportar respuestas del formulario actual',admin_download:'Descargar .txt',admin_note:'Esta vista muestra los datos del formulario cargado en este navegador. Accede añadiendo #admin a la URL.',
-    modal_title:'Respuestas — AW26',modal_note:'Copia el texto y pégalo en un email, o usa el botón de envío directo.',btn_copy:'Copiar texto',btn_email:'Abrir en email',btn_close:'Cerrar',
-    // Export labels
-    xl_title:'FEEDBACK FIN DE TEMPORADA AW26',xl_season:'Temporada',xl_agent:'Agente',xl_country:'País',xl_date:'Fecha',
-    xl_s1:'1. VALORACIÓN GENERAL (1–5)',xl_atractivo:'Atractivo general',xl_moda:'Nivel de moda',xl_comercial:'Potencial comercial',xl_precio:'Posic. precio',xl_equilibrio:'Equilibrio',xl_color:'Paleta color',xl_relacion:'Moda/básico',
-    xl_s2:'2. RANGOS MÁS EXITOSOS',xl_why:'¿Por qué?',xl_s3:'3. RANGOS MÁS DÉBILES',xl_reasons:'Motivos',xl_comments:'Comentarios',
-    xl_s4:'4. CARENCIAS DE PRODUCTO',xl_other:'Otros',xl_s5:'5. ANÁLISIS DEL SURTIDO',xl_excess:'Exceso',xl_lack:'Falta',
-    xl_s6:'6. FEEDBACK SOBRE PRECIOS',xl_expensive:'Demasiado caros',xl_competitive:'Competitivos',xl_lost:'¿Ventas perdidas?',xl_detail:'Explicación',
-    xl_s7:'7. FIT, CALIDAD Y TEJIDOS',xl_aspects:'Aspectos comentados',
-    xl_s8:'8. ANÁLISIS DE LA COMPETENCIA',xl_better:'Qué hacen mejor',xl_advantages:'Ventajas LOSAN',
-    xl_s9:'9. TENDENCIAS DE MERCADO',xl_s10:'10. REFERENCIAS ECHADAS EN FALTA ★',xl_missing:'Referencias',xl_opp:'Oportunidades perdidas',
-    xl_recs:'TOP 5 RECOMENDACIONES',xl_final:'COMENTARIOS FINALES',
-    // Family names
-    f_basic_tee:'Camiseta básica',f_graphic_tee:'Camiseta estampada',f_polo:'Polo',f_casual_shirt:'Camisa casual',f_dress_shirt:'Camisa vestir',f_overshirt:'Sobrecamisa',f_sweatshirt:'Sudadera',f_hoodie:'Sudadera capucha',f_knitwear:'Jersey / Punto',f_cardigan:'Cardigan',f_denim:'Denim / Vaquero',f_chino:'Pantalón chino',f_knit_trs:'Pantalón punto',f_coat:'Abrigo',f_jacket:'Chaqueta',f_wind:'Cortavientos',
-  },
-  en:{
-    intro_eyebrow:'AW26 — End of Season Feedback',
-    intro_title:'Your market insight<br><em>makes better collections.</em>',
-    intro_desc:'Fill in this form at the end of the sales campaign. Your responses, together with those of the other agents, will allow us to make much more precise product and collection decisions. 15–20 minutes.',
-    lbl_season:'Season',lbl_agent:'Agent',lbl_country:'Country / Market',lbl_date:'Date',
-    ph_agent:'Your full name',ph_country:'Country or territory',
-    s1_eyebrow:'Section 1 of 10',s1_title:'Overall collection<br><em>rating.</em>',s1_hint:'Rate each area from 1 (very low) to 5 (excellent).',
-    r_atractivo:'Overall appeal',r_moda:'Fashion level',r_comercial:'Commercial potential',r_precio:'Price positioning',r_equilibrio:'Collection balance',r_color:'Colour palette',r_relacion:'Fashion / basics ratio',
-    s2_eyebrow:'Section 2 of 10',s2_title:'Most successful<br><em>product ranges.</em>',s2_hint:'Select the ranges that were best received. The number indicates the order of selection.',s2_why_lbl:'Why did they work especially well?',s2_why_ph:'Explain the success factors...',
-    s3_eyebrow:'Section 3 of 10',s3_title:'Weakest<br><em>product ranges.</em>',s3_hint:'Select the ranges that generated least interest. The number indicates the order of selection.',s3_why_lbl:'What were the reasons?',s3_com_lbl:'Additional comments',s3_com_ph:'Give further detail if needed...',
-    mot_precio:'Price',mot_diseno:'Design',mot_tendencia:'Lack of trend',mot_color:'Colour range',mot_tejido:'Fabric',mot_fit:'Fit / Pattern',mot_competencia:'Competition',mot_otro:'Other',
-    s4_eyebrow:'Section 4 of 10',s4_title:'Product<br><em>gaps.</em>',s4_hint:'Which products did customers request that were not sufficiently represented?',s4_otros_lbl:'Other products not listed',s4_otros_ph:'Please specify...',
-    s5_eyebrow:'Section 5 of 10',s5_title:'Assortment<br><em>analysis.</em>',s5_hint:'Which categories were poorly represented in breadth or depth?',s5_exceso_lbl:'Over-represented',s5_exceso_ph:'Categories with too much range...',s5_falta_lbl:'Under-represented',s5_falta_ph:'Categories with too little range...',
-    s6_eyebrow:'Section 6 of 10',s6_title:'Pricing<br><em>feedback.</em>',s6_caros_lbl:'Which ranges are perceived as too expensive?',s6_caros_ph:'Indicate the ranges...',s6_comp_lbl:'Which ranges are perceived as especially price-competitive?',s6_comp_ph:'Indicate the ranges...',s6_perdida_lbl:'Have you lost sales due to price positioning?',s6_explica_ph:'If applicable, describe the cases...',yn_yes:'Yes',yn_no:'No',yn_some:'In some cases',
-    s7_eyebrow:'Section 7 of 10',s7_title:'Fit, quality<br><em>and fabrics.</em>',s7_hint:'Have you received customer feedback on any of these aspects?',ft_tallaje:'Sizing',ft_patronaje:'Pattern / Cut',ft_largo:'Garment length',ft_calidad:'Perceived quality',ft_tejidos:'Fabrics',ft_acabados:'Finishes',ft_etiquetado:'Labelling',s7_com_lbl:'Detail the most repeated comments',s7_com_ph:'What did customers mention most?',
-    s8_eyebrow:'Section 8 of 10',s8_title:'Competitor<br><em>analysis.</em>',s8_hint:'Brands most frequently mentioned in customer comparisons.',cp_ph:'Competitor brand',s8_better_lbl:'What do they do better than LOSAN?',s8_better_ph:"Competitors' strengths...",s8_losan_lbl:'What do we do better than them?',s8_losan_ph:"LOSAN's advantages...",
-    s9_eyebrow:'Section 9 of 10',s9_title:'Market trends and<br><em>opportunities.</em>',s9_hint:'The 5 trends in your market that should be incorporated in future collections.',td_ph:'Market trend',
-    s10_eyebrow:'Section 10 of 10',s10_title:'Missing<br><em>references.</em>',s10_hint:'Thinking about the entire sales campaign.',s10_falta_lbl:'What references or products did you miss? Give specific examples.',s10_falta_ph:'Be specific: fabrics, silhouettes, prices, categories...',s10_oport_lbl:'What sales opportunities do you think we lost?',s10_oport_ph:'Estimate the impact if you can...',key_badge:'Key question',
-    sc_eyebrow:'To close',sc_title:'Top 5 recommendations<br><em>for next season.</em>',rc_ph:'Your recommendation',sc_com_lbl:'Final comments',sc_com_ph:'Any additional observations that could help us improve...',
-    btn_submit:'Send response →',btn_print:'Print',btn_clear:'Clear',
-    submit_ok_title:'Response sent!',submit_ok_desc:'We have received your responses. Thank you for your feedback.',submit_ok_btn:'Close',
-    submit_warn:'Please enter your name before sending.',
-    admin_badge:'Admin',admin_back:'← Form',admin_section_lbl:'Export current form responses',admin_download:'Download .txt',admin_note:'This view shows data from the form currently loaded in this browser. Access by adding #admin to the URL.',
-    modal_title:'Responses — AW26',modal_note:'Copy the text and paste it into an email, or use the direct send button.',btn_copy:'Copy text',btn_email:'Open in email',btn_close:'Close',
-    xl_title:'END OF SEASON FEEDBACK AW26',xl_season:'Season',xl_agent:'Agent',xl_country:'Country',xl_date:'Date',
-    xl_s1:'1. OVERALL RATING (1–5)',xl_atractivo:'Overall appeal',xl_moda:'Fashion level',xl_comercial:'Commercial potential',xl_precio:'Price positioning',xl_equilibrio:'Balance',xl_color:'Colour palette',xl_relacion:'Fashion/basics',
-    xl_s2:'2. MOST SUCCESSFUL RANGES',xl_why:'Why?',xl_s3:'3. WEAKEST RANGES',xl_reasons:'Reasons',xl_comments:'Comments',
-    xl_s4:'4. PRODUCT GAPS',xl_other:'Other',xl_s5:'5. ASSORTMENT ANALYSIS',xl_excess:'Over-represented',xl_lack:'Under-represented',
-    xl_s6:'6. PRICING FEEDBACK',xl_expensive:'Too expensive',xl_competitive:'Competitive',xl_lost:'Lost sales?',xl_detail:'Detail',
-    xl_s7:'7. FIT, QUALITY & FABRICS',xl_aspects:'Aspects mentioned',
-    xl_s8:'8. COMPETITOR ANALYSIS',xl_better:'Better than LOSAN',xl_advantages:'LOSAN advantages',
-    xl_s9:'9. MARKET TRENDS',xl_s10:'10. MISSING REFERENCES ★',xl_missing:'References',xl_opp:'Lost opportunities',
-    xl_recs:'TOP 5 RECOMMENDATIONS',xl_final:'FINAL COMMENTS',
-    f_basic_tee:'Basic T-shirt',f_graphic_tee:'Graphic T-shirt',f_polo:'Polo',f_casual_shirt:'Casual shirt',f_dress_shirt:'Dress shirt',f_overshirt:'Overshirt',f_sweatshirt:'Sweatshirt',f_hoodie:'Hoodie',f_knitwear:'Knitwear',f_cardigan:'Cardigan',f_denim:'Denim',f_chino:'Chino trousers',f_knit_trs:'Knit trousers',f_coat:'Coat',f_jacket:'Jacket',f_wind:'Windbreaker',
-  },
-  it:{
-    intro_eyebrow:'AW26 — Report di feedback commerciale',
-    intro_title:'La tua visione di mercato<br><em>crea collezioni migliori.</em>',
-    intro_desc:'Compila questo modulo al termine della campagna vendite. Le tue risposte, insieme a quelle degli altri agenti, ci permetteranno di prendere decisioni di prodotto e collezione molto più precise. 15–20 minuti.',
-    lbl_season:'Stagione',lbl_agent:'Agente',lbl_country:'Paese / Mercato',lbl_date:'Data',
-    ph_agent:'Il tuo nome completo',ph_country:'Paese o territorio',
-    s1_eyebrow:'Sezione 1 di 10',s1_title:'Valutazione generale<br><em>della collezione.</em>',s1_hint:'Valuta ogni area da 1 (molto basso) a 5 (eccellente).',
-    r_atractivo:'Attrattività generale della collezione',r_moda:'Livello moda',r_comercial:'Potenziale commerciale',r_precio:'Posizionamento prezzo',r_equilibrio:'Equilibrio della collezione',r_color:'Palette colori',r_relacion:'Rapporto moda / basic',
-    s2_eyebrow:'Sezione 2 di 10',s2_title:'Range di prodotto<br><em>più riusciti.</em>',s2_hint:"Seleziona i range che hanno avuto maggiore accoglienza. Il numero indica l'ordine di selezione.",s2_why_lbl:'Perché hanno funzionato particolarmente bene?',s2_why_ph:'Spiega i fattori di successo...',
-    s3_eyebrow:'Sezione 3 di 10',s3_title:'Range di prodotto<br><em>più deboli.</em>',s3_hint:"Seleziona i range che hanno generato meno interesse. Il numero indica l'ordine di selezione.",s3_why_lbl:'Quali sono stati i motivi?',s3_com_lbl:'Commenti aggiuntivi',s3_com_ph:'Aggiungi dettagli se necessario...',
-    mot_precio:'Prezzo',mot_diseno:'Design',mot_tendencia:'Mancanza di tendenza',mot_color:'Palette colori',mot_tejido:'Tessuto',mot_fit:'Fit / Vestibilità',mot_competencia:'Concorrenza',mot_otro:'Altro',
-    s4_eyebrow:'Sezione 4 di 10',s4_title:'Lacune<br><em>di prodotto.</em>',s4_hint:'Quali prodotti hanno richiesto i clienti che non erano sufficientemente rappresentati nella collezione?',s4_otros_lbl:'Altri prodotti non elencati',s4_otros_ph:'Specifica...',
-    s5_eyebrow:'Sezione 5 di 10',s5_title:"Analisi<br><em>dell'assortimento.</em>",s5_hint:'Quali categorie ritieni fossero mal rappresentate in ampiezza o profondità?',s5_exceso_lbl:'Eccessivamente rappresentate',s5_exceso_ph:'Categorie con troppo assortimento...',s5_falta_lbl:'Insufficientemente rappresentate',s5_falta_ph:'Categorie con poco assortimento...',
-    s6_eyebrow:'Sezione 6 di 10',s6_title:'Feedback<br><em>sui prezzi.</em>',s6_caros_lbl:'Quali range sono percepiti come troppo cari?',s6_caros_ph:'Indica i range...',s6_comp_lbl:'Quali range sono percepiti come particolarmente competitivi nel prezzo?',s6_comp_ph:'Indica i range...',s6_perdida_lbl:'Ha perso vendite a causa del posizionamento di prezzo?',s6_explica_ph:'Se applicabile, descrivi i casi...',yn_yes:'Sì',yn_no:'No',yn_some:'In alcuni casi',
-    s7_eyebrow:'Sezione 7 di 10',s7_title:'Fit, qualità<br><em>e tessuti.</em>',s7_hint:'Ha ricevuto commenti dai clienti su alcuni di questi aspetti?',ft_tallaje:'Taglie',ft_patronaje:'Vestibilità / Modello',ft_largo:'Lunghezza capi',ft_calidad:'Qualità percepita',ft_tejidos:'Tessuti',ft_acabados:'Finiture',ft_etiquetado:'Etichettatura',s7_com_lbl:'Dettaglia i commenti più ripetuti',s7_com_ph:'Cosa hanno menzionato di più i clienti?',
-    s8_eyebrow:'Sezione 8 di 10',s8_title:'Analisi<br><em>della concorrenza.</em>',s8_hint:'Marchi citati più frequentemente nei paragoni dei clienti.',cp_ph:'Marchio concorrente',s8_better_lbl:'Cosa fanno meglio di LOSAN?',s8_better_ph:'Punti di forza della concorrenza...',s8_losan_lbl:'Cosa facciamo meglio di loro?',s8_losan_ph:'Vantaggi differenziali di LOSAN...',
-    s9_eyebrow:'Sezione 9 di 10',s9_title:'Tendenze e<br><em>opportunità di mercato.</em>',s9_hint:'Le 5 tendenze che rilevi nel tuo mercato e che dovrebbero essere incorporate nelle prossime collezioni.',td_ph:'Tendenza di mercato',
-    s10_eyebrow:'Sezione 10 di 10',s10_title:'Riferimenti<br><em>mancanti.</em>',s10_hint:"Pensando all'intera campagna vendite.",s10_falta_lbl:'Quali riferimenti o prodotti le sono mancati? Indica esempi concreti.',s10_falta_ph:'Sii specifico: tessuti, silhouette, prezzi, categorie...',s10_oport_lbl:'Quali opportunità di vendita ritieni che abbiamo perso?',s10_oport_ph:"Stima l'impatto se puoi...",key_badge:'Domanda chiave',
-    sc_eyebrow:'Per concludere',sc_title:'Top 5 raccomandazioni<br><em>per la prossima stagione.</em>',rc_ph:'La tua raccomandazione',sc_com_lbl:'Commenti finali',sc_com_ph:'Qualsiasi osservazione aggiuntiva che possa aiutarci a migliorare...',
-    btn_submit:'Invia risposta →',btn_print:'Stampa',btn_clear:'Cancella',
-    submit_ok_title:'Risposta inviata!',submit_ok_desc:'Abbiamo ricevuto le tue risposte. Grazie per il tuo feedback.',submit_ok_btn:'Chiudi',
-    submit_warn:'Inserisci il tuo nome prima di inviare.',
-    admin_badge:'Admin',admin_back:'← Modulo',admin_section_lbl:'Esporta le risposte del modulo attuale',admin_download:'Scarica .txt',admin_note:"Questa vista mostra i dati del modulo caricato in questo browser. Accedi aggiungendo #admin all'URL.",
-    modal_title:'Risposte — AW26',modal_note:"Copia il testo e incollalo in un'email, oppure usa il pulsante di invio diretto.",btn_copy:'Copia testo',btn_email:'Apri in email',btn_close:'Chiudi',
-    xl_title:'FEEDBACK FINE STAGIONE AW26',xl_season:'Stagione',xl_agent:'Agente',xl_country:'Paese',xl_date:'Data',
-    xl_s1:'1. VALUTAZIONE GENERALE (1–5)',xl_atractivo:'Attrattività generale',xl_moda:'Livello moda',xl_comercial:'Potenziale commerciale',xl_precio:'Posiz. prezzo',xl_equilibrio:'Equilibrio',xl_color:'Palette colori',xl_relacion:'Moda/basic',
-    xl_s2:'2. RANGE PIÙ RIUSCITI',xl_why:'Perché?',xl_s3:'3. RANGE PIÙ DEBOLI',xl_reasons:'Motivi',xl_comments:'Commenti',
-    xl_s4:'4. LACUNE DI PRODOTTO',xl_other:'Altro',xl_s5:"5. ANALISI DELL'ASSORTIMENTO",xl_excess:'Eccessivi',xl_lack:'Insufficienti',
-    xl_s6:'6. FEEDBACK SUI PREZZI',xl_expensive:'Troppo cari',xl_competitive:'Competitivi',xl_lost:'Vendite perse?',xl_detail:'Dettaglio',
-    xl_s7:'7. FIT, QUALITÀ E TESSUTI',xl_aspects:'Aspetti menzionati',
-    xl_s8:'8. ANALISI DELLA CONCORRENZA',xl_better:'Fanno meglio di LOSAN',xl_advantages:'Vantaggi LOSAN',
-    xl_s9:'9. TENDENZE DI MERCATO',xl_s10:'10. RIFERIMENTI MANCANTI ★',xl_missing:'Riferimenti',xl_opp:'Opportunità perse',
-    xl_recs:'TOP 5 RACCOMANDAZIONI',xl_final:'COMMENTI FINALI',
-    f_basic_tee:'T-shirt basic',f_graphic_tee:'T-shirt stampata',f_polo:'Polo',f_casual_shirt:'Camicia casual',f_dress_shirt:'Camicia formale',f_overshirt:'Overshirt',f_sweatshirt:'Felpa',f_hoodie:'Felpa con cappuccio',f_knitwear:'Maglieria',f_cardigan:'Cardigan',f_denim:'Denim / Jeans',f_chino:'Pantaloni chino',f_knit_trs:'Pantaloni in maglia',f_coat:'Cappotto',f_jacket:'Giacca',f_wind:'Giacca a vento',
-  }
+const BANDS = ['baby','kids','teen','adult'];
+const RATINGS = [
+  {id:'atractivo', es:'Atractivo general', en:'Overall appeal', it:'Attrattiva'},
+  {id:'moda',      es:'Nivel de moda',     en:'Fashion level',  it:'Livello moda'},
+  {id:'comercial', es:'Potencial de venta',en:'Sell-through',   it:'Vendibilità'},
+  {id:'precio',    es:'Posicion. precio',  en:'Price position', it:'Posizion. prezzo'},
+  {id:'equilibrio',es:'Equilibrio surtido',en:'Range balance',  it:'Equilibrio gamma'},
+  {id:'color',     es:'Paleta de color',   en:'Colour palette', it:'Palette colori'},
+  {id:'relacion',  es:'Moda / básico',     en:'Fashion / basic',it:'Moda / basic'}
+];
+const RANGES = [
+  {id:'basic_tee', es:'Camiseta básica',   en:'Basic tee',      it:'T-shirt basic'},
+  {id:'graphic_tee',es:'Camiseta estampada',en:'Graphic tee',   it:'T-shirt stampata'},
+  {id:'polo',      es:'Polo',              en:'Polo',           it:'Polo'},
+  {id:'casual_shirt',es:'Camisa casual',   en:'Casual shirt',   it:'Camicia casual'},
+  {id:'dress_shirt',es:'Camisa de vestir', en:'Dress shirt',    it:'Camicia elegante'},
+  {id:'overshirt', es:'Sobrecamisa',       en:'Overshirt',      it:'Sovracamicia'},
+  {id:'sweatshirt',es:'Sudadera',          en:'Sweatshirt',     it:'Felpa'},
+  {id:'hoodie',    es:'Sudadera capucha',  en:'Hoodie',         it:'Felpa cappuccio'},
+  {id:'knitwear',  es:'Punto / Jersey',    en:'Knitwear',       it:'Maglieria'},
+  {id:'cardigan',  es:'Cárdigan',          en:'Cardigan',       it:'Cardigan'},
+  {id:'denim',     es:'Denim / Vaquero',   en:'Denim',          it:'Denim'},
+  {id:'chino',     es:'Pantalón chino',    en:'Chino',          it:'Chino'},
+  {id:'knit_trs',  es:'Pantalón punto',    en:'Knit trousers',  it:'Pantaloni maglia'},
+  {id:'coat',      es:'Abrigo',            en:'Coat',           it:'Cappotto'},
+  {id:'jacket',    es:'Chaqueta',          en:'Jacket',         it:'Giacca'},
+  {id:'windbreaker',es:'Cortavientos',     en:'Windbreaker',    it:'Giacca a vento'}
+];
+const FIT = [
+  {id:'tallaje',  es:'Tallaje',   en:'Sizing',     it:'Taglie'},
+  {id:'patronaje',es:'Patronaje', en:'Pattern fit',it:'Vestibilità'},
+  {id:'largo',    es:'Largos',    en:'Lengths',    it:'Lunghezze'},
+  {id:'calidad',  es:'Calidad',   en:'Quality',    it:'Qualità'},
+  {id:'tejidos',  es:'Tejidos',   en:'Fabrics',    it:'Tessuti'},
+  {id:'acabados', es:'Acabados',  en:'Finishings', it:'Finiture'},
+  {id:'packaging',es:'Packaging', en:'Packaging',  it:'Packaging'},
+  {id:'etiquetado',es:'Etiquetado',en:'Labelling', it:'Etichettatura'}
+];
+const PRECIO_OPTS = {
+  es:[['','—'],['no','No'],['algunos','Algunos'],['si','Sí, varias']],
+  en:[['','—'],['no','No'],['algunos','A few'],['si','Yes, several']],
+  it:[['','—'],['no','No'],['algunos','Alcune'],['si','Sì, diverse']]
 };
 
-// ═══════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════
+const UI = {
+  es:{ header_meta:'AW26 · Por familia', i_eyebrow:'AW26 — Informe de fin de temporada',
+    i_title:'Feedback <em>familia a familia</em>', i_desc:'Valora el cuestionario completo para cada familia que trabajes. Desactiva arriba las que no vendas y sus columnas se bloquean. Puntúa de 1 (flojo) a 5 (excelente).',
+    l_agent:'Agente comercial', l_country:'País / zona', l_date:'Fecha', l_season:'Temporada',
+    l_famctrl:'Marca las familias que NO trabajas — se anula su columna entera:',
+    sec_rat:'01 — Valoración general', sec_rat_h:'Impresión global de cada familia.',
+    sec_rng:'02 — Rangos de producto', sec_rng_h:'Cómo ha funcionado cada tipo de prenda en cada familia.',
+    sec_car:'03 — Carencias', sec_car_h:'Marca las prendas que faltan o se quedan cortas en cada familia.',
+    sec_fit:'04 — Calidad / fit', sec_fit_h:'Marca dónde hay problemas en cada familia.',
+    sec_pre:'05 — Precio', sec_pre_h:'',  pre_lost:'¿Ventas perdidas por precio?',
+    sec_com:'06 — Comentario por familia', sec_com_h:'Una nota libre por familia: surtido, oportunidades, lo que quieras.',
+    com_ph:'Comentario…',
+    x_eyebrow:'07 — Visión de mercado', x_title:'Transversal (no por familia)', x_hint:'Aplica al conjunto, se pregunta una vez.',
+    l_comp:'Principales competidores', l_trend:'Tendencias que funcionan', l_rec:'Recomendaciones próxima colección', l_final:'Comentarios finales',
+    ph_brand:'Marca…', ph_trend:'Tendencia…', ph_rec:'Recomendación…', ph_final:'Lo que quieras añadir…',
+    btn_submit:'Enviar valoración', btn_print:'Imprimir', btn_clear:'Limpiar',
+    warn_name:'Pon tu nombre antes de enviar.', warn_fam:'Activa y valora al menos una familia.',
+    ok_title:'¡Recibido!', ok_desc:'Hemos guardado tu valoración. Gracias por tu tiempo.', ok_btn:'Cerrar',
+    scale:'Escala: 1 flojo · 5 excelente · — sin valorar' },
+  en:{ header_meta:'AW26 · By family', i_eyebrow:'AW26 — End of season report',
+    i_title:'Feedback <em>family by family</em>', i_desc:'Fill the full questionnaire for each family you carry. Disable the ones you don’t — their columns lock. Score 1 (poor) to 5 (excellent).',
+    l_agent:'Sales agent', l_country:'Country / area', l_date:'Date', l_season:'Season',
+    l_famctrl:'Tick the families you do NOT carry — their whole column is voided:',
+    sec_rat:'01 — Overall rating', sec_rat_h:'Overall impression of each family.',
+    sec_rng:'02 — Product ranges', sec_rng_h:'How each garment type performed in each family.',
+    sec_car:'03 — Gaps', sec_car_h:'Tick the garments missing or too thin in each family.',
+    sec_fit:'04 — Quality / fit', sec_fit_h:'Tick where there are issues in each family.',
+    sec_pre:'05 — Price', sec_pre_h:'', pre_lost:'Sales lost to price?',
+    sec_com:'06 — Comment per family', sec_com_h:'A free note per family: assortment, opportunities, anything.',
+    com_ph:'Comment…',
+    x_eyebrow:'07 — Market view', x_title:'Cross-cutting (not per family)', x_hint:'Applies overall, asked once.',
+    l_comp:'Main competitors', l_trend:'Trends that work', l_rec:'Recommendations next collection', l_final:'Final comments',
+    ph_brand:'Brand…', ph_trend:'Trend…', ph_rec:'Recommendation…', ph_final:'Anything to add…',
+    btn_submit:'Send feedback', btn_print:'Print', btn_clear:'Clear',
+    warn_name:'Enter your name before sending.', warn_fam:'Enable and rate at least one family.',
+    ok_title:'Received!', ok_desc:'Your feedback has been saved. Thank you.', ok_btn:'Close',
+    scale:'Scale: 1 poor · 5 excellent · — not rated' },
+  it:{ header_meta:'AW26 · Per famiglia', i_eyebrow:'AW26 — Report di fine stagione',
+    i_title:'Feedback <em>famiglia per famiglia</em>', i_desc:'Compila il questionario completo per ogni famiglia che tratti. Disattiva le altre: le colonne si bloccano. Punteggio da 1 (scarso) a 5 (eccellente).',
+    l_agent:'Agente di vendita', l_country:'Paese / zona', l_date:'Data', l_season:'Stagione',
+    l_famctrl:'Spunta le famiglie che NON tratti — l\u2019intera colonna viene annullata:',
+    sec_rat:'01 — Valutazione generale', sec_rat_h:'Impressione generale di ogni famiglia.',
+    sec_rng:'02 — Gamme di prodotto', sec_rng_h:'Come ha funzionato ogni tipo di capo in ogni famiglia.',
+    sec_car:'03 — Mancanze', sec_car_h:'Segna i capi che mancano o scarseggiano in ogni famiglia.',
+    sec_fit:'04 — Qualità / vestibilità', sec_fit_h:'Segna dove ci sono problemi in ogni famiglia.',
+    sec_pre:'05 — Prezzo', sec_pre_h:'', pre_lost:'Vendite perse per il prezzo?',
+    sec_com:'06 — Commento per famiglia', sec_com_h:'Una nota libera per famiglia: assortimento, opportunità, ecc.',
+    com_ph:'Commento…',
+    x_eyebrow:'07 — Visione di mercato', x_title:'Trasversale (non per famiglia)', x_hint:'Vale nel complesso, chiesto una volta.',
+    l_comp:'Principali concorrenti', l_trend:'Tendenze che funzionano', l_rec:'Consigli prossima collezione', l_final:'Commenti finali',
+    ph_brand:'Marca…', ph_trend:'Tendenza…', ph_rec:'Consiglio…', ph_final:'Cosa vuoi aggiungere…',
+    btn_submit:'Invia valutazione', btn_print:'Stampa', btn_clear:'Pulisci',
+    warn_name:'Inserisci il tuo nome prima di inviare.', warn_fam:'Attiva e valuta almeno una famiglia.',
+    ok_title:'Ricevuto!', ok_desc:'La tua valutazione è stata salvata. Grazie.', ok_btn:'Chiudi',
+    scale:'Scala: 1 scarso · 5 eccellente · — non valutato' }
+};
+const BANDLBL = { es:{baby:'Bebé',kids:'Niños',teen:'Teen',adult:'Adulto'}, en:{baby:'Baby',kids:'Kids',teen:'Teen',adult:'Adult'}, it:{baby:'Baby',kids:'Bambini',teen:'Teen',adult:'Adulto'} };
+
 let currentLang = 'es';
-const ranked = { success:{}, weak:{} };
+const skipped = new Set();
 
-// ═══════════════════════════════════════════════
-// FIREBASE
-// ═══════════════════════════════════════════════
+// ═══════════════ FIREBASE ═══════════════
 const firebaseConfig = {
-  apiKey: "AIzaSyAk_d6JF0NuQtd-9h8GdpK9JEtfM4qn65I",
-  authDomain: "traductorlosan.firebaseapp.com",
-  databaseURL: "https://traductorlosan-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "traductorlosan",
-  storageBucket: "traductorlosan.firebasestorage.app",
-  messagingSenderId: "883937975350",
-  appId: "1:883937975350:web:4905dde97938f1b6ca8c97"
+  apiKey:"AIzaSyAk_d6JF0NuQtd-9h8GdpK9JEtfM4qn65I", authDomain:"traductorlosan.firebaseapp.com",
+  databaseURL:"https://traductorlosan-default-rtdb.europe-west1.firebasedatabase.app", projectId:"traductorlosan",
+  storageBucket:"traductorlosan.firebasestorage.app", messagingSenderId:"883937975350", appId:"1:883937975350:web:4905dde97938f1b6ca8c97"
 };
-const FEEDBACK_PATH = 'surveys/aw26_feedback';
+const FEEDBACK_PATH = 'surveys/aw26_familias';
 let db = null;
-try {
-  firebase.initializeApp(firebaseConfig);
-  db = firebase.database();
-} catch (e) {
-  console.error('Firebase no disponible. Revisa que los <script> de Firebase del <head> cargan bien (no deben dar 404):', e);
+try { firebase.initializeApp(firebaseConfig); db = firebase.database(); }
+catch(e){ console.error('Firebase no disponible (revisa los <script> del <head>, no deben dar 404):', e); }
+let adminRows = [], adminListening = false;
+
+// ═══════════════ HELPERS ═══════════════
+function nm(o){ return o[currentLang]||o.es; }
+function segName(id){ const s=SEGMENTS.find(x=>x.id===id); return s?nm(s):id; }
+function esc(s){ const e=document.createElement('div'); e.textContent=(s==null?'':String(s)); return e.innerHTML; }
+function U(){ return UI[currentLang]||UI.es; }
+
+// ═══════════════ BUILD MATRIX FORM ═══════════════
+function colHeader(){
+  let band='<tr class="band"><th class="rowlab"></th>';
+  BANDS.forEach(b => { const n=SEGMENTS.filter(s=>s.band===b).length; band += `<th colspan="${n}">${BANDLBL[currentLang][b]}</th>`; });
+  band += '</tr><tr class="fam"><th class="rowlab"></th>';
+  SEGMENTS.forEach(s => band += `<th>${esc(nm(s))}</th>`);
+  band += '</tr>';
+  return `<thead>${band}</thead>`;
+}
+function matrixSection(eyebrow, title, hint, rows, type, group){
+  // type: 'rating' | 'check'
+  let tb='';
+  rows.forEach(r => {
+    tb += `<tr><td class="rowlab">${esc(nm(r))}</td>`;
+    SEGMENTS.forEach(s => {
+      const off = skipped.has(s.id)?' off':'';
+      if (type==='rating'){
+        let opts='<option value="">—</option>'; for(let i=1;i<=5;i++) opts+=`<option value="${i}">${i}</option>`;
+        tb += `<td class="mcell${off}" data-fam="${s.id}"><select id="${group}_${r.id}_${s.id}">${opts}</select></td>`;
+      } else {
+        tb += `<td class="mcell${off}" data-fam="${s.id}"><input type="checkbox" id="${group}_${r.id}_${s.id}"></td>`;
+      }
+    });
+    tb += '</tr>';
+  });
+  return `<div class="section"><p class="s-eyebrow">${eyebrow}</p><h2 class="s-title">${title}</h2>${hint?`<p class="s-hint">${hint}</p>`:''}
+    <div class="matrix-wrap"><table class="matrix">${colHeader()}<tbody>${tb}</tbody></table></div>${type==='rating'?`<p class="scale-key">${U().scale}</p>`:''}</div>`;
+}
+function precioSection(){
+  const u=U();
+  let tb=`<tr><td class="rowlab">${u.pre_lost}</td>`;
+  SEGMENTS.forEach(s => {
+    const off=skipped.has(s.id)?' off':'';
+    let opts=''; PRECIO_OPTS[currentLang].forEach(([v,l])=>opts+=`<option value="${v}">${l}</option>`);
+    tb += `<td class="mcell${off}" data-fam="${s.id}"><select id="pre_${s.id}" style="width:auto">${opts}</select></td>`;
+  });
+  tb+='</tr>';
+  return `<div class="section"><p class="s-eyebrow">${u.sec_pre}</p><h2 class="s-title">Precio</h2>
+    <div class="matrix-wrap"><table class="matrix">${colHeader()}<tbody>${tb}</tbody></table></div></div>`;
+}
+function commentSection(){
+  const u=U();
+  let tb=`<tr><td class="rowlab">${u.sec_com.replace(/^\d+\s*—\s*/,'')}</td>`;
+  SEGMENTS.forEach(s => { const off=skipped.has(s.id)?' off':''; tb+=`<td class="mcell${off}" data-fam="${s.id}"><input type="text" class="txt" id="com_${s.id}" placeholder="${u.com_ph}"></td>`; });
+  tb+='</tr>';
+  return `<div class="section"><p class="s-eyebrow">${u.sec_com}</p><h2 class="s-title">${u.sec_com.replace(/^\d+\s*—\s*/,'')}</h2><p class="s-hint">${u.sec_com_h}</p>
+    <div class="matrix-wrap"><table class="matrix">${colHeader()}<tbody>${tb}</tbody></table></div></div>`;
+}
+function renderSections(){
+  const u=U();
+  let html='';
+  html += matrixSection(u.sec_rat, u.sec_rat.replace(/^\d+\s*—\s*/,''), u.sec_rat_h, RATINGS, 'rating', 'rat');
+  html += matrixSection(u.sec_rng, u.sec_rng.replace(/^\d+\s*—\s*/,''), u.sec_rng_h, RANGES, 'rating', 'rng');
+  html += matrixSection(u.sec_car, u.sec_car.replace(/^\d+\s*—\s*/,''), u.sec_car_h, RANGES, 'check', 'car');
+  html += matrixSection(u.sec_fit, u.sec_fit.replace(/^\d+\s*—\s*/,''), u.sec_fit_h, FIT, 'check', 'fit');
+  html += precioSection();
+  html += commentSection();
+  document.getElementById('sections').innerHTML = html;
+}
+function renderFamControls(){
+  let html='';
+  SEGMENTS.forEach(s => html += `<label class="fam-skip-item${skipped.has(s.id)?' on':''}"><input type="checkbox" data-fam="${s.id}" ${skipped.has(s.id)?'checked':''} onchange="setFam('${s.id}',this.checked)"><span>${esc(nm(s))}</span></label>`);
+  document.getElementById('famControls').innerHTML = html;
+}
+function setFam(id, checked){
+  if (checked) skipped.add(id); else skipped.delete(id);
+  const cb=document.querySelector(`.fam-skip-item input[data-fam="${id}"]`);
+  if (cb){ cb.checked=checked; cb.closest('.fam-skip-item').classList.toggle('on',checked); }
+  document.querySelectorAll(`td.mcell[data-fam="${id}"]`).forEach(td=>{ td.classList.toggle('off',checked); td.querySelectorAll('select,input').forEach(el=>el.disabled=checked); });
+  updateProgress();
 }
 
-let adminRows = [];
-let adminListening = false;
+// ═══════════════ STATE PRESERVE (lang switch) ═══════════════
+function captureState(){
+  const st={};
+  document.querySelectorAll('#sections select, #sections input').forEach(el=>{ st[el.id] = (el.type==='checkbox')?el.checked:el.value; });
+  return st;
+}
+function restoreState(st){
+  Object.entries(st).forEach(([id,val])=>{ const el=document.getElementById(id); if(!el) return; if(el.type==='checkbox') el.checked=val; else el.value=val; });
+  skipped.forEach(id=>document.querySelectorAll(`td.mcell[data-fam="${id}"]`).forEach(td=>{ td.classList.add('off'); td.querySelectorAll('select,input').forEach(el=>el.disabled=true); }));
+}
 
-// ═══════════════════════════════════════════════
-// LANGUAGE
-// ═══════════════════════════════════════════════
-function setLang(lang) {
+// ═══════════════ I18N (static labels) ═══════════════
+function applyUI(){
+  const u=U();
+  const set=(id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=v; };
+  const setH=(id,v)=>{ const e=document.getElementById(id); if(e) e.innerHTML=v; };
+  set('hd-meta',u.header_meta); set('i_eyebrow',u.i_eyebrow); setH('i_title',u.i_title); set('i_desc',u.i_desc);
+  set('l_agent',u.l_agent); set('l_country',u.l_country); set('l_date',u.l_date); set('l_season',u.l_season);
+  set('l_famctrl',u.l_famctrl);
+  set('x_eyebrow',u.x_eyebrow); set('x_title',u.x_title); set('x_hint',u.x_hint);
+  set('l_comp',u.l_comp); set('l_trend',u.l_trend); set('l_rec',u.l_rec); set('l_final',u.l_final);
+  set('submitBtn',u.btn_submit); set('printBtn',u.btn_print); set('clearBtn',u.btn_clear);
+  set('ok_title',u.ok_title); set('ok_desc',u.ok_desc); set('ok_btn',u.ok_btn);
+  ['cp1','cp2','cp3'].forEach(id=>{const e=document.getElementById(id);if(e)e.placeholder=u.ph_brand;});
+  ['td1','td2','td3'].forEach(id=>{const e=document.getElementById(id);if(e)e.placeholder=u.ph_trend;});
+  ['rc1','rc2','rc3'].forEach(id=>{const e=document.getElementById(id);if(e)e.placeholder=u.ph_rec;});
+  const c=document.getElementById('comentarios'); if(c) c.placeholder=u.ph_final;
+}
+function setLang(lang){
+  const hadSections = document.querySelector('#sections .matrix');
+  const st = hadSections ? captureState() : null;
   currentLang = lang;
   document.documentElement.lang = lang;
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-  applyI18n();
-  renderFamilyGrid('grid-success','success');
-  renderFamilyGrid('grid-weak','weak');
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
+  renderFamControls();
+  renderSections();
+  if (st) restoreState(st);
+  applyUI();
   updateProgress();
   if (isAdminMode()) refreshAdmin();
 }
 
-function applyI18n() {
-  const d = LANGS[currentLang];
-  if (!d) return;
-  document.querySelectorAll('[data-i18n]').forEach(el => { const k=el.getAttribute('data-i18n'); if(d[k]!==undefined) el.textContent=d[k]; });
-  document.querySelectorAll('[data-i18n-html]').forEach(el => { const k=el.getAttribute('data-i18n-html'); if(d[k]!==undefined) el.innerHTML=d[k]; });
-  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const k=el.getAttribute('data-i18n-placeholder'); if(d[k]!==undefined) el.placeholder=d[k]; });
-  const titles = {es:'LOSAN — Feedback AW26', en:'LOSAN — AW26 Feedback', it:'LOSAN — Feedback AW26'};
-  document.title = titles[currentLang] || titles.es;
-}
-
-// ═══════════════════════════════════════════════
-// FAMILY GRIDS (ranked selection)
-// ═══════════════════════════════════════════════
-function renderFamilyGrid(containerId, type) {
-  const d = LANGS[currentLang];
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  container.innerHTML = FAMILIES.map(f => {
-    const rank = ranked[type][f.id];
-    const isRanked = rank !== undefined;
-    return `<div class="fam-row${isRanked?' ranked':''}" onclick="toggleFamily('${f.id}','${type}')">
-      <span class="fam-indicator">${isRanked ? rank : '—'}</span>
-      <span class="fam-name">${d[f.id] || f.es}</span>
-    </div>`;
-  }).join('');
-}
-
-function toggleFamily(familyId, type) {
-  if (ranked[type][familyId] !== undefined) {
-    const removedRank = ranked[type][familyId];
-    delete ranked[type][familyId];
-    Object.keys(ranked[type]).forEach(id => { if(ranked[type][id]>removedRank) ranked[type][id]--; });
-  } else {
-    ranked[type][familyId] = Object.keys(ranked[type]).length + 1;
-  }
-  renderFamilyGrid(type==='success'?'grid-success':'grid-weak', type);
-  updateProgress();
-}
-
-// ═══════════════════════════════════════════════
-// PROGRESS
-// ═══════════════════════════════════════════════
-function updateProgress() {
-  let filled = 0;
-  if(document.querySelector('input[name^="r_"]:checked')) filled++;
-  if(Object.keys(ranked.success).length>0) filled++;
-  if(Object.keys(ranked.weak).length>0||document.querySelector('input[name="motivo"]:checked')) filled++;
-  if(document.querySelector('input[name="carencia"]:checked')||v('car_otros')) filled++;
-  if(v('sur_exceso')||v('sur_falta')) filled++;
-  if(v('pre_caros')||v('pre_comp')||document.querySelector('input[name="pre_perdida"]:checked')) filled++;
-  if(document.querySelector('input[name="fit"]:checked')) filled++;
-  if(v('cp1')||v('cp2')) filled++;
-  if(v('td1')||v('td2')) filled++;
-  if(v('ref_falta')||v('ref_oport')) filled++;
-  const pct = Math.round((filled/10)*100);
-  document.getElementById('progressFill').style.width = pct+'%';
-  document.getElementById('hd-meta').textContent = filled+' / 10';
-}
-document.addEventListener('input', updateProgress);
-document.addEventListener('change', updateProgress);
-
-// ═══════════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════════
-function v(id){ const e=document.getElementById(id); return e&&e.value.trim()?e.value.trim():'—'; }
-function getRadio(name){ const e=document.querySelector(`input[name="${name}"]:checked`); return e?e.value:'—'; }
-function getChecks(name){ const els=[...document.querySelectorAll(`input[name="${name}"]:checked`)]; return els.length?els.map(e=>e.value).join(', '):'—'; }
-
-function getRankedList(type){
-  const d = LANGS[currentLang];
-  const byRank = Object.entries(ranked[type]).sort((a,b)=>a[1]-b[1]);
-  if(!byRank.length) return '—';
-  return byRank.map(([id,rank])=>`${rank}. ${d[id]||id}`).join('\n');
-}
-
-function getCheckedMotivos(){
-  const d = LANGS[currentLang];
-  const keys = {precio:'mot_precio',diseno:'mot_diseno',tendencia:'mot_tendencia',colorido:'mot_color',tejido:'mot_tejido',fit:'mot_fit',competencia:'mot_competencia',otro:'mot_otro'};
-  const els = [...document.querySelectorAll('input[name="motivo"]:checked')];
-  return els.length ? els.map(e=>d[keys[e.value]]||e.value).join(', ') : '—';
-}
-
-function getCheckedCarencias(){
-  const d = LANGS[currentLang];
-  const els = [...document.querySelectorAll('input[name="carencia"]:checked')];
-  return els.length ? els.map(e=>d['f_'+e.value]||e.value).join(', ') : '—';
-}
-
-function getCheckedFit(){
-  const d = LANGS[currentLang];
-  const keys = {tallaje:'ft_tallaje',patronaje:'ft_patronaje',largo:'ft_largo',calidad:'ft_calidad',tejidos:'ft_tejidos',acabados:'ft_acabados',packaging:'Packaging',etiquetado:'ft_etiquetado'};
-  const els = [...document.querySelectorAll('input[name="fit"]:checked')];
-  return els.length ? els.map(e=>d[keys[e.value]]||e.value).join(', ') : '—';
-}
-
-function getYesNo(){
-  const d = LANGS[currentLang];
-  const e = document.querySelector('input[name="pre_perdida"]:checked');
-  if(!e) return '—';
-  return {si:d.yn_yes, no:d.yn_no, algunos:d.yn_some}[e.value] || e.value;
-}
-
-// ═══════════════════════════════════════════════
-// EXPORT
-// ═══════════════════════════════════════════════
-function exportar(){
-  const x = LANGS[currentLang];
-  const S = '──────────────────────────────────────────────────';
-  const H = '══════════════════════════════════════════════════';
-  const txt = `
-${H}
-LOSAN MEN — ${x.xl_title}
-${H}
-${x.xl_season} : ${v('m_temporada')}
-${x.xl_agent}  : ${v('m_agente')}
-${x.xl_country}: ${v('m_pais')}
-${x.xl_date}   : ${v('m_fecha')}
-
-${S}
-${x.xl_s1}
-${S}
-${x.xl_atractivo}    : ${getRadio('r_atractivo')}
-${x.xl_moda}         : ${getRadio('r_moda')}
-${x.xl_comercial}    : ${getRadio('r_comercial')}
-${x.xl_precio}       : ${getRadio('r_precio')}
-${x.xl_equilibrio}   : ${getRadio('r_equilibrio')}
-${x.xl_color}        : ${getRadio('r_color')}
-${x.xl_relacion}     : ${getRadio('r_relacion')}
-
-${S}
-${x.xl_s2}
-${S}
-${getRankedList('success')}
-${x.xl_why}: ${v('ex_porque')}
-
-${S}
-${x.xl_s3}
-${S}
-${getRankedList('weak')}
-${x.xl_reasons}: ${getCheckedMotivos()}
-${x.xl_comments}: ${v('db_com')}
-
-${S}
-${x.xl_s4}
-${S}
-${getCheckedCarencias()}
-${x.xl_other}: ${v('car_otros')}
-
-${S}
-${x.xl_s5}
-${S}
-${x.xl_excess}: ${v('sur_exceso')}
-${x.xl_lack}: ${v('sur_falta')}
-
-${S}
-${x.xl_s6}
-${S}
-${x.xl_expensive}: ${v('pre_caros')}
-${x.xl_competitive}: ${v('pre_comp')}
-${x.xl_lost}: ${getYesNo()}
-${x.xl_detail}: ${v('pre_explica')}
-
-${S}
-${x.xl_s7}
-${S}
-${x.xl_aspects}: ${getCheckedFit()}
-${v('fit_com')}
-
-${S}
-${x.xl_s8}
-${S}
-1. ${v('cp1')}  2. ${v('cp2')}  3. ${v('cp3')}  4. ${v('cp4')}  5. ${v('cp5')}
-${x.xl_better}: ${v('cp_mejor')}
-${x.xl_advantages}: ${v('cp_losan')}
-
-${S}
-${x.xl_s9}
-${S}
-1. ${v('td1')}
-2. ${v('td2')}
-3. ${v('td3')}
-4. ${v('td4')}
-5. ${v('td5')}
-
-${S}
-${x.xl_s10}
-${S}
-${x.xl_missing}: ${v('ref_falta')}
-${x.xl_opp}: ${v('ref_oport')}
-
-${S}
-${x.xl_recs}
-${S}
-1. ${v('rc1')}
-2. ${v('rc2')}
-3. ${v('rc3')}
-4. ${v('rc4')}
-5. ${v('rc5')}
-
-${x.xl_final}
-${v('comentarios')}
-${H}`.trim();
-
-  document.getElementById('textoExportado').textContent = txt;
-  document.getElementById('modalOverlay').classList.add('active');
-}
-
-function cerrarModal(){ document.getElementById('modalOverlay').classList.remove('active'); }
-
-function copiar(){
-  const d = LANGS[currentLang];
-  navigator.clipboard.writeText(document.getElementById('textoExportado').textContent).then(()=>{
-    const b=event.target; const orig=b.textContent;
-    b.textContent='✓ '+(currentLang==='it'?'Copiato!':currentLang==='en'?'Copied!':'Copiado');
-    setTimeout(()=>{ b.textContent=orig; },2200);
+function updateProgress(){
+  let done=0;
+  SEGMENTS.forEach(s=>{
+    if (skipped.has(s.id)) { done++; return; }
+    const any = [...document.querySelectorAll(`td.mcell[data-fam="${s.id}"] select, td.mcell[data-fam="${s.id}"] input`)].some(el => el.type==='checkbox'?el.checked:el.value);
+    if (any) done++;
   });
+  const pct=Math.round(done/SEGMENTS.length*100);
+  document.getElementById('progressFill').style.width=pct+'%';
 }
 
-function enviarEmail(){
-  const subject = encodeURIComponent(`LOSAN AW26 Feedback – ${v('m_agente')} (${v('m_pais')})`);
-  const body = encodeURIComponent(document.getElementById('textoExportado').textContent);
-  window.location.href = `mailto:rblanch@losaniberia.com?subject=${subject}&body=${body}`;
-}
-
-function limpiar(){
-  const msgs = {es:'¿Limpiar todas las respuestas?',en:'Clear all responses?',it:'Cancellare tutte le risposte?'};
-  if(!confirm(msgs[currentLang]||msgs.es)) return;
-  document.querySelectorAll('input[type="text"],textarea').forEach(e=>e.value='');
-  document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(e=>e.checked=false);
-  document.getElementById('m_fecha').valueAsDate=new Date();
-  document.getElementById('m_temporada').value='AW26';
-  ranked.success={}; ranked.weak={};
-  renderFamilyGrid('grid-success','success');
-  renderFamilyGrid('grid-weak','weak');
-  updateProgress();
-}
-
-document.getElementById('modalOverlay').addEventListener('click',e=>{ if(e.target===e.currentTarget) cerrarModal(); });
-
-// ═══════════════════════════════════════════════
-// SUBMIT FORM
-// ═══════════════════════════════════════════════
-// ═══════════════════════════════════════════════
-// COLLECT RESPONSE (for Firebase)
-// ═══════════════════════════════════════════════
-function numRadio(name){ const e=document.querySelector(`input[name="${name}"]:checked`); return e?parseInt(e.value):0; }
-function rawRadio(name){ const e=document.querySelector(`input[name="${name}"]:checked`); return e?e.value:''; }
+// ═══════════════ COLLECT + SUBMIT ═══════════════
 function txt(id){ const e=document.getElementById(id); return e?e.value.trim():''; }
-function checksArr(name){ return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(e=>e.value); }
-function rankedArr(type){ return Object.entries(ranked[type]).sort((a,b)=>a[1]-b[1]).map(([id])=>id); }
-
+function selVal(id){ const e=document.getElementById(id); return e&&e.value?parseInt(e.value):0; }
+function collectFamilies(){
+  const fams={};
+  SEGMENTS.forEach(s=>{
+    if (skipped.has(s.id)) return;
+    const ratings={}; let has=false;
+    RATINGS.forEach(r=>{ const v=selVal(`rat_${r.id}_${s.id}`); ratings[r.id]=v; if(v) has=true; });
+    const ranges={}; RANGES.forEach(r=>{ const v=selVal(`rng_${r.id}_${s.id}`); ranges[r.id]=v; if(v) has=true; });
+    const carencias=RANGES.filter(r=>{const e=document.getElementById(`car_${r.id}_${s.id}`);return e&&e.checked;}).map(r=>r.id);
+    const fit=FIT.filter(r=>{const e=document.getElementById(`fit_${r.id}_${s.id}`);return e&&e.checked;}).map(r=>r.id);
+    const precio=(document.getElementById(`pre_${s.id}`)||{}).value||'';
+    const comentario=txt(`com_${s.id}`);
+    if (carencias.length||fit.length||precio||comentario) has=true;
+    if (has) fams[s.id]={ ratings, ranges, carencias, fit, precio_perdida:precio, comentario };
+  });
+  return fams;
+}
 function collectResponse(){
   return {
-    timestamp: firebase.database.ServerValue.TIMESTAMP,
-    lang: currentLang,
-    temporada: txt('m_temporada'),
-    agente: txt('m_agente'),
-    pais: txt('m_pais'),
-    fecha: txt('m_fecha'),
-    ratings: {
-      atractivo:numRadio('r_atractivo'), moda:numRadio('r_moda'), comercial:numRadio('r_comercial'),
-      precio:numRadio('r_precio'), equilibrio:numRadio('r_equilibrio'), color:numRadio('r_color'), relacion:numRadio('r_relacion')
-    },
-    success: rankedArr('success'),
-    success_why: txt('ex_porque'),
-    weak: rankedArr('weak'),
-    weak_motivos: checksArr('motivo'),
-    weak_com: txt('db_com'),
-    carencias: checksArr('carencia'),
-    carencias_otros: txt('car_otros'),
-    surtido_exceso: txt('sur_exceso'),
-    surtido_falta: txt('sur_falta'),
-    precio_caros: txt('pre_caros'),
-    precio_comp: txt('pre_comp'),
-    precio_perdida: rawRadio('pre_perdida'),
-    precio_explica: txt('pre_explica'),
-    fit_aspectos: checksArr('fit'),
-    fit_com: txt('fit_com'),
-    competidores: [txt('cp1'),txt('cp2'),txt('cp3'),txt('cp4'),txt('cp5')].filter(Boolean),
-    comp_mejor: txt('cp_mejor'),
-    comp_losan: txt('cp_losan'),
-    tendencias: [txt('td1'),txt('td2'),txt('td3'),txt('td4'),txt('td5')].filter(Boolean),
-    ref_falta: txt('ref_falta'),
-    ref_oport: txt('ref_oport'),
-    recomendaciones: [txt('rc1'),txt('rc2'),txt('rc3'),txt('rc4'),txt('rc5')].filter(Boolean),
+    timestamp: firebase.database.ServerValue.TIMESTAMP, lang: currentLang,
+    agente: txt('m_agente'), pais: txt('m_pais'), fecha: txt('m_fecha'), temporada: txt('m_temporada'),
+    families: collectFamilies(),
+    competidores:[txt('cp1'),txt('cp2'),txt('cp3')].filter(Boolean),
+    tendencias:[txt('td1'),txt('td2'),txt('td3')].filter(Boolean),
+    recomendaciones:[txt('rc1'),txt('rc2'),txt('rc3')].filter(Boolean),
     comentarios: txt('comentarios')
   };
 }
-
-// ═══════════════════════════════════════════════
-// SUBMIT FORM → FIREBASE
-// ═══════════════════════════════════════════════
-async function submitForm() {
-  const d = LANGS[currentLang];
-  const agentName = document.getElementById('m_agente').value.trim();
-  if (!agentName) {
-    alert(d.submit_warn || 'Please enter your name before sending.');
-    document.getElementById('m_agente').focus();
-    return;
-  }
-  const btn = document.getElementById('submitBtn');
-  if (!db) {
-    alert({es:'No hay conexión con la base de datos. Inténtalo más tarde o avisa al administrador.',
-           en:'No database connection. Try again later or contact the administrator.',
-           it:'Nessuna connessione al database. Riprova più tardi o contatta l\'amministratore.'}[currentLang]);
-    return;
-  }
-  const savingTxt = {es:'Guardando…',en:'Saving…',it:'Salvataggio…'}[currentLang] || 'Guardando…';
-  const origTxt = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = savingTxt;
-
-  try {
-    await db.ref(FEEDBACK_PATH).push(collectResponse());
-    applyI18n();
-    document.getElementById('submitOverlay').classList.add('active');
-  } catch (err) {
-    console.error('Firebase write error:', err);
-    const errTxt = {es:'No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.',
-                    en:'Could not save. Check your connection and try again.',
-                    it:'Impossibile salvare. Controlla la connessione e riprova.'}[currentLang];
-    alert(errTxt);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = origTxt;
-  }
+async function submitForm(){
+  const u=U();
+  if (!db){ alert('Sin conexión con la base de datos.'); return; }
+  if (!txt('m_agente')){ alert(u.warn_name); document.getElementById('m_agente').focus(); return; }
+  const resp=collectResponse();
+  if (!Object.keys(resp.families).length){ alert(u.warn_fam); return; }
+  const btn=document.getElementById('submitBtn'); const orig=btn.textContent;
+  btn.disabled=true; btn.textContent={es:'Guardando…',en:'Saving…',it:'Salvataggio…'}[currentLang];
+  try { await db.ref(FEEDBACK_PATH).push(resp); document.getElementById('submitOverlay').classList.add('active'); }
+  catch(err){ console.error(err); alert({es:'No se pudo guardar. Revisa tu conexión.',en:'Could not save.',it:'Impossibile salvare.'}[currentLang]); }
+  finally { btn.disabled=false; btn.textContent=orig; }
+}
+function limpiar(){
+  document.getElementById('m_agente').value=''; document.getElementById('m_pais').value='';
+  ['cp1','cp2','cp3','td1','td2','td3','rc1','rc2','rc3','comentarios'].forEach(id=>document.getElementById(id).value='');
+  skipped.clear(); renderFamControls(); renderSections(); applyUI(); updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function closeSubmitOverlay() {
-  document.getElementById('submitOverlay').classList.remove('active');
-  cerrarModal();
-}
-
-// ═══════════════════════════════════════════════
-// ADMIN ROUTING
-// ═══════════════════════════════════════════════
-function isAdminMode(){
-  const p = new URLSearchParams(location.search);
-  return p.get('admin') === 'losan27' || location.hash === '#admin';
-}
-
+// ═══════════════ ROUTING ═══════════════
+function isAdminMode(){ const p=new URLSearchParams(location.search); return p.get('admin')==='losan27'||location.hash==='#admin'; }
 function route(){
-  const admin = isAdminMode();
-  const els = [
-    document.querySelector('.progress-bar'),
-    document.querySelector('main.form-body'),
-    document.querySelector('.actions-bar'),
-    document.querySelector('header.header')
-  ];
-  if (admin) {
-    els.forEach(el => { if(el) el.style.display='none'; });
-    document.getElementById('admin-view').style.display='block';
-    document.querySelectorAll('#admin-view .lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
-    loadAdmin();
-  } else {
-    els.forEach(el => { if(el) el.style.display=''; });
-    document.getElementById('admin-view').style.display='none';
-  }
+  const admin=isAdminMode();
+  const els=[document.querySelector('.progress-bar'),document.querySelector('main.form-body'),document.querySelector('.actions-bar'),document.querySelector('header.header')];
+  if (admin){ els.forEach(e=>{if(e)e.style.display='none';}); document.getElementById('admin-view').style.display='block';
+    document.querySelectorAll('#admin-view .lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===currentLang)); loadAdmin(); }
+  else { els.forEach(e=>{if(e)e.style.display='';}); document.getElementById('admin-view').style.display='none'; }
 }
+function goToForm(){ history.pushState('',document.title,location.pathname); route(); }
 
-function goToForm(){
-  history.pushState('', document.title, location.pathname);
-  route();
-}
-
-// ═══════════════════════════════════════════════
-// ADMIN — LABEL HELPERS
-// ═══════════════════════════════════════════════
-function famName(id){ const d=LANGS[currentLang]; return (d&&d[id])||id; }
-function motLabel(v){ const d=LANGS[currentLang]; const k={precio:'mot_precio',diseno:'mot_diseno',tendencia:'mot_tendencia',colorido:'mot_color',tejido:'mot_tejido',fit:'mot_fit',competencia:'mot_competencia',otro:'mot_otro'}[v]; return (d&&d[k])||v; }
-function carLabel(v){ const d=LANGS[currentLang]; return (d&&d['f_'+v])||v; }
-function fitLabel(v){ const d=LANGS[currentLang]; const k={tallaje:'ft_tallaje',patronaje:'ft_patronaje',largo:'ft_largo',calidad:'ft_calidad',tejidos:'ft_tejidos',acabados:'ft_acabados',packaging:'Packaging',etiquetado:'ft_etiquetado'}[v]; return (d&&d[k])||v; }
-function ynLabel(v){ const d=LANGS[currentLang]; return ({si:d.yn_yes,no:d.yn_no,algunos:d.yn_some}[v])||'—'; }
-function esc(s){ const e=document.createElement('div'); e.textContent=(s==null?'':String(s)); return e.innerHTML; }
-function dash(s){ return (s&&String(s).trim())?s:'—'; }
-function arrNames(arr,fn){ return (arr&&arr.length)?arr.map(fn).join(', '):'—'; }
-function avgRating(r){ const vals=Object.values(r.ratings||{}).filter(n=>n>0); return vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length):0; }
-
-// ═══════════════════════════════════════════════
-// ADMIN — LOAD + RENDER
-// ═══════════════════════════════════════════════
+// ═══════════════ ADMIN ═══════════════
 function loadAdmin(){
-  if (!db) {
-    document.getElementById('adminMeta').textContent = 'Sin conexión con la base de datos.';
-    document.getElementById('tableWrap').innerHTML = '<div class="no-data">No se ha podido conectar con Firebase. Abre la consola (F12): si ves errores 404 en <strong>firebase-app-compat.js</strong>, los scripts del &lt;head&gt; no se están cargando.</div>';
-    return;
-  }
-  if (adminListening) { refreshAdmin(); return; }
-  adminListening = true;
-  document.getElementById('adminMeta').textContent = 'Cargando…';
-  db.ref(FEEDBACK_PATH).on('value', snap => {
-    const raw = snap.val();
-    adminRows = raw ? Object.entries(raw).map(([k,v]) => ({_key:k, ...v})) : [];
-    adminRows.sort((a,b) => (b.timestamp||0) - (a.timestamp||0));
-    refreshAdmin();
-  }, err => {
-    console.error('Firebase read error:', err);
-    document.getElementById('adminMeta').textContent = 'Error de conexión con la base de datos.';
-  });
+  if (!db){ document.getElementById('adminMeta').textContent='Sin conexión con la base de datos.';
+    document.getElementById('tableWrap').innerHTML='<div class="no-data">No conecta con Firebase. Revisa la consola (F12): 404 en firebase-app-compat.js = scripts del &lt;head&gt; no cargan.</div>'; return; }
+  if (adminListening){ refreshAdmin(); return; }
+  adminListening=true; document.getElementById('adminMeta').textContent='Cargando…';
+  db.ref(FEEDBACK_PATH).on('value',snap=>{ const raw=snap.val(); adminRows=raw?Object.entries(raw).map(([k,v])=>({_key:k,...v})):[]; adminRows.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)); refreshAdmin(); },
+    err=>{ console.error(err); document.getElementById('adminMeta').textContent='Error de conexión.'; });
 }
-
 function refreshAdmin(){
   if (!isAdminMode()) return;
-  const n = adminRows.length;
-  document.getElementById('adminMeta').textContent =
-    n === 0 ? 'Sin respuestas todavía.' : `${n} respuesta${n!==1?'s':''} de agentes.`;
-  renderSummary(adminRows);
-  renderTable(adminRows);
+  const n=adminRows.length;
+  document.getElementById('adminMeta').textContent = n===0?'Sin respuestas todavía.':`${n} respuesta${n!==1?'s':''} de agentes.`;
+  renderSummary(adminRows); renderFamilyAverages(adminRows); renderRangeHeat(adminRows); renderTable(adminRows);
 }
-
+function famAvg(rows){
+  const st={}; SEGMENTS.forEach(s=>st[s.id]={sum:{},cnt:{},agents:0,global:0});
+  rows.forEach(r=>{ const f=r.families||{}; SEGMENTS.forEach(s=>{ const o=f[s.id]; if(!o) return; st[s.id].agents++;
+    RATINGS.forEach(d=>{ const v=(o.ratings||{})[d.id]; if(v>0){ st[s.id].sum[d.id]=(st[s.id].sum[d.id]||0)+v; st[s.id].cnt[d.id]=(st[s.id].cnt[d.id]||0)+1; } }); }); });
+  SEGMENTS.forEach(s=>{ const x=st[s.id]; let g=0,gc=0; RATINGS.forEach(d=>{ const a=x.cnt[d.id]?x.sum[d.id]/x.cnt[d.id]:0; x[d.id]=a; if(a){g+=a;gc++;} }); x.global=gc?g/gc:0; });
+  return st;
+}
 function renderSummary(rows){
-  const wrap = document.getElementById('summaryWrap');
-  if (!rows.length) { wrap.innerHTML=''; return; }
-  let all = [];
-  rows.forEach(r => Object.values(r.ratings||{}).forEach(n => { if(n>0) all.push(n); }));
-  const avg = all.length ? (all.reduce((a,b)=>a+b,0)/all.length).toFixed(1) : '—';
-  const tally = key => {
-    const c={}; rows.forEach(r => (r[key]||[]).forEach(id => { c[id]=(c[id]||0)+1; }));
-    const e = Object.entries(c).sort((a,b)=>b[1]-a[1])[0];
-    return e ? {name:famName(e[0]), n:e[1]} : null;
-  };
-  const ts = tally('success'), tw = tally('weak');
-  wrap.innerHTML = `
-    <div class="summary-grid">
-      <div class="summary-card"><div class="summary-label">Respuestas</div><div class="summary-value">${rows.length}</div><div class="summary-sub">agentes</div></div>
-      <div class="summary-card"><div class="summary-label">Valoración media</div><div class="summary-value">${avg}</div><div class="summary-sub">sobre 5 · 7 áreas</div></div>
-      <div class="summary-card"><div class="summary-label">Rango ★ más citado</div><div class="summary-value" style="font-size:1rem;line-height:1.3;">${ts?esc(ts.name):'—'}</div><div class="summary-sub">${ts?ts.n+' menciones':'—'}</div></div>
-      <div class="summary-card"><div class="summary-label">Rango ⚠ más débil</div><div class="summary-value" style="font-size:1rem;line-height:1.3;">${tw?esc(tw.name):'—'}</div><div class="summary-sub">${tw?tw.n+' menciones':'—'}</div></div>
-    </div>`;
+  const w=document.getElementById('summaryWrap'); if(!rows.length){w.innerHTML='';return;}
+  const st=famAvg(rows); let all=[]; rows.forEach(r=>{const f=r.families||{};Object.values(f).forEach(o=>RATINGS.forEach(d=>{const v=(o.ratings||{})[d.id];if(v>0)all.push(v);}));});
+  const avg=all.length?(all.reduce((a,b)=>a+b,0)/all.length).toFixed(1):'—';
+  let best=null,worst=null; SEGMENTS.forEach(s=>{const g=st[s.id].global;if(g>0){if(!best||g>st[best].global)best=s.id;if(!worst||g<st[worst].global)worst=s.id;}});
+  w.innerHTML=`<div class="summary-grid">
+    <div class="summary-card"><div class="summary-label">Respuestas</div><div class="summary-value">${rows.length}</div><div class="summary-sub">agentes</div></div>
+    <div class="summary-card"><div class="summary-label">Valoración media</div><div class="summary-value">${avg}</div><div class="summary-sub">sobre 5</div></div>
+    <div class="summary-card"><div class="summary-label">Familia mejor</div><div class="summary-value" style="font-size:1.05rem;line-height:1.3">${best?esc(segName(best)):'—'}</div><div class="summary-sub">${best?st[best].global.toFixed(1)+' / 5':'—'}</div></div>
+    <div class="summary-card"><div class="summary-label">Familia peor</div><div class="summary-value" style="font-size:1.05rem;line-height:1.3">${worst?esc(segName(worst)):'—'}</div><div class="summary-sub">${worst?st[worst].global.toFixed(1)+' / 5':'—'}</div></div>
+  </div>`;
 }
-
+function colHeadAdmin(){
+  let h='<thead><tr><th class="l"></th>'; SEGMENTS.forEach(s=>h+=`<th>${esc(nm(s))}</th>`); h+='</tr></thead>'; return h;
+}
+function renderFamilyAverages(rows){
+  const w=document.getElementById('famAvgWrap'); if(!rows.length){w.innerHTML='<div class="no-data">Sin datos.</div>';return;}
+  const st=famAvg(rows); const v=a=>a?a.toFixed(1):'·';
+  let body='';
+  RATINGS.forEach(d=>{ body+=`<tr><td class="l">${esc(nm(d))}</td>`; SEGMENTS.forEach(s=>body+=`<td class="heat">${v(st[s.id][d.id])}</td>`); body+='</tr>'; });
+  body+=`<tr style="font-weight:600"><td class="l">Global</td>`; SEGMENTS.forEach(s=>body+=`<td class="heat">${st[s.id].global?st[s.id].global.toFixed(1):'·'}</td>`); body+='</tr>';
+  body+=`<tr><td class="l" style="color:var(--muted)">Agentes</td>`; SEGMENTS.forEach(s=>body+=`<td class="heat" style="color:var(--muted)">${st[s.id].agents||'·'}</td>`); body+='</tr>';
+  w.innerHTML=`<table class="atable">${colHeadAdmin()}<tbody>${body}</tbody></table>`;
+}
+function renderRangeHeat(rows){
+  const w=document.getElementById('rangeHeatWrap'); if(!rows.length){w.innerHTML='<div class="no-data">Sin datos.</div>';return;}
+  const st={}; RANGES.forEach(r=>{st[r.id]={};SEGMENTS.forEach(s=>st[r.id][s.id]={sum:0,cnt:0});});
+  rows.forEach(row=>{ const f=row.families||{}; SEGMENTS.forEach(s=>{ const o=f[s.id]; if(!o)return; const rg=o.ranges||{}; RANGES.forEach(r=>{ if(rg[r.id]>0){st[r.id][s.id].sum+=rg[r.id];st[r.id][s.id].cnt++;} }); }); });
+  let body='';
+  RANGES.forEach(r=>{ body+=`<tr><td class="l">${esc(nm(r))}</td>`; SEGMENTS.forEach(s=>{ const c=st[r.id][s.id]; const a=c.cnt?(c.sum/c.cnt):0;
+    const bg=a?`background:rgba(10,10,10,${(a/5*0.16).toFixed(3)})`:''; body+=`<td class="heat" style="${bg}">${a?a.toFixed(1):'·'}</td>`; }); body+='</tr>'; });
+  w.innerHTML=`<table class="atable">${colHeadAdmin()}<tbody>${body}</tbody></table>`;
+}
 function renderTable(rows){
-  const wrap = document.getElementById('tableWrap');
-  if (!rows.length) { wrap.innerHTML='<div class="no-data">Las respuestas aparecerán aquí en cuanto los agentes envíen el formulario.</div>'; return; }
-  const cell = n => `<td class="num">${n>0?n:'·'}</td>`;
-  const top = arr => { const id=(arr&&arr[0]); return id?esc(famName(id)):'—'; };
-  const trs = rows.map(r => {
-    const dt = r.timestamp ? new Date(r.timestamp).toLocaleString('es-ES',{dateStyle:'short',timeStyle:'short'}) : '—';
-    const rt = r.ratings||{};
-    const a = avgRating(r);
-    return `<tr>
-      <td style="white-space:nowrap">${dt}</td>
-      <td><strong style="font-size:0.6rem;letter-spacing:0.1em;color:var(--muted)">${(r.lang||'—').toUpperCase()}</strong></td>
-      <td style="white-space:normal"><strong>${esc(r.agente)||'—'}</strong></td>
-      <td style="color:var(--muted)">${esc(r.pais)||'—'}</td>
-      ${cell(rt.atractivo)}${cell(rt.moda)}${cell(rt.comercial)}${cell(rt.precio)}${cell(rt.equilibrio)}${cell(rt.color)}${cell(rt.relacion)}
-      <td class="num"><strong>${a?a.toFixed(1):'·'}</strong></td>
-      <td style="white-space:normal;max-width:150px">${top(r.success)}</td>
-      <td style="white-space:normal;max-width:150px">${top(r.weak)}</td>
-      <td><button class="view-btn" onclick="viewDetail('${r._key}')">Ver</button></td>
-    </tr>`;
-  }).join('');
-  wrap.innerHTML = `
-    <div style="position:relative;">
-      <div class="admin-scroll">
-        <table class="responses-table">
-          <thead><tr>
-            <th>Fecha</th><th>Idioma</th><th>Agente</th><th>País</th>
-            <th title="Atractivo general">At</th><th title="Nivel de moda">Mo</th><th title="Potencial comercial">Co</th><th title="Posic. precio">Pr</th><th title="Equilibrio">Eq</th><th title="Paleta color">Cl</th><th title="Moda / básico">Re</th>
-            <th>Media</th><th>Rango ★</th><th>Rango ⚠</th><th>Detalle</th>
-          </tr></thead>
-          <tbody>${trs}</tbody>
-        </table>
-      </div>
-      <div class="scroll-hint" id="scrollHint">&#8594;</div>
-    </div>`;
-  setTimeout(() => {
-    const sc = wrap.querySelector('.admin-scroll'), h = document.getElementById('scrollHint');
-    if (sc && h) sc.addEventListener('scroll', () => { h.style.opacity='0'; }, {once:true});
-  }, 100);
+  const w=document.getElementById('tableWrap'); if(!rows.length){w.innerHTML='<div class="no-data">Las respuestas aparecerán aquí.</div>';return;}
+  const trs=rows.map(r=>{ const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES',{dateStyle:'short',timeStyle:'short'}):'—';
+    const f=r.families||{}; const ids=Object.keys(f); let all=[]; ids.forEach(id=>RATINGS.forEach(d=>{const v=(f[id].ratings||{})[d.id];if(v>0)all.push(v);}));
+    const avg=all.length?(all.reduce((a,b)=>a+b,0)/all.length).toFixed(1):'·';
+    return `<tr><td style="white-space:nowrap">${dt}</td><td>${(r.lang||'—').toUpperCase()}</td><td class="l"><strong>${esc(r.agente)||'—'}</strong></td><td class="l">${esc(r.pais)||'—'}</td><td>${ids.length||'·'}</td><td><strong>${avg}</strong></td><td><button class="view-btn" onclick="viewDetail('${r._key}')">Ver</button></td></tr>`; }).join('');
+  w.innerHTML=`<table class="atable"><thead><tr><th class="l">Fecha</th><th>Idioma</th><th class="l">Agente</th><th class="l">País</th><th>Familias</th><th>Media</th><th>Detalle</th></tr></thead><tbody>${trs}</tbody></table>`;
 }
-
 function viewDetail(key){
-  const r = adminRows.find(x => x._key === key);
-  if (!r) return;
-  document.getElementById('textoExportado').textContent = formatResponse(r);
-  document.getElementById('modalTitle').textContent = (r.agente||'—') + (r.pais ? ' · '+r.pais : '');
-  document.getElementById('modalNote').textContent = {
-    es:'Detalle completo de la respuesta. Copia el texto si lo necesitas.',
-    en:'Full response detail. Copy the text if needed.',
-    it:'Dettaglio completo della risposta. Copia il testo se necessario.'
-  }[currentLang] || '';
+  const r=adminRows.find(x=>x._key===key); if(!r)return;
+  document.getElementById('textoExportado').textContent=formatResponse(r);
+  document.getElementById('modalTitle').textContent=(r.agente||'—')+(r.pais?' · '+r.pais:'');
   document.getElementById('modalOverlay').classList.add('active');
 }
-
 function formatResponse(r){
-  const x = LANGS[currentLang], rt = r.ratings||{};
-  const S='──────────────────────────────────────────────────';
-  const H='══════════════════════════════════════════════════';
-  const rankList = arr => (arr&&arr.length) ? arr.map((id,i)=>`${i+1}. ${famName(id)}`).join('\n') : '—';
-  const numList  = arr => (arr&&arr.length) ? arr.map((t,i)=>`${i+1}. ${t}`).join('\n') : '—';
-  const dt = r.timestamp ? new Date(r.timestamp).toLocaleString('es-ES') : '—';
-  return `${H}
-LOSAN MEN — ${x.xl_title}
-${H}
-${x.xl_season} : ${dash(r.temporada)}
-${x.xl_agent}  : ${dash(r.agente)}
-${x.xl_country}: ${dash(r.pais)}
-${x.xl_date}   : ${dash(r.fecha)}
-Enviado      : ${dt}
-
-${S}
-${x.xl_s1}
-${S}
-${x.xl_atractivo}  : ${rt.atractivo||'—'}
-${x.xl_moda}       : ${rt.moda||'—'}
-${x.xl_comercial}  : ${rt.comercial||'—'}
-${x.xl_precio}     : ${rt.precio||'—'}
-${x.xl_equilibrio} : ${rt.equilibrio||'—'}
-${x.xl_color}      : ${rt.color||'—'}
-${x.xl_relacion}   : ${rt.relacion||'—'}
-
-${S}
-${x.xl_s2}
-${S}
-${rankList(r.success)}
-${x.xl_why}: ${dash(r.success_why)}
-
-${S}
-${x.xl_s3}
-${S}
-${rankList(r.weak)}
-${x.xl_reasons}: ${arrNames(r.weak_motivos, motLabel)}
-${x.xl_comments}: ${dash(r.weak_com)}
-
-${S}
-${x.xl_s4}
-${S}
-${arrNames(r.carencias, carLabel)}
-${x.xl_other}: ${dash(r.carencias_otros)}
-
-${S}
-${x.xl_s5}
-${S}
-${x.xl_excess}: ${dash(r.surtido_exceso)}
-${x.xl_lack}: ${dash(r.surtido_falta)}
-
-${S}
-${x.xl_s6}
-${S}
-${x.xl_expensive}: ${dash(r.precio_caros)}
-${x.xl_competitive}: ${dash(r.precio_comp)}
-${x.xl_lost}: ${ynLabel(r.precio_perdida)}
-${x.xl_detail}: ${dash(r.precio_explica)}
-
-${S}
-${x.xl_s7}
-${S}
-${x.xl_aspects}: ${arrNames(r.fit_aspectos, fitLabel)}
-${dash(r.fit_com)}
-
-${S}
-${x.xl_s8}
-${S}
-${(r.competidores&&r.competidores.length) ? r.competidores.map((c,i)=>`${i+1}. ${c}`).join('   ') : '—'}
-${x.xl_better}: ${dash(r.comp_mejor)}
-${x.xl_advantages}: ${dash(r.comp_losan)}
-
-${S}
-${x.xl_s9}
-${S}
-${numList(r.tendencias)}
-
-${S}
-${x.xl_s10}
-${S}
-${x.xl_missing}: ${dash(r.ref_falta)}
-${x.xl_opp}: ${dash(r.ref_oport)}
-
-${S}
-${x.xl_recs}
-${S}
-${numList(r.recomendaciones)}
-
-${x.xl_final}
-${dash(r.comentarios)}
-${H}`;
-}
-
-async function exportCSV(){
-  if (!adminRows.length) { alert('No hay respuestas para exportar.'); return; }
-  const rows = adminRows.slice().sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
-  const sc = s => String(s==null?'':s).replace(/[\r\n;]+/g,' ').trim();
-  const joinNames = (arr,fn) => (arr&&arr.length) ? arr.map(fn).join(' | ') : '';
-  const hdr = ['Enviado','Idioma','Temporada','Agente','Pais','FechaForm',
-    'Atractivo','Moda','Comercial','Precio','Equilibrio','Color','RelacionModaBasico',
-    'RangosExitosos','PorQueExito','RangosDebiles','MotivosDebiles','ComentariosDebiles',
-    'Carencias','CarenciasOtros','SurtidoExceso','SurtidoFalta',
-    'PreciosCaros','PreciosCompetitivos','VentasPerdidas','PrecioExplicacion',
-    'FitAspectos','FitComentarios','Competidores','CompMejor','CompLosan',
-    'TendenciasMercado','RefEchadasFalta','OportunidadesPerdidas','Top5Recomendaciones','ComentariosFinales'
-  ].join(';');
-  const lines = rows.map(r => {
-    const rt = r.ratings||{};
-    const dt = r.timestamp ? new Date(r.timestamp).toLocaleString('es-ES') : '';
-    return [
-      dt, (r.lang||'').toUpperCase(), r.temporada, r.agente, r.pais, r.fecha,
-      rt.atractivo||'', rt.moda||'', rt.comercial||'', rt.precio||'', rt.equilibrio||'', rt.color||'', rt.relacion||'',
-      joinNames(r.success,famName), r.success_why, joinNames(r.weak,famName), joinNames(r.weak_motivos,motLabel), r.weak_com,
-      joinNames(r.carencias,carLabel), r.carencias_otros, r.surtido_exceso, r.surtido_falta,
-      r.precio_caros, r.precio_comp, (r.precio_perdida?ynLabel(r.precio_perdida):''), r.precio_explica,
-      joinNames(r.fit_aspectos,fitLabel), r.fit_com, (r.competidores||[]).join(' | '), r.comp_mejor, r.comp_losan,
-      (r.tendencias||[]).join(' | '), r.ref_falta, r.ref_oport, (r.recomendaciones||[]).join(' | '), r.comentarios
-    ].map(sc).join(';');
+  const S='──────────────────────────────────────────────────', H='══════════════════════════════════════════════════';
+  const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES'):'—';
+  let o=`${H}\nLOSAN — Feedback AW26 por familia\n${H}\nAgente: ${r.agente||'—'}  ·  País: ${r.pais||'—'}  ·  ${r.temporada||''}\nEnviado: ${dt}\n`;
+  const f=r.families||{};
+  SEGMENTS.forEach(s=>{ const x=f[s.id]; if(!x)return;
+    o+=`\n${S}\n${segName(s.id)}\n${S}\n`;
+    o+='Valoración: '+RATINGS.map(d=>`${nm(d)} ${(x.ratings||{})[d.id]||'—'}`).join(' · ')+'\n';
+    const rg=RANGES.filter(r2=>(x.ranges||{})[r2.id]>0).map(r2=>`${nm(r2)} ${x.ranges[r2.id]}`);
+    o+='Rangos: '+(rg.length?rg.join(' · '):'—')+'\n';
+    o+='Carencias: '+((x.carencias||[]).map(id=>{const r2=RANGES.find(z=>z.id===id);return r2?nm(r2):id;}).join(', ')||'—')+'\n';
+    o+='Fit/calidad: '+((x.fit||[]).map(id=>{const r2=FIT.find(z=>z.id===id);return r2?nm(r2):id;}).join(', ')||'—')+'\n';
+    o+='Ventas perdidas precio: '+(x.precio_perdida||'—')+'\n';
+    if(x.comentario) o+=`« ${x.comentario} »\n`;
   });
-  const csv = '\uFEFF' + hdr + '\n' + lines.join('\n');
-  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `LOSAN_Feedback_AW26_${new Date().toISOString().slice(0,10)}.csv`;
-  a.click(); URL.revokeObjectURL(a.href);
+  o+=`\n${S}\nTransversal\n${S}\nCompetidores: ${(r.competidores||[]).join(', ')||'—'}\nTendencias: ${(r.tendencias||[]).join(', ')||'—'}\nRecomendaciones: ${(r.recomendaciones||[]).join(', ')||'—'}\nComentarios: ${r.comentarios||'—'}\n${H}`;
+  return o;
 }
+function copiar(){ navigator.clipboard.writeText(document.getElementById('textoExportado').textContent); }
+function cerrarModal(){ document.getElementById('modalOverlay').classList.remove('active'); }
 
-window.addEventListener('hashchange', route);
+function sc(s){ return String(s==null?'':s).replace(/[\r\n;]+/g,' ').trim(); }
+function exportCSV(){
+  if(!adminRows.length){alert('No hay respuestas.');return;}
+  const rows=adminRows.slice().sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
+  const hdr=['Enviado','Idioma','Agente','Pais','Temporada','Familia','Banda',
+    ...RATINGS.map(d=>'V_'+d.id), ...RANGES.map(r=>'R_'+r.id), 'Carencias','Fit','VentasPerdidasPrecio','Comentario'].join(';');
+  const lines=[];
+  rows.forEach(r=>{ const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES'):''; const f=r.families||{};
+    SEGMENTS.forEach(s=>{ const x=f[s.id]; if(!x)return;
+      lines.push([dt,(r.lang||'').toUpperCase(),r.agente,r.pais,r.temporada,s.es,s.band,
+        ...RATINGS.map(d=>(x.ratings||{})[d.id]||''), ...RANGES.map(rr=>(x.ranges||{})[rr.id]||''),
+        (x.carencias||[]).join(' | '),(x.fit||[]).join(' | '),x.precio_perdida||'',x.comentario||''].map(sc).join(';')); }); });
+  if(!lines.length){alert('Sin datos por familia.');return;}
+  dl('\uFEFF'+hdr+'\n'+lines.join('\n'),`LOSAN_AW26_familias_${new Date().toISOString().slice(0,10)}.csv`);
+}
+function exportRangesCSV(){
+  if(!adminRows.length){alert('No hay respuestas.');return;}
+  const rows=adminRows.slice().sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
+  const hdr=['Enviado','Agente','Pais','Familia','Banda','Rango','Puntuacion'].join(';');
+  const lines=[];
+  rows.forEach(r=>{ const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES'):''; const f=r.families||{};
+    SEGMENTS.forEach(s=>{ const x=f[s.id]; if(!x)return; const rg=x.ranges||{};
+      RANGES.forEach(rr=>{ if(rg[rr.id]>0) lines.push([dt,r.agente,r.pais,s.es,s.band,rr.es,rg[rr.id]].map(sc).join(';')); }); }); });
+  if(!lines.length){alert('Sin datos de rangos.');return;}
+  dl('\uFEFF'+hdr+'\n'+lines.join('\n'),`LOSAN_AW26_rangos_${new Date().toISOString().slice(0,10)}.csv`);
+}
+function dl(text,name){ const b=new Blob([text],{type:'text/csv;charset=utf-8;'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=name; a.click(); URL.revokeObjectURL(a.href); }
 
-// ═══════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════
+// ═══════════════ INIT ═══════════════
 window.addEventListener('DOMContentLoaded',()=>{
-  document.getElementById('m_fecha').valueAsDate = new Date();
-  const nav = (navigator.language||'es').toLowerCase().split('-')[0];
-  setLang(['es','en','it'].includes(nav) ? nav : 'es');
+  document.getElementById('m_fecha').valueAsDate=new Date();
+  const nav=(navigator.language||'es').toLowerCase().split('-')[0];
+  setLang(['es','en','it'].includes(nav)?nav:'es');
+  document.addEventListener('input',e=>{ if(e.target.closest('#sections')) updateProgress(); });
+  document.addEventListener('change',e=>{ if(e.target.closest('#sections')) updateProgress(); });
   route();
 });
+window.addEventListener('hashchange',route);
 </script>
 </body>
 </html>
