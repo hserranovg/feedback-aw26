@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0039)file:///Users/hermes/Downloads/aaa.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="LOSAN MEN — AW26 End of Season Feedback">
 <title>LOSAN — Feedback AW26</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<script src="./index_files/firebase-app-compat.js"></script>
+<script src="./index_files/firebase-database-compat.js"></script>
+<link href="./index_files/css2" rel="stylesheet">
 <style>
 :root{--bg:#fff;--surface:#fafafa;--text:#0a0a0a;--muted:#8a8a8a;--line:#e8e8e8;--line-dark:#d0d0d0;--danger:#c8102e;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -142,6 +144,31 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-we
   .actions-bar,.modal-overlay,.progress-bar,.lang-switcher{display:none!important;}
   .header{position:static;}
 }
+/* ── ADMIN: SUMMARY + TABLE + CSV ── */
+.admin-toolbar{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+.admin-title{font-size:1.3rem;font-weight:400;letter-spacing:-0.01em;}
+.admin-meta{font-size:0.8rem;color:var(--muted);margin-top:0.2rem;}
+.export-btn{font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;padding:0.6rem 1.25rem;background:var(--text);color:var(--bg);border:none;cursor:pointer;letter-spacing:0.05em;}
+.export-btn:hover{opacity:0.82;}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line);margin-bottom:2rem;}
+.summary-card{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:1rem 1.25rem;}
+.summary-label{font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;}
+.summary-value{font-size:1.4rem;font-weight:400;letter-spacing:-0.02em;line-height:1.15;}
+.summary-sub{font-size:0.68rem;color:var(--muted);margin-top:0.25rem;}
+.responses-table{width:100%;border-collapse:collapse;font-size:0.76rem;}
+.responses-table th{text-align:left;padding:0.55rem 0.7rem;background:var(--surface);border:1px solid var(--line);font-size:0.56rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:400;white-space:nowrap;}
+.responses-table td{padding:0.55rem 0.7rem;border:1px solid var(--line);vertical-align:top;line-height:1.4;white-space:nowrap;}
+.responses-table tr:nth-child(even) td{background:var(--surface);}
+.responses-table .num{text-align:center;font-variant-numeric:tabular-nums;}
+.view-btn{font-family:'DM Sans',sans-serif;font-size:0.68rem;font-weight:500;padding:0.3rem 0.7rem;border:1px solid var(--line-dark);background:var(--bg);color:var(--text);cursor:pointer;}
+.view-btn:hover{background:var(--text);color:var(--bg);border-color:var(--text);}
+.no-data{text-align:center;padding:4rem 1rem;color:var(--muted);font-style:italic;}
+.admin-scroll{overflow-x:auto;padding-bottom:2px;scrollbar-width:thin;scrollbar-color:var(--line-dark) var(--line);}
+.admin-scroll::-webkit-scrollbar{height:5px;}
+.admin-scroll::-webkit-scrollbar-track{background:var(--line);}
+.admin-scroll::-webkit-scrollbar-thumb{background:var(--line-dark);border-radius:2px;}
+.scroll-hint{position:absolute;right:0;top:0;bottom:0;width:60px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:var(--danger);background:linear-gradient(to right,transparent,var(--bg) 55%);pointer-events:none;animation:scrollPulse 1.8s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:1;transform:translateX(0);}50%{opacity:0.2;transform:translateX(6px);}}
 </style>
 </head>
 <body>
@@ -149,299 +176,397 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-we
 <header class="header">
   <span class="logo-wordmark">LOSAN</span>
   <div class="header-right">
-    <span class="header-meta" id="hd-meta"></span>
+    <span class="header-meta" id="hd-meta">6 / 10</span>
     <div class="lang-switcher">
-      <button class="lang-btn active" data-lang="es" onclick="setLang('es')">ES</button>
-      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
+      <button class="lang-btn active" data-lang="es" onclick="setLang(&#39;es&#39;)">ES</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang(&#39;en&#39;)">EN</button>
+      <button class="lang-btn" data-lang="it" onclick="setLang(&#39;it&#39;)">IT</button>
     </div>
   </div>
 </header>
 
-<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 60%;"></div></div>
 
 <main class="form-body">
 
   <div class="intro">
-    <span class="eyebrow" data-i18n="intro_eyebrow"></span>
-    <h1 class="intro-title" data-i18n-html="intro_title"></h1>
-    <p class="intro-desc" data-i18n="intro_desc"></p>
+    <span class="eyebrow" data-i18n="intro_eyebrow">AW26 — Informe de feedback comercial</span>
+    <h1 class="intro-title" data-i18n-html="intro_title">Tu visión de mercado<br><em>hace mejores colecciones.</em></h1>
+    <p class="intro-desc" data-i18n="intro_desc">Rellena este formulario al finalizar la campaña de ventas. Tus respuestas, junto con las del resto de agentes, nos permitirán tomar decisiones de producto y colección mucho más precisas. 15–20 minutos.</p>
   </div>
 
   <div class="meta-grid">
-    <div class="meta-cell"><label data-i18n="lbl_season"></label><input type="text" id="m_temporada" value="AW26"></div>
-    <div class="meta-cell"><label data-i18n="lbl_agent"></label><input type="text" id="m_agente" data-i18n-placeholder="ph_agent"></div>
-    <div class="meta-cell"><label data-i18n="lbl_country"></label><input type="text" id="m_pais" data-i18n-placeholder="ph_country"></div>
-    <div class="meta-cell"><label data-i18n="lbl_date"></label><input type="date" id="m_fecha"></div>
+    <div class="meta-cell"><label data-i18n="lbl_season">Temporada</label><input type="text" id="m_temporada" value="AW26"></div>
+    <div class="meta-cell"><label data-i18n="lbl_agent">Agente</label><input type="text" id="m_agente" data-i18n-placeholder="ph_agent" placeholder="Tu nombre completo"></div>
+    <div class="meta-cell"><label data-i18n="lbl_country">País / Mercado</label><input type="text" id="m_pais" data-i18n-placeholder="ph_country" placeholder="País o territorio"></div>
+    <div class="meta-cell"><label data-i18n="lbl_date">Fecha</label><input type="date" id="m_fecha"></div>
   </div>
 
   <!-- S1 -->
   <div class="section" data-sec="1">
-    <p class="s-eyebrow" data-i18n="s1_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s1_title"></h2>
-    <p class="s-hint" data-i18n="s1_hint"></p>
+    <p class="s-eyebrow" data-i18n="s1_eyebrow">Sección 1 de 10</p>
+    <h2 class="s-title" data-i18n-html="s1_title">Valoración general<br><em>de la colección.</em></h2>
+    <p class="s-hint" data-i18n="s1_hint">Puntúa cada área de 1 (muy bajo) a 5 (excelente).</p>
     <div class="rating-block">
-      <div class="rating-row"><span class="rating-label" data-i18n="r_atractivo"></span><div class="rating-opts"><input type="radio" name="r_atractivo" id="r_at1" value="1"><label for="r_at1">1</label><input type="radio" name="r_atractivo" id="r_at2" value="2"><label for="r_at2">2</label><input type="radio" name="r_atractivo" id="r_at3" value="3"><label for="r_at3">3</label><input type="radio" name="r_atractivo" id="r_at4" value="4"><label for="r_at4">4</label><input type="radio" name="r_atractivo" id="r_at5" value="5"><label for="r_at5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_moda"></span><div class="rating-opts"><input type="radio" name="r_moda" id="r_mo1" value="1"><label for="r_mo1">1</label><input type="radio" name="r_moda" id="r_mo2" value="2"><label for="r_mo2">2</label><input type="radio" name="r_moda" id="r_mo3" value="3"><label for="r_mo3">3</label><input type="radio" name="r_moda" id="r_mo4" value="4"><label for="r_mo4">4</label><input type="radio" name="r_moda" id="r_mo5" value="5"><label for="r_mo5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_comercial"></span><div class="rating-opts"><input type="radio" name="r_comercial" id="r_co1" value="1"><label for="r_co1">1</label><input type="radio" name="r_comercial" id="r_co2" value="2"><label for="r_co2">2</label><input type="radio" name="r_comercial" id="r_co3" value="3"><label for="r_co3">3</label><input type="radio" name="r_comercial" id="r_co4" value="4"><label for="r_co4">4</label><input type="radio" name="r_comercial" id="r_co5" value="5"><label for="r_co5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_precio"></span><div class="rating-opts"><input type="radio" name="r_precio" id="r_pr1" value="1"><label for="r_pr1">1</label><input type="radio" name="r_precio" id="r_pr2" value="2"><label for="r_pr2">2</label><input type="radio" name="r_precio" id="r_pr3" value="3"><label for="r_pr3">3</label><input type="radio" name="r_precio" id="r_pr4" value="4"><label for="r_pr4">4</label><input type="radio" name="r_precio" id="r_pr5" value="5"><label for="r_pr5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_equilibrio"></span><div class="rating-opts"><input type="radio" name="r_equilibrio" id="r_eq1" value="1"><label for="r_eq1">1</label><input type="radio" name="r_equilibrio" id="r_eq2" value="2"><label for="r_eq2">2</label><input type="radio" name="r_equilibrio" id="r_eq3" value="3"><label for="r_eq3">3</label><input type="radio" name="r_equilibrio" id="r_eq4" value="4"><label for="r_eq4">4</label><input type="radio" name="r_equilibrio" id="r_eq5" value="5"><label for="r_eq5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_color"></span><div class="rating-opts"><input type="radio" name="r_color" id="r_cl1" value="1"><label for="r_cl1">1</label><input type="radio" name="r_color" id="r_cl2" value="2"><label for="r_cl2">2</label><input type="radio" name="r_color" id="r_cl3" value="3"><label for="r_cl3">3</label><input type="radio" name="r_color" id="r_cl4" value="4"><label for="r_cl4">4</label><input type="radio" name="r_color" id="r_cl5" value="5"><label for="r_cl5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_relacion"></span><div class="rating-opts"><input type="radio" name="r_relacion" id="r_re1" value="1"><label for="r_re1">1</label><input type="radio" name="r_relacion" id="r_re2" value="2"><label for="r_re2">2</label><input type="radio" name="r_relacion" id="r_re3" value="3"><label for="r_re3">3</label><input type="radio" name="r_relacion" id="r_re4" value="4"><label for="r_re4">4</label><input type="radio" name="r_relacion" id="r_re5" value="5"><label for="r_re5">5</label></div></div>
+      <div class="rating-row"><span class="rating-label" data-i18n="r_atractivo">Atractivo general</span><div class="rating-opts"><input type="radio" name="r_atractivo" id="r_at1" value="1"><label for="r_at1">1</label><input type="radio" name="r_atractivo" id="r_at2" value="2"><label for="r_at2">2</label><input type="radio" name="r_atractivo" id="r_at3" value="3"><label for="r_at3">3</label><input type="radio" name="r_atractivo" id="r_at4" value="4"><label for="r_at4">4</label><input type="radio" name="r_atractivo" id="r_at5" value="5"><label for="r_at5">5</label></div></div>
+      <div class="rating-row"><span class="rating-label" data-i18n="r_moda">Nivel de moda</span><div class="rating-opts"><input type="radio" name="r_moda" id="r_mo1" value="1"><label for="r_mo1">1</label><input type="radio" name="r_moda" id="r_mo2" value="2"><label for="r_mo2">2</label><input type="radio" name="r_moda" id="r_mo3" value="3"><label for="r_mo3">3</label><input type="radio" name="r_moda" id="r_mo4" value="4"><label for="r_mo4">4</label><input type="radio" name="r_moda" id="r_mo5" value="5"><label for="r_mo5">5</label></div></div>
+      <div class="rating-row"><span class="rating-label" data-i18n="r_comercial">Potencial comercial</span><div class="rating-opts"><input type="radio" name="r_comercial" id="r_co1" value="1"><label for="r_co1">1</label><input type="radio" name="r_comercial" id="r_co2" value="2"><label for="r_co2">2</label><input type="radio" name="r_comercial" id="r_co3" value="3"><label for="r_co3">3</label><input type="radio" name="r_comercial" id="r_co4" value="4"><label for="r_co4">4</label><input type="radio" name="r_comercial" id="r_co5" value="5"><label for="r_co5">5</label></div></div>
+      <div class="rating-row"><span class="rating-label" data-i18n="r_precio">Posicionamiento de precio</span><div class="rating-opts"><input type="radio" name="r_precio" id="r_pr1" value="1"><label for="r_pr1">1</label><input type="radio" name="r_precio" id="r_pr2" value="2"><label for="r_pr2">2</label><input type="radio" name="r_precio" id="r_pr3" value="3"><label for="r_pr3">3</label><input type="radio" name="r_precio" id="r_pr4" value="4"><label for="r_pr4">4</label><input type="radio" name="r_precio" id="r_pr5" value="5"><label for="r_pr5">5</label></div></div>
+      <div class="rating-row"><span class="rating-label" data-i18n="r_equilibrio">Equilibrio de la colección</span><div class="rating-opts"><input type="radio" name="r_equilibrio" id="r_eq1" value="1"><label for="r_eq1">1</label><input type="radio" name="r_equilibrio" id="r_eq2" value="2"><label for="r_eq2">2</label><input type="radio" name="r_equilibrio" id="r_eq3" value="3"><label for="r_eq3">3</label><input type="radio" name="r_equilibrio" id="r_eq4" value="4"><label for="r_eq4">4</label><input type="radio" name="r_equilibrio" id="r_eq5" value="5"><label for="r_eq5">5</label></div></div>
+      <div class="rating-row"><span class="rating-label" data-i18n="r_color">Paleta de color</span><div class="rating-opts"><input type="radio" name="r_color" id="r_cl1" value="1"><label for="r_cl1">1</label><input type="radio" name="r_color" id="r_cl2" value="2"><label for="r_cl2">2</label><input type="radio" name="r_color" id="r_cl3" value="3"><label for="r_cl3">3</label><input type="radio" name="r_color" id="r_cl4" value="4"><label for="r_cl4">4</label><input type="radio" name="r_color" id="r_cl5" value="5"><label for="r_cl5">5</label></div></div>
+      <div class="rating-row"><span class="rating-label" data-i18n="r_relacion">Relación moda / básico</span><div class="rating-opts"><input type="radio" name="r_relacion" id="r_re1" value="1"><label for="r_re1">1</label><input type="radio" name="r_relacion" id="r_re2" value="2"><label for="r_re2">2</label><input type="radio" name="r_relacion" id="r_re3" value="3"><label for="r_re3">3</label><input type="radio" name="r_relacion" id="r_re4" value="4"><label for="r_re4">4</label><input type="radio" name="r_relacion" id="r_re5" value="5"><label for="r_re5">5</label></div></div>
     </div>
   </div>
 
   <!-- S2 -->
   <div class="section" data-sec="2">
-    <p class="s-eyebrow" data-i18n="s2_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s2_title"></h2>
-    <p class="s-hint" data-i18n="s2_hint"></p>
-    <div class="family-grid" id="grid-success"></div>
+    <p class="s-eyebrow" data-i18n="s2_eyebrow">Sección 2 de 10</p>
+    <h2 class="s-title" data-i18n-html="s2_title">Rangos de producto<br><em>más exitosos.</em></h2>
+    <p class="s-hint" data-i18n="s2_hint">Selecciona los rangos que mejor acogida han tenido. El número indica el orden de selección.</p>
+    <div class="family-grid" id="grid-success"><div class="fam-row" onclick="toggleFamily(&#39;f_basic_tee&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Camiseta básica</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_graphic_tee&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Camiseta estampada</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_polo&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Polo</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_casual_shirt&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Camisa casual</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_dress_shirt&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Camisa vestir</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_overshirt&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Sobrecamisa</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_sweatshirt&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Sudadera</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_hoodie&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Sudadera capucha</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_knitwear&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Jersey / Punto</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_cardigan&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Cardigan</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_denim&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Denim / Vaquero</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_chino&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Pantalón chino</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_knit_trs&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Pantalón punto</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_coat&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Abrigo</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_jacket&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Chaqueta</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_wind&#39;,&#39;success&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Cortavientos</span>
+    </div></div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s2_why_lbl"></span>
-      <textarea class="textarea-field" id="ex_porque" data-i18n-placeholder="s2_why_ph"></textarea>
+      <span class="field-label" data-i18n="s2_why_lbl">¿Por qué han funcionado especialmente bien?</span>
+      <textarea class="textarea-field" id="ex_porque" data-i18n-placeholder="s2_why_ph" placeholder="Explica los factores de éxito..."></textarea>
     </div>
   </div>
 
   <!-- S3 -->
   <div class="section" data-sec="3">
-    <p class="s-eyebrow" data-i18n="s3_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s3_title"></h2>
-    <p class="s-hint" data-i18n="s3_hint"></p>
-    <div class="family-grid" id="grid-weak"></div>
+    <p class="s-eyebrow" data-i18n="s3_eyebrow">Sección 3 de 10</p>
+    <h2 class="s-title" data-i18n-html="s3_title">Rangos de producto<br><em>más débiles.</em></h2>
+    <p class="s-hint" data-i18n="s3_hint">Selecciona los rangos que han generado menor interés. El número indica el orden de selección.</p>
+    <div class="family-grid" id="grid-weak"><div class="fam-row" onclick="toggleFamily(&#39;f_basic_tee&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Camiseta básica</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_graphic_tee&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Camiseta estampada</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_polo&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Polo</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_casual_shirt&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Camisa casual</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_dress_shirt&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Camisa vestir</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_overshirt&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Sobrecamisa</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_sweatshirt&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Sudadera</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_hoodie&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Sudadera capucha</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_knitwear&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Jersey / Punto</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_cardigan&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Cardigan</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_denim&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Denim / Vaquero</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_chino&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Pantalón chino</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_knit_trs&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Pantalón punto</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_coat&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Abrigo</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_jacket&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Chaqueta</span>
+    </div><div class="fam-row" onclick="toggleFamily(&#39;f_wind&#39;,&#39;weak&#39;)">
+      <span class="fam-indicator">—</span>
+      <span class="fam-name">Cortavientos</span>
+    </div></div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s3_why_lbl"></span>
+      <span class="field-label" data-i18n="s3_why_lbl">¿Cuáles han sido los motivos?</span>
       <div class="check-group check-group-2col">
-        <label class="check-row"><input type="checkbox" name="motivo" value="precio"><span class="check-ind"></span><span class="check-label" data-i18n="mot_precio"></span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="diseno"><span class="check-ind"></span><span class="check-label" data-i18n="mot_diseno"></span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="tendencia"><span class="check-ind"></span><span class="check-label" data-i18n="mot_tendencia"></span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="colorido"><span class="check-ind"></span><span class="check-label" data-i18n="mot_color"></span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="tejido"><span class="check-ind"></span><span class="check-label" data-i18n="mot_tejido"></span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="fit"><span class="check-ind"></span><span class="check-label" data-i18n="mot_fit"></span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="competencia"><span class="check-ind"></span><span class="check-label" data-i18n="mot_competencia"></span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="otro"><span class="check-ind"></span><span class="check-label" data-i18n="mot_otro"></span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="precio"><span class="check-ind"></span><span class="check-label" data-i18n="mot_precio">Precio</span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="diseno"><span class="check-ind"></span><span class="check-label" data-i18n="mot_diseno">Diseño</span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="tendencia"><span class="check-ind"></span><span class="check-label" data-i18n="mot_tendencia">Falta de tendencia</span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="colorido"><span class="check-ind"></span><span class="check-label" data-i18n="mot_color">Colorido</span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="tejido"><span class="check-ind"></span><span class="check-label" data-i18n="mot_tejido">Tejido</span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="fit"><span class="check-ind"></span><span class="check-label" data-i18n="mot_fit">Fit / Patronaje</span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="competencia"><span class="check-ind"></span><span class="check-label" data-i18n="mot_competencia">Competencia</span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="otro"><span class="check-ind"></span><span class="check-label" data-i18n="mot_otro">Otro</span></label>
       </div>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s3_com_lbl"></span>
-      <textarea class="textarea-field" id="db_com" data-i18n-placeholder="s3_com_ph"></textarea>
+      <span class="field-label" data-i18n="s3_com_lbl">Comentarios adicionales</span>
+      <textarea class="textarea-field" id="db_com" data-i18n-placeholder="s3_com_ph" placeholder="Detalla si lo consideras necesario..."></textarea>
     </div>
   </div>
 
   <!-- S4 -->
   <div class="section" data-sec="4">
-    <p class="s-eyebrow" data-i18n="s4_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s4_title"></h2>
-    <p class="s-hint" data-i18n="s4_hint"></p>
+    <p class="s-eyebrow" data-i18n="s4_eyebrow">Sección 4 de 10</p>
+    <h2 class="s-title" data-i18n-html="s4_title">Carencias<br><em>de producto.</em></h2>
+    <p class="s-hint" data-i18n="s4_hint">¿Qué productos han solicitado los clientes que no estaban suficientemente representados?</p>
     <div class="check-group check-group-2col">
-      <label class="check-row"><input type="checkbox" name="carencia" value="basic_tee"><span class="check-ind"></span><span class="check-label" data-i18n="f_basic_tee"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="graphic_tee"><span class="check-ind"></span><span class="check-label" data-i18n="f_graphic_tee"></span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="basic_tee"><span class="check-ind"></span><span class="check-label" data-i18n="f_basic_tee">Camiseta básica</span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="graphic_tee"><span class="check-ind"></span><span class="check-label" data-i18n="f_graphic_tee">Camiseta estampada</span></label>
       <label class="check-row"><input type="checkbox" name="carencia" value="polo"><span class="check-ind"></span><span class="check-label">Polo</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="casual_shirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_casual_shirt"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="dress_shirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_dress_shirt"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="overshirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_overshirt"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="sweatshirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_sweatshirt"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="hoodie"><span class="check-ind"></span><span class="check-label" data-i18n="f_hoodie"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="knitwear"><span class="check-ind"></span><span class="check-label" data-i18n="f_knitwear"></span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="casual_shirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_casual_shirt">Camisa casual</span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="dress_shirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_dress_shirt">Camisa vestir</span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="overshirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_overshirt">Sobrecamisa</span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="sweatshirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_sweatshirt">Sudadera</span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="hoodie"><span class="check-ind"></span><span class="check-label" data-i18n="f_hoodie">Sudadera capucha</span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="knitwear"><span class="check-ind"></span><span class="check-label" data-i18n="f_knitwear">Jersey / Punto</span></label>
       <label class="check-row"><input type="checkbox" name="carencia" value="cardigan"><span class="check-ind"></span><span class="check-label">Cardigan</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="denim"><span class="check-ind"></span><span class="check-label" data-i18n="f_denim"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="chino"><span class="check-ind"></span><span class="check-label" data-i18n="f_chino"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="knit_trs"><span class="check-ind"></span><span class="check-label" data-i18n="f_knit_trs"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="coat"><span class="check-ind"></span><span class="check-label" data-i18n="f_coat"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="jacket"><span class="check-ind"></span><span class="check-label" data-i18n="f_jacket"></span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="windbreaker"><span class="check-ind"></span><span class="check-label" data-i18n="f_wind"></span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="denim"><span class="check-ind"></span><span class="check-label" data-i18n="f_denim">Denim / Vaquero</span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="chino"><span class="check-ind"></span><span class="check-label" data-i18n="f_chino">Pantalón chino</span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="knit_trs"><span class="check-ind"></span><span class="check-label" data-i18n="f_knit_trs">Pantalón punto</span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="coat"><span class="check-ind"></span><span class="check-label" data-i18n="f_coat">Abrigo</span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="jacket"><span class="check-ind"></span><span class="check-label" data-i18n="f_jacket">Chaqueta</span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="windbreaker"><span class="check-ind"></span><span class="check-label" data-i18n="f_wind">Cortavientos</span></label>
     </div>
     <div class="input-wrap">
-      <label class="field-label" data-i18n="s4_otros_lbl"></label>
-      <input type="text" class="input-line" id="car_otros" data-i18n-placeholder="s4_otros_ph">
+      <label class="field-label" data-i18n="s4_otros_lbl">Otros productos no listados</label>
+      <input type="text" class="input-line" id="car_otros" data-i18n-placeholder="s4_otros_ph" placeholder="Especifica...">
     </div>
   </div>
 
   <!-- S5 -->
   <div class="section" data-sec="5">
-    <p class="s-eyebrow" data-i18n="s5_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s5_title"></h2>
-    <p class="s-hint" data-i18n="s5_hint"></p>
+    <p class="s-eyebrow" data-i18n="s5_eyebrow">Sección 5 de 10</p>
+    <h2 class="s-title" data-i18n-html="s5_title">Análisis<br><em>del surtido.</em></h2>
+    <p class="s-hint" data-i18n="s5_hint">¿Qué categorías considera que estaban mal representadas en amplitud o profundidad?</p>
     <div class="textarea-wrap" style="margin-top:0;">
-      <span class="field-label" data-i18n="s5_exceso_lbl"></span>
-      <textarea class="textarea-field" id="sur_exceso" data-i18n-placeholder="s5_exceso_ph"></textarea>
+      <span class="field-label" data-i18n="s5_exceso_lbl">Excesivamente representadas</span>
+      <textarea class="textarea-field" id="sur_exceso" data-i18n-placeholder="s5_exceso_ph" placeholder="Categorías con demasiado surtido..."></textarea>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s5_falta_lbl"></span>
-      <textarea class="textarea-field" id="sur_falta" data-i18n-placeholder="s5_falta_ph"></textarea>
+      <span class="field-label" data-i18n="s5_falta_lbl">Insuficientemente representadas</span>
+      <textarea class="textarea-field" id="sur_falta" data-i18n-placeholder="s5_falta_ph" placeholder="Categorías con poco surtido..."></textarea>
     </div>
   </div>
 
   <!-- S6 -->
   <div class="section" data-sec="6">
-    <p class="s-eyebrow" data-i18n="s6_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s6_title"></h2>
+    <p class="s-eyebrow" data-i18n="s6_eyebrow">Sección 6 de 10</p>
+    <h2 class="s-title" data-i18n-html="s6_title">Feedback<br><em>sobre precios.</em></h2>
     <div class="textarea-wrap" style="margin-top:0;">
-      <span class="field-label" data-i18n="s6_caros_lbl"></span>
-      <textarea class="textarea-field" id="pre_caros" data-i18n-placeholder="s6_caros_ph"></textarea>
+      <span class="field-label" data-i18n="s6_caros_lbl">¿Qué rangos se perciben como demasiado caros?</span>
+      <textarea class="textarea-field" id="pre_caros" data-i18n-placeholder="s6_caros_ph" placeholder="Indica los rangos..."></textarea>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s6_comp_lbl"></span>
-      <textarea class="textarea-field" id="pre_comp" data-i18n-placeholder="s6_comp_ph"></textarea>
+      <span class="field-label" data-i18n="s6_comp_lbl">¿Qué rangos se perciben como especialmente competitivos?</span>
+      <textarea class="textarea-field" id="pre_comp" data-i18n-placeholder="s6_comp_ph" placeholder="Indica los rangos..."></textarea>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s6_perdida_lbl"></span>
+      <span class="field-label" data-i18n="s6_perdida_lbl">¿Ha perdido ventas por posicionamiento de precio?</span>
       <div class="yesno-row">
-        <input type="radio" name="pre_perdida" id="yn_si" value="si"><label for="yn_si" data-i18n="yn_yes"></label>
-        <input type="radio" name="pre_perdida" id="yn_no" value="no"><label for="yn_no" data-i18n="yn_no"></label>
-        <input type="radio" name="pre_perdida" id="yn_av" value="algunos"><label for="yn_av" data-i18n="yn_some"></label>
+        <input type="radio" name="pre_perdida" id="yn_si" value="si"><label for="yn_si" data-i18n="yn_yes">Sí</label>
+        <input type="radio" name="pre_perdida" id="yn_no" value="no"><label for="yn_no" data-i18n="yn_no">No</label>
+        <input type="radio" name="pre_perdida" id="yn_av" value="algunos"><label for="yn_av" data-i18n="yn_some">En algunos casos</label>
       </div>
-      <textarea class="textarea-field" id="pre_explica" data-i18n-placeholder="s6_explica_ph"></textarea>
+      <textarea class="textarea-field" id="pre_explica" data-i18n-placeholder="s6_explica_ph" placeholder="Si aplica, detalla los casos..."></textarea>
     </div>
   </div>
 
   <!-- S7 -->
   <div class="section" data-sec="7">
-    <p class="s-eyebrow" data-i18n="s7_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s7_title"></h2>
-    <p class="s-hint" data-i18n="s7_hint"></p>
+    <p class="s-eyebrow" data-i18n="s7_eyebrow">Sección 7 de 10</p>
+    <h2 class="s-title" data-i18n-html="s7_title">Fit, calidad<br><em>y tejidos.</em></h2>
+    <p class="s-hint" data-i18n="s7_hint">¿Ha recibido comentarios de clientes sobre alguno de estos aspectos?</p>
     <div class="check-group check-group-2col">
-      <label class="check-row"><input type="checkbox" name="fit" value="tallaje"><span class="check-ind"></span><span class="check-label" data-i18n="ft_tallaje"></span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="patronaje"><span class="check-ind"></span><span class="check-label" data-i18n="ft_patronaje"></span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="largo"><span class="check-ind"></span><span class="check-label" data-i18n="ft_largo"></span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="calidad"><span class="check-ind"></span><span class="check-label" data-i18n="ft_calidad"></span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="tejidos"><span class="check-ind"></span><span class="check-label" data-i18n="ft_tejidos"></span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="acabados"><span class="check-ind"></span><span class="check-label" data-i18n="ft_acabados"></span></label>
+      <label class="check-row"><input type="checkbox" name="fit" value="tallaje"><span class="check-ind"></span><span class="check-label" data-i18n="ft_tallaje">Tallaje</span></label>
+      <label class="check-row"><input type="checkbox" name="fit" value="patronaje"><span class="check-ind"></span><span class="check-label" data-i18n="ft_patronaje">Patronaje</span></label>
+      <label class="check-row"><input type="checkbox" name="fit" value="largo"><span class="check-ind"></span><span class="check-label" data-i18n="ft_largo">Largo de prendas</span></label>
+      <label class="check-row"><input type="checkbox" name="fit" value="calidad"><span class="check-ind"></span><span class="check-label" data-i18n="ft_calidad">Calidad percibida</span></label>
+      <label class="check-row"><input type="checkbox" name="fit" value="tejidos"><span class="check-ind"></span><span class="check-label" data-i18n="ft_tejidos">Tejidos</span></label>
+      <label class="check-row"><input type="checkbox" name="fit" value="acabados"><span class="check-ind"></span><span class="check-label" data-i18n="ft_acabados">Acabados</span></label>
       <label class="check-row"><input type="checkbox" name="fit" value="packaging"><span class="check-ind"></span><span class="check-label">Packaging</span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="etiquetado"><span class="check-ind"></span><span class="check-label" data-i18n="ft_etiquetado"></span></label>
+      <label class="check-row"><input type="checkbox" name="fit" value="etiquetado"><span class="check-ind"></span><span class="check-label" data-i18n="ft_etiquetado">Etiquetado</span></label>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s7_com_lbl"></span>
-      <textarea class="textarea-field" id="fit_com" data-i18n-placeholder="s7_com_ph"></textarea>
+      <span class="field-label" data-i18n="s7_com_lbl">Detalle los comentarios más repetidos</span>
+      <textarea class="textarea-field" id="fit_com" data-i18n-placeholder="s7_com_ph" placeholder="¿Qué es lo que más han mencionado?"></textarea>
     </div>
   </div>
 
   <!-- S8 -->
   <div class="section" data-sec="8">
-    <p class="s-eyebrow" data-i18n="s8_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s8_title"></h2>
-    <p class="s-hint" data-i18n="s8_hint"></p>
+    <p class="s-eyebrow" data-i18n="s8_eyebrow">Sección 8 de 10</p>
+    <h2 class="s-title" data-i18n-html="s8_title">Análisis<br><em>de la competencia.</em></h2>
+    <p class="s-hint" data-i18n="s8_hint">Marcas más frecuentes en las comparaciones de los clientes.</p>
     <div class="num-list">
-      <label class="num-row"><span class="num-badge">01</span><input type="text" id="cp1" data-i18n-placeholder="cp_ph"></label>
-      <label class="num-row"><span class="num-badge">02</span><input type="text" id="cp2" data-i18n-placeholder="cp_ph"></label>
-      <label class="num-row"><span class="num-badge">03</span><input type="text" id="cp3" data-i18n-placeholder="cp_ph"></label>
-      <label class="num-row"><span class="num-badge">04</span><input type="text" id="cp4" data-i18n-placeholder="cp_ph"></label>
-      <label class="num-row"><span class="num-badge">05</span><input type="text" id="cp5" data-i18n-placeholder="cp_ph"></label>
+      <label class="num-row"><span class="num-badge">01</span><input type="text" id="cp1" data-i18n-placeholder="cp_ph" placeholder="Marca competidora"></label>
+      <label class="num-row"><span class="num-badge">02</span><input type="text" id="cp2" data-i18n-placeholder="cp_ph" placeholder="Marca competidora"></label>
+      <label class="num-row"><span class="num-badge">03</span><input type="text" id="cp3" data-i18n-placeholder="cp_ph" placeholder="Marca competidora"></label>
+      <label class="num-row"><span class="num-badge">04</span><input type="text" id="cp4" data-i18n-placeholder="cp_ph" placeholder="Marca competidora"></label>
+      <label class="num-row"><span class="num-badge">05</span><input type="text" id="cp5" data-i18n-placeholder="cp_ph" placeholder="Marca competidora"></label>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s8_better_lbl"></span>
-      <textarea class="textarea-field" id="cp_mejor" data-i18n-placeholder="s8_better_ph"></textarea>
+      <span class="field-label" data-i18n="s8_better_lbl">¿Qué hacen mejor que LOSAN?</span>
+      <textarea class="textarea-field" id="cp_mejor" data-i18n-placeholder="s8_better_ph" placeholder="Puntos fuertes de la competencia..."></textarea>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s8_losan_lbl"></span>
-      <textarea class="textarea-field" id="cp_losan" data-i18n-placeholder="s8_losan_ph"></textarea>
+      <span class="field-label" data-i18n="s8_losan_lbl">¿Qué hacemos mejor que ellos?</span>
+      <textarea class="textarea-field" id="cp_losan" data-i18n-placeholder="s8_losan_ph" placeholder="Ventajas diferenciales de LOSAN..."></textarea>
     </div>
   </div>
 
   <!-- S9 -->
   <div class="section" data-sec="9">
-    <p class="s-eyebrow" data-i18n="s9_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="s9_title"></h2>
-    <p class="s-hint" data-i18n="s9_hint"></p>
+    <p class="s-eyebrow" data-i18n="s9_eyebrow">Sección 9 de 10</p>
+    <h2 class="s-title" data-i18n-html="s9_title">Tendencias y<br><em>oportunidades de mercado.</em></h2>
+    <p class="s-hint" data-i18n="s9_hint">Las 5 tendencias que detectas en tu mercado que deberían incorporarse en futuras colecciones.</p>
     <div class="num-list">
-      <label class="num-row"><span class="num-badge">01</span><input type="text" id="td1" data-i18n-placeholder="td_ph"></label>
-      <label class="num-row"><span class="num-badge">02</span><input type="text" id="td2" data-i18n-placeholder="td_ph"></label>
-      <label class="num-row"><span class="num-badge">03</span><input type="text" id="td3" data-i18n-placeholder="td_ph"></label>
-      <label class="num-row"><span class="num-badge">04</span><input type="text" id="td4" data-i18n-placeholder="td_ph"></label>
-      <label class="num-row"><span class="num-badge">05</span><input type="text" id="td5" data-i18n-placeholder="td_ph"></label>
+      <label class="num-row"><span class="num-badge">01</span><input type="text" id="td1" data-i18n-placeholder="td_ph" placeholder="Tendencia de mercado"></label>
+      <label class="num-row"><span class="num-badge">02</span><input type="text" id="td2" data-i18n-placeholder="td_ph" placeholder="Tendencia de mercado"></label>
+      <label class="num-row"><span class="num-badge">03</span><input type="text" id="td3" data-i18n-placeholder="td_ph" placeholder="Tendencia de mercado"></label>
+      <label class="num-row"><span class="num-badge">04</span><input type="text" id="td4" data-i18n-placeholder="td_ph" placeholder="Tendencia de mercado"></label>
+      <label class="num-row"><span class="num-badge">05</span><input type="text" id="td5" data-i18n-placeholder="td_ph" placeholder="Tendencia de mercado"></label>
     </div>
   </div>
 
   <!-- S10 -->
   <div class="section" data-sec="10">
-    <p class="s-eyebrow"><span data-i18n="s10_eyebrow"></span> <span class="key-badge" data-i18n="key_badge"></span></p>
-    <h2 class="s-title" data-i18n-html="s10_title"></h2>
-    <p class="s-hint" data-i18n="s10_hint"></p>
+    <p class="s-eyebrow"><span data-i18n="s10_eyebrow">Sección 10 de 10</span> <span class="key-badge" data-i18n="key_badge">Pregunta clave</span></p>
+    <h2 class="s-title" data-i18n-html="s10_title">Referencias<br><em>echadas en falta.</em></h2>
+    <p class="s-hint" data-i18n="s10_hint">Pensando en toda la campaña de ventas.</p>
     <div class="textarea-wrap" style="margin-top:0;">
-      <span class="field-label" data-i18n="s10_falta_lbl"></span>
-      <textarea class="textarea-field" id="ref_falta" data-i18n-placeholder="s10_falta_ph"></textarea>
+      <span class="field-label" data-i18n="s10_falta_lbl">¿Qué referencias o productos has echado de menos? Indica ejemplos concretos.</span>
+      <textarea class="textarea-field" id="ref_falta" data-i18n-placeholder="s10_falta_ph" placeholder="Sé específico: tejidos, siluetas, precios, categorías..."></textarea>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s10_oport_lbl"></span>
-      <textarea class="textarea-field" id="ref_oport" data-i18n-placeholder="s10_oport_ph"></textarea>
+      <span class="field-label" data-i18n="s10_oport_lbl">¿Qué oportunidades crees que hemos perdido?</span>
+      <textarea class="textarea-field" id="ref_oport" data-i18n-placeholder="s10_oport_ph" placeholder="Estima el impacto si puedes..."></textarea>
     </div>
   </div>
 
   <!-- CIERRE -->
   <div class="section">
-    <p class="s-eyebrow" data-i18n="sc_eyebrow"></p>
-    <h2 class="s-title" data-i18n-html="sc_title"></h2>
+    <p class="s-eyebrow" data-i18n="sc_eyebrow">Para cerrar</p>
+    <h2 class="s-title" data-i18n-html="sc_title">Top 5 recomendaciones<br><em>para la próxima temporada.</em></h2>
     <div class="num-list">
-      <label class="num-row"><span class="num-badge">01</span><input type="text" id="rc1" data-i18n-placeholder="rc_ph"></label>
-      <label class="num-row"><span class="num-badge">02</span><input type="text" id="rc2" data-i18n-placeholder="rc_ph"></label>
-      <label class="num-row"><span class="num-badge">03</span><input type="text" id="rc3" data-i18n-placeholder="rc_ph"></label>
-      <label class="num-row"><span class="num-badge">04</span><input type="text" id="rc4" data-i18n-placeholder="rc_ph"></label>
-      <label class="num-row"><span class="num-badge">05</span><input type="text" id="rc5" data-i18n-placeholder="rc_ph"></label>
+      <label class="num-row"><span class="num-badge">01</span><input type="text" id="rc1" data-i18n-placeholder="rc_ph" placeholder="Tu recomendación"></label>
+      <label class="num-row"><span class="num-badge">02</span><input type="text" id="rc2" data-i18n-placeholder="rc_ph" placeholder="Tu recomendación"></label>
+      <label class="num-row"><span class="num-badge">03</span><input type="text" id="rc3" data-i18n-placeholder="rc_ph" placeholder="Tu recomendación"></label>
+      <label class="num-row"><span class="num-badge">04</span><input type="text" id="rc4" data-i18n-placeholder="rc_ph" placeholder="Tu recomendación"></label>
+      <label class="num-row"><span class="num-badge">05</span><input type="text" id="rc5" data-i18n-placeholder="rc_ph" placeholder="Tu recomendación"></label>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="sc_com_lbl"></span>
-      <textarea class="textarea-field" id="comentarios" data-i18n-placeholder="sc_com_ph"></textarea>
+      <span class="field-label" data-i18n="sc_com_lbl">Comentarios finales</span>
+      <textarea class="textarea-field" id="comentarios" data-i18n-placeholder="sc_com_ph" placeholder="Cualquier observación adicional que pueda ayudarnos a mejorar..."></textarea>
     </div>
   </div>
 
 </main>
 
 <div class="actions-bar">
-  <button class="btn btn-primary" onclick="submitForm()" data-i18n="btn_submit"></button>
-  <button class="btn" onclick="window.print()" data-i18n="btn_print"></button>
-  <button class="btn-ghost btn" onclick="limpiar()" data-i18n="btn_clear"></button>
+  <button class="btn btn-primary" id="submitBtn" onclick="submitForm()" data-i18n="btn_submit">Enviar respuesta →</button>
+  <button class="btn" onclick="window.print()" data-i18n="btn_print">Imprimir</button>
+  <button class="btn-ghost btn" onclick="limpiar()" data-i18n="btn_clear">Limpiar</button>
 </div>
 
 <!-- SUBMIT SUCCESS OVERLAY -->
 <div class="submit-overlay" id="submitOverlay">
   <div class="submit-icon">✓</div>
-  <h2 class="submit-title" data-i18n="submit_ok_title"></h2>
-  <p class="submit-desc" data-i18n="submit_ok_desc"></p>
-  <button class="btn" onclick="closeSubmitOverlay()" data-i18n="submit_ok_btn"></button>
+  <h2 class="submit-title" data-i18n="submit_ok_title">¡Respuesta enviada!</h2>
+  <p class="submit-desc" data-i18n="submit_ok_desc">Se ha abierto tu cliente de correo con las respuestas listas para enviar. Gracias por tu feedback.</p>
+  <button class="btn" onclick="closeSubmitOverlay()" data-i18n="submit_ok_btn">Cerrar</button>
 </div>
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-head">
-      <h2 data-i18n="modal_title"></h2>
+      <h2 id="modalTitle" data-i18n="modal_title">Respuestas — AW26</h2>
       <button class="modal-close" onclick="cerrarModal()">×</button>
     </div>
     <div class="modal-body">
-      <p class="modal-note" data-i18n="modal_note"></p>
+      <p class="modal-note" id="modalNote" data-i18n="modal_note">Copia el texto y pégalo en un email, o usa el botón de envío directo.</p>
       <pre class="modal-pre" id="textoExportado"></pre>
     </div>
     <div class="modal-foot">
-      <button class="btn btn-primary" onclick="copiar()" data-i18n="btn_copy"></button>
-      <button class="btn" onclick="enviarEmail()" data-i18n="btn_email"></button>
-      <button class="btn-ghost btn" onclick="cerrarModal()" data-i18n="btn_close"></button>
+      <button class="btn btn-primary" onclick="copiar()" data-i18n="btn_copy">Copiar texto</button>
+      <button class="btn-ghost btn" onclick="cerrarModal()" data-i18n="btn_close">Cerrar</button>
     </div>
   </div>
 </div>
 
 <!-- ADMIN VIEW -->
-<div id="admin-view">
+<div id="admin-view" style="display: none;">
   <header class="admin-header">
     <div style="display:flex;align-items:center;">
       <span class="logo-wordmark">LOSAN</span>
-      <span class="admin-badge" data-i18n="admin_badge"></span>
+      <span class="admin-badge" data-i18n="admin_badge">Admin</span>
     </div>
     <div style="display:flex;align-items:center;gap:1rem;">
       <div class="lang-switcher">
-        <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
-        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
+        <button class="lang-btn active" data-lang="es" onclick="setLang(&#39;es&#39;)">ES</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang(&#39;en&#39;)">EN</button>
+        <button class="lang-btn" data-lang="it" onclick="setLang(&#39;it&#39;)">IT</button>
       </div>
-      <button class="btn" onclick="goToForm()" data-i18n="admin_back"></button>
+      <button class="btn" onclick="goToForm()" data-i18n="admin_back">← Formulario</button>
     </div>
   </header>
   <div class="admin-body">
-    <p class="admin-section-title" data-i18n="admin_section_lbl"></p>
-    <pre class="admin-pre" id="adminPre"></pre>
-    <div class="admin-actions">
-      <button class="btn btn-primary" onclick="adminCopy()" id="adminCopyBtn" data-i18n="btn_copy"></button>
-      <button class="btn" onclick="adminDownload()" data-i18n="admin_download"></button>
+    <div class="admin-toolbar">
+      <div>
+        <h2 class="admin-title">Resultados — Feedback AW26</h2>
+        <p class="admin-meta" id="adminMeta">Cargando…</p>
+      </div>
+      <button class="export-btn" onclick="exportCSV()">Exportar CSV</button>
     </div>
-    <p class="admin-note" data-i18n="admin_note"></p>
+    <div id="summaryWrap"></div>
+    <div id="tableWrap"><div class="no-data">Cargando respuestas…</div></div>
+    <p class="admin-note">Las respuestas se guardan automáticamente al enviar el formulario. Esta vista se actualiza en tiempo real. Accede añadiendo <strong>?admin=losan27</strong> a la URL.</p>
   </div>
 </div>
 
@@ -588,6 +713,25 @@ let currentLang = 'es';
 const ranked = { success:{}, weak:{} };
 
 // ═══════════════════════════════════════════════
+// FIREBASE
+// ═══════════════════════════════════════════════
+const firebaseConfig = {
+  apiKey: "AIzaSyAk_d6JF0NuQtd-9h8GdpK9JEtfM4qn65I",
+  authDomain: "traductorlosan.firebaseapp.com",
+  databaseURL: "https://traductorlosan-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "traductorlosan",
+  storageBucket: "traductorlosan.firebasestorage.app",
+  messagingSenderId: "883937975350",
+  appId: "1:883937975350:web:4905dde97938f1b6ca8c97"
+};
+const FEEDBACK_PATH = 'surveys/aw26_feedback';
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+let adminRows = [];
+let adminListening = false;
+
+// ═══════════════════════════════════════════════
 // LANGUAGE
 // ═══════════════════════════════════════════════
 function setLang(lang) {
@@ -598,7 +742,7 @@ function setLang(lang) {
   renderFamilyGrid('grid-success','success');
   renderFamilyGrid('grid-weak','weak');
   updateProgress();
-  if (location.hash === '#admin') renderAdmin();
+  if (isAdminMode()) refreshAdmin();
 }
 
 function applyI18n() {
@@ -843,20 +987,84 @@ document.getElementById('modalOverlay').addEventListener('click',e=>{ if(e.targe
 // ═══════════════════════════════════════════════
 // SUBMIT FORM
 // ═══════════════════════════════════════════════
-function submitForm() {
-  const agentName = document.getElementById('m_agente').value.trim();
+// ═══════════════════════════════════════════════
+// COLLECT RESPONSE (for Firebase)
+// ═══════════════════════════════════════════════
+function numRadio(name){ const e=document.querySelector(`input[name="${name}"]:checked`); return e?parseInt(e.value):0; }
+function rawRadio(name){ const e=document.querySelector(`input[name="${name}"]:checked`); return e?e.value:''; }
+function txt(id){ const e=document.getElementById(id); return e?e.value.trim():''; }
+function checksArr(name){ return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(e=>e.value); }
+function rankedArr(type){ return Object.entries(ranked[type]).sort((a,b)=>a[1]-b[1]).map(([id])=>id); }
+
+function collectResponse(){
+  return {
+    timestamp: firebase.database.ServerValue.TIMESTAMP,
+    lang: currentLang,
+    temporada: txt('m_temporada'),
+    agente: txt('m_agente'),
+    pais: txt('m_pais'),
+    fecha: txt('m_fecha'),
+    ratings: {
+      atractivo:numRadio('r_atractivo'), moda:numRadio('r_moda'), comercial:numRadio('r_comercial'),
+      precio:numRadio('r_precio'), equilibrio:numRadio('r_equilibrio'), color:numRadio('r_color'), relacion:numRadio('r_relacion')
+    },
+    success: rankedArr('success'),
+    success_why: txt('ex_porque'),
+    weak: rankedArr('weak'),
+    weak_motivos: checksArr('motivo'),
+    weak_com: txt('db_com'),
+    carencias: checksArr('carencia'),
+    carencias_otros: txt('car_otros'),
+    surtido_exceso: txt('sur_exceso'),
+    surtido_falta: txt('sur_falta'),
+    precio_caros: txt('pre_caros'),
+    precio_comp: txt('pre_comp'),
+    precio_perdida: rawRadio('pre_perdida'),
+    precio_explica: txt('pre_explica'),
+    fit_aspectos: checksArr('fit'),
+    fit_com: txt('fit_com'),
+    competidores: [txt('cp1'),txt('cp2'),txt('cp3'),txt('cp4'),txt('cp5')].filter(Boolean),
+    comp_mejor: txt('cp_mejor'),
+    comp_losan: txt('cp_losan'),
+    tendencias: [txt('td1'),txt('td2'),txt('td3'),txt('td4'),txt('td5')].filter(Boolean),
+    ref_falta: txt('ref_falta'),
+    ref_oport: txt('ref_oport'),
+    recomendaciones: [txt('rc1'),txt('rc2'),txt('rc3'),txt('rc4'),txt('rc5')].filter(Boolean),
+    comentarios: txt('comentarios')
+  };
+}
+
+// ═══════════════════════════════════════════════
+// SUBMIT FORM → FIREBASE
+// ═══════════════════════════════════════════════
+async function submitForm() {
   const d = LANGS[currentLang];
+  const agentName = document.getElementById('m_agente').value.trim();
   if (!agentName) {
     alert(d.submit_warn || 'Please enter your name before sending.');
     document.getElementById('m_agente').focus();
     return;
   }
-  // Build text and open email
-  exportar(); // builds textoExportado
-  enviarEmail();
-  // Show success overlay
-  applyI18n();
-  document.getElementById('submitOverlay').classList.add('active');
+  const btn = document.getElementById('submitBtn');
+  const savingTxt = {es:'Guardando…',en:'Saving…',it:'Salvataggio…'}[currentLang] || 'Guardando…';
+  const origTxt = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = savingTxt;
+
+  try {
+    await db.ref(FEEDBACK_PATH).push(collectResponse());
+    applyI18n();
+    document.getElementById('submitOverlay').classList.add('active');
+  } catch (err) {
+    console.error('Firebase write error:', err);
+    const errTxt = {es:'No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.',
+                    en:'Could not save. Check your connection and try again.',
+                    it:'Impossibile salvare. Controlla la connessione e riprova.'}[currentLang];
+    alert(errTxt);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = origTxt;
+  }
 }
 
 function closeSubmitOverlay() {
@@ -867,68 +1075,276 @@ function closeSubmitOverlay() {
 // ═══════════════════════════════════════════════
 // ADMIN ROUTING
 // ═══════════════════════════════════════════════
-function route() {
-  const isAdmin = location.hash === '#admin';
-  const mainEl = document.querySelector('.progress-bar');
-  const formEl = document.querySelector('main.form-body');
-  const actionsEl = document.querySelector('.actions-bar');
-  const headerEl = document.querySelector('header.header');
+function isAdminMode(){
+  const p = new URLSearchParams(location.search);
+  return p.get('admin') === 'losan27' || location.hash === '#admin';
+}
 
-  if (isAdmin) {
-    if(mainEl) mainEl.style.display='none';
-    if(formEl) formEl.style.display='none';
-    if(actionsEl) actionsEl.style.display='none';
-    if(headerEl) headerEl.style.display='none';
+function route(){
+  const admin = isAdminMode();
+  const els = [
+    document.querySelector('.progress-bar'),
+    document.querySelector('main.form-body'),
+    document.querySelector('.actions-bar'),
+    document.querySelector('header.header')
+  ];
+  if (admin) {
+    els.forEach(el => { if(el) el.style.display='none'; });
     document.getElementById('admin-view').style.display='block';
-    renderAdmin();
-    // sync lang buttons in admin header
     document.querySelectorAll('#admin-view .lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
+    loadAdmin();
   } else {
-    if(mainEl) mainEl.style.display='';
-    if(formEl) formEl.style.display='';
-    if(actionsEl) actionsEl.style.display='';
-    if(headerEl) headerEl.style.display='';
+    els.forEach(el => { if(el) el.style.display=''; });
     document.getElementById('admin-view').style.display='none';
   }
 }
 
-function goToForm() {
-  history.pushState('', document.title, location.pathname + location.search);
+function goToForm(){
+  history.pushState('', document.title, location.pathname);
   route();
 }
 
-function renderAdmin() {
-  const d = LANGS[currentLang];
-  // sync lang buttons
-  document.querySelectorAll('#admin-view .lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
-  // apply i18n inside admin view
-  document.querySelectorAll('#admin-view [data-i18n]').forEach(el => { const k=el.getAttribute('data-i18n'); if(d[k]!==undefined) el.textContent=d[k]; });
-  // generate export text
-  exportar(); // populates textoExportado
-  const txt = document.getElementById('textoExportado').textContent;
-  document.getElementById('adminPre').textContent = txt;
-  cerrarModal(); // close the modal that exportar() opened
-}
+// ═══════════════════════════════════════════════
+// ADMIN — LABEL HELPERS
+// ═══════════════════════════════════════════════
+function famName(id){ const d=LANGS[currentLang]; return (d&&d[id])||id; }
+function motLabel(v){ const d=LANGS[currentLang]; const k={precio:'mot_precio',diseno:'mot_diseno',tendencia:'mot_tendencia',colorido:'mot_color',tejido:'mot_tejido',fit:'mot_fit',competencia:'mot_competencia',otro:'mot_otro'}[v]; return (d&&d[k])||v; }
+function carLabel(v){ const d=LANGS[currentLang]; return (d&&d['f_'+v])||v; }
+function fitLabel(v){ const d=LANGS[currentLang]; const k={tallaje:'ft_tallaje',patronaje:'ft_patronaje',largo:'ft_largo',calidad:'ft_calidad',tejidos:'ft_tejidos',acabados:'ft_acabados',packaging:'Packaging',etiquetado:'ft_etiquetado'}[v]; return (d&&d[k])||v; }
+function ynLabel(v){ const d=LANGS[currentLang]; return ({si:d.yn_yes,no:d.yn_no,algunos:d.yn_some}[v])||'—'; }
+function esc(s){ const e=document.createElement('div'); e.textContent=(s==null?'':String(s)); return e.innerHTML; }
+function dash(s){ return (s&&String(s).trim())?s:'—'; }
+function arrNames(arr,fn){ return (arr&&arr.length)?arr.map(fn).join(', '):'—'; }
+function avgRating(r){ const vals=Object.values(r.ratings||{}).filter(n=>n>0); return vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length):0; }
 
-function adminCopy() {
-  const txt = document.getElementById('adminPre').textContent;
-  navigator.clipboard.writeText(txt).then(() => {
-    const btn = document.getElementById('adminCopyBtn');
-    const orig = btn.textContent;
-    btn.textContent = '✓ '+(currentLang==='it'?'Copiato!':currentLang==='en'?'Copied!':'Copiado');
-    setTimeout(()=>{ btn.textContent=orig; }, 2200);
+// ═══════════════════════════════════════════════
+// ADMIN — LOAD + RENDER
+// ═══════════════════════════════════════════════
+function loadAdmin(){
+  if (adminListening) { refreshAdmin(); return; }
+  adminListening = true;
+  document.getElementById('adminMeta').textContent = 'Cargando…';
+  db.ref(FEEDBACK_PATH).on('value', snap => {
+    const raw = snap.val();
+    adminRows = raw ? Object.entries(raw).map(([k,v]) => ({_key:k, ...v})) : [];
+    adminRows.sort((a,b) => (b.timestamp||0) - (a.timestamp||0));
+    refreshAdmin();
+  }, err => {
+    console.error('Firebase read error:', err);
+    document.getElementById('adminMeta').textContent = 'Error de conexión con la base de datos.';
   });
 }
 
-function adminDownload() {
-  const txt = document.getElementById('adminPre').textContent;
-  const agent = document.getElementById('m_agente').value.trim() || 'agente';
-  const blob = new Blob([txt], {type:'text/plain;charset=utf-8'});
+function refreshAdmin(){
+  if (!isAdminMode()) return;
+  const n = adminRows.length;
+  document.getElementById('adminMeta').textContent =
+    n === 0 ? 'Sin respuestas todavía.' : `${n} respuesta${n!==1?'s':''} de agentes.`;
+  renderSummary(adminRows);
+  renderTable(adminRows);
+}
+
+function renderSummary(rows){
+  const wrap = document.getElementById('summaryWrap');
+  if (!rows.length) { wrap.innerHTML=''; return; }
+  let all = [];
+  rows.forEach(r => Object.values(r.ratings||{}).forEach(n => { if(n>0) all.push(n); }));
+  const avg = all.length ? (all.reduce((a,b)=>a+b,0)/all.length).toFixed(1) : '—';
+  const tally = key => {
+    const c={}; rows.forEach(r => (r[key]||[]).forEach(id => { c[id]=(c[id]||0)+1; }));
+    const e = Object.entries(c).sort((a,b)=>b[1]-a[1])[0];
+    return e ? {name:famName(e[0]), n:e[1]} : null;
+  };
+  const ts = tally('success'), tw = tally('weak');
+  wrap.innerHTML = `
+    <div class="summary-grid">
+      <div class="summary-card"><div class="summary-label">Respuestas</div><div class="summary-value">${rows.length}</div><div class="summary-sub">agentes</div></div>
+      <div class="summary-card"><div class="summary-label">Valoración media</div><div class="summary-value">${avg}</div><div class="summary-sub">sobre 5 · 7 áreas</div></div>
+      <div class="summary-card"><div class="summary-label">Rango ★ más citado</div><div class="summary-value" style="font-size:1rem;line-height:1.3;">${ts?esc(ts.name):'—'}</div><div class="summary-sub">${ts?ts.n+' menciones':'—'}</div></div>
+      <div class="summary-card"><div class="summary-label">Rango ⚠ más débil</div><div class="summary-value" style="font-size:1rem;line-height:1.3;">${tw?esc(tw.name):'—'}</div><div class="summary-sub">${tw?tw.n+' menciones':'—'}</div></div>
+    </div>`;
+}
+
+function renderTable(rows){
+  const wrap = document.getElementById('tableWrap');
+  if (!rows.length) { wrap.innerHTML='<div class="no-data">Las respuestas aparecerán aquí en cuanto los agentes envíen el formulario.</div>'; return; }
+  const cell = n => `<td class="num">${n>0?n:'·'}</td>`;
+  const top = arr => { const id=(arr&&arr[0]); return id?esc(famName(id)):'—'; };
+  const trs = rows.map(r => {
+    const dt = r.timestamp ? new Date(r.timestamp).toLocaleString('es-ES',{dateStyle:'short',timeStyle:'short'}) : '—';
+    const rt = r.ratings||{};
+    const a = avgRating(r);
+    return `<tr>
+      <td style="white-space:nowrap">${dt}</td>
+      <td><strong style="font-size:0.6rem;letter-spacing:0.1em;color:var(--muted)">${(r.lang||'—').toUpperCase()}</strong></td>
+      <td style="white-space:normal"><strong>${esc(r.agente)||'—'}</strong></td>
+      <td style="color:var(--muted)">${esc(r.pais)||'—'}</td>
+      ${cell(rt.atractivo)}${cell(rt.moda)}${cell(rt.comercial)}${cell(rt.precio)}${cell(rt.equilibrio)}${cell(rt.color)}${cell(rt.relacion)}
+      <td class="num"><strong>${a?a.toFixed(1):'·'}</strong></td>
+      <td style="white-space:normal;max-width:150px">${top(r.success)}</td>
+      <td style="white-space:normal;max-width:150px">${top(r.weak)}</td>
+      <td><button class="view-btn" onclick="viewDetail('${r._key}')">Ver</button></td>
+    </tr>`;
+  }).join('');
+  wrap.innerHTML = `
+    <div style="position:relative;">
+      <div class="admin-scroll">
+        <table class="responses-table">
+          <thead><tr>
+            <th>Fecha</th><th>Idioma</th><th>Agente</th><th>País</th>
+            <th title="Atractivo general">At</th><th title="Nivel de moda">Mo</th><th title="Potencial comercial">Co</th><th title="Posic. precio">Pr</th><th title="Equilibrio">Eq</th><th title="Paleta color">Cl</th><th title="Moda / básico">Re</th>
+            <th>Media</th><th>Rango ★</th><th>Rango ⚠</th><th>Detalle</th>
+          </tr></thead>
+          <tbody>${trs}</tbody>
+        </table>
+      </div>
+      <div class="scroll-hint" id="scrollHint">&#8594;</div>
+    </div>`;
+  setTimeout(() => {
+    const sc = wrap.querySelector('.admin-scroll'), h = document.getElementById('scrollHint');
+    if (sc && h) sc.addEventListener('scroll', () => { h.style.opacity='0'; }, {once:true});
+  }, 100);
+}
+
+function viewDetail(key){
+  const r = adminRows.find(x => x._key === key);
+  if (!r) return;
+  document.getElementById('textoExportado').textContent = formatResponse(r);
+  document.getElementById('modalTitle').textContent = (r.agente||'—') + (r.pais ? ' · '+r.pais : '');
+  document.getElementById('modalNote').textContent = {
+    es:'Detalle completo de la respuesta. Copia el texto si lo necesitas.',
+    en:'Full response detail. Copy the text if needed.',
+    it:'Dettaglio completo della risposta. Copia il testo se necessario.'
+  }[currentLang] || '';
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function formatResponse(r){
+  const x = LANGS[currentLang], rt = r.ratings||{};
+  const S='──────────────────────────────────────────────────';
+  const H='══════════════════════════════════════════════════';
+  const rankList = arr => (arr&&arr.length) ? arr.map((id,i)=>`${i+1}. ${famName(id)}`).join('\n') : '—';
+  const numList  = arr => (arr&&arr.length) ? arr.map((t,i)=>`${i+1}. ${t}`).join('\n') : '—';
+  const dt = r.timestamp ? new Date(r.timestamp).toLocaleString('es-ES') : '—';
+  return `${H}
+LOSAN MEN — ${x.xl_title}
+${H}
+${x.xl_season} : ${dash(r.temporada)}
+${x.xl_agent}  : ${dash(r.agente)}
+${x.xl_country}: ${dash(r.pais)}
+${x.xl_date}   : ${dash(r.fecha)}
+Enviado      : ${dt}
+
+${S}
+${x.xl_s1}
+${S}
+${x.xl_atractivo}  : ${rt.atractivo||'—'}
+${x.xl_moda}       : ${rt.moda||'—'}
+${x.xl_comercial}  : ${rt.comercial||'—'}
+${x.xl_precio}     : ${rt.precio||'—'}
+${x.xl_equilibrio} : ${rt.equilibrio||'—'}
+${x.xl_color}      : ${rt.color||'—'}
+${x.xl_relacion}   : ${rt.relacion||'—'}
+
+${S}
+${x.xl_s2}
+${S}
+${rankList(r.success)}
+${x.xl_why}: ${dash(r.success_why)}
+
+${S}
+${x.xl_s3}
+${S}
+${rankList(r.weak)}
+${x.xl_reasons}: ${arrNames(r.weak_motivos, motLabel)}
+${x.xl_comments}: ${dash(r.weak_com)}
+
+${S}
+${x.xl_s4}
+${S}
+${arrNames(r.carencias, carLabel)}
+${x.xl_other}: ${dash(r.carencias_otros)}
+
+${S}
+${x.xl_s5}
+${S}
+${x.xl_excess}: ${dash(r.surtido_exceso)}
+${x.xl_lack}: ${dash(r.surtido_falta)}
+
+${S}
+${x.xl_s6}
+${S}
+${x.xl_expensive}: ${dash(r.precio_caros)}
+${x.xl_competitive}: ${dash(r.precio_comp)}
+${x.xl_lost}: ${ynLabel(r.precio_perdida)}
+${x.xl_detail}: ${dash(r.precio_explica)}
+
+${S}
+${x.xl_s7}
+${S}
+${x.xl_aspects}: ${arrNames(r.fit_aspectos, fitLabel)}
+${dash(r.fit_com)}
+
+${S}
+${x.xl_s8}
+${S}
+${(r.competidores&&r.competidores.length) ? r.competidores.map((c,i)=>`${i+1}. ${c}`).join('   ') : '—'}
+${x.xl_better}: ${dash(r.comp_mejor)}
+${x.xl_advantages}: ${dash(r.comp_losan)}
+
+${S}
+${x.xl_s9}
+${S}
+${numList(r.tendencias)}
+
+${S}
+${x.xl_s10}
+${S}
+${x.xl_missing}: ${dash(r.ref_falta)}
+${x.xl_opp}: ${dash(r.ref_oport)}
+
+${S}
+${x.xl_recs}
+${S}
+${numList(r.recomendaciones)}
+
+${x.xl_final}
+${dash(r.comentarios)}
+${H}`;
+}
+
+async function exportCSV(){
+  if (!adminRows.length) { alert('No hay respuestas para exportar.'); return; }
+  const rows = adminRows.slice().sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
+  const sc = s => String(s==null?'':s).replace(/[\r\n;]+/g,' ').trim();
+  const joinNames = (arr,fn) => (arr&&arr.length) ? arr.map(fn).join(' | ') : '';
+  const hdr = ['Enviado','Idioma','Temporada','Agente','Pais','FechaForm',
+    'Atractivo','Moda','Comercial','Precio','Equilibrio','Color','RelacionModaBasico',
+    'RangosExitosos','PorQueExito','RangosDebiles','MotivosDebiles','ComentariosDebiles',
+    'Carencias','CarenciasOtros','SurtidoExceso','SurtidoFalta',
+    'PreciosCaros','PreciosCompetitivos','VentasPerdidas','PrecioExplicacion',
+    'FitAspectos','FitComentarios','Competidores','CompMejor','CompLosan',
+    'TendenciasMercado','RefEchadasFalta','OportunidadesPerdidas','Top5Recomendaciones','ComentariosFinales'
+  ].join(';');
+  const lines = rows.map(r => {
+    const rt = r.ratings||{};
+    const dt = r.timestamp ? new Date(r.timestamp).toLocaleString('es-ES') : '';
+    return [
+      dt, (r.lang||'').toUpperCase(), r.temporada, r.agente, r.pais, r.fecha,
+      rt.atractivo||'', rt.moda||'', rt.comercial||'', rt.precio||'', rt.equilibrio||'', rt.color||'', rt.relacion||'',
+      joinNames(r.success,famName), r.success_why, joinNames(r.weak,famName), joinNames(r.weak_motivos,motLabel), r.weak_com,
+      joinNames(r.carencias,carLabel), r.carencias_otros, r.surtido_exceso, r.surtido_falta,
+      r.precio_caros, r.precio_comp, (r.precio_perdida?ynLabel(r.precio_perdida):''), r.precio_explica,
+      joinNames(r.fit_aspectos,fitLabel), r.fit_com, (r.competidores||[]).join(' | '), r.comp_mejor, r.comp_losan,
+      (r.tendencias||[]).join(' | '), r.ref_falta, r.ref_oport, (r.recomendaciones||[]).join(' | '), r.comentarios
+    ].map(sc).join(';');
+  });
+  const csv = '\uFEFF' + hdr + '\n' + lines.join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `LOSAN_AW26_${agent.replace(/\s+/g,'_')}.txt`;
-  a.click();
-  URL.revokeObjectURL(a.href);
+  a.download = `LOSAN_Feedback_AW26_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(a.href);
 }
 
 window.addEventListener('hashchange', route);
@@ -943,5 +1359,6 @@ window.addEventListener('DOMContentLoaded',()=>{
   route();
 });
 </script>
-</body>
-</html>
+
+
+</body></html>
