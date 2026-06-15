@@ -64,6 +64,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-we
 .matrix select{font-family:inherit;font-size:0.78rem;border:1px solid var(--line-dark);background:var(--bg);padding:0.18rem 0.1rem;width:48px;cursor:pointer;}
 .matrix input[type=checkbox]{width:16px;height:16px;accent-color:var(--text);cursor:pointer;}
 .matrix .txt{width:130px;border:none;border-bottom:1px solid var(--line-dark);font-family:inherit;font-size:0.78rem;padding:0.2rem;background:transparent;outline:none;}
+.matrix input.rank{width:48px;border:1px solid var(--line-dark);font-family:inherit;font-size:0.8rem;padding:0.18rem;text-align:center;background:var(--bg);}
 .matrix .txt:focus{border-bottom-color:var(--text);}
 td.off,.matrix tbody tr:nth-child(even) td.off{background:var(--off);}
 td.off select,td.off input{opacity:.25;pointer-events:none;}
@@ -242,7 +243,7 @@ td.off select,td.off input{opacity:.25;pointer-events:none;}
     <div id="summaryWrap"></div>
     <p class="admin-block-title">Medias por familia</p>
     <div class="admin-scroll"><div id="famAvgWrap"><div class="no-data">Cargando…</div></div></div>
-    <p class="admin-block-title">Rendimiento de rangos por familia (media)</p>
+    <p class="admin-block-title">Orden medio de selección de rangos por familia (menor = más prioritario)</p>
     <div class="admin-scroll"><div id="rangeHeatWrap"><div class="no-data">Cargando…</div></div></div>
     <p class="admin-block-title">Respuestas</p>
     <div class="admin-scroll"><div id="tableWrap"><div class="no-data">Cargando respuestas…</div></div></div>
@@ -294,30 +295,39 @@ const FIT = [
   {id:'tallaje',  es:'Tallaje',   en:'Sizing',     it:'Taglie'},
   {id:'patronaje',es:'Patronaje', en:'Pattern fit',it:'Vestibilità'},
   {id:'largo',    es:'Largos',    en:'Lengths',    it:'Lunghezze'},
-  {id:'calidad',  es:'Calidad',   en:'Quality',    it:'Qualità'},
+  {id:'calidad',  es:'Calidad percibida', en:'Perceived quality', it:'Qualità percepita'},
   {id:'tejidos',  es:'Tejidos',   en:'Fabrics',    it:'Tessuti'},
   {id:'acabados', es:'Acabados',  en:'Finishings', it:'Finiture'},
   {id:'packaging',es:'Packaging', en:'Packaging',  it:'Packaging'},
   {id:'etiquetado',es:'Etiquetado',en:'Labelling', it:'Etichettatura'}
 ];
-const PRECIO_OPTS = {
-  es:[['','—'],['no','No'],['algunos','Algunos'],['si','Sí, varias']],
-  en:[['','—'],['no','No'],['algunos','A few'],['si','Yes, several']],
-  it:[['','—'],['no','No'],['algunos','Alcune'],['si','Sì, diverse']]
+const SURTIDO_OPTS = {
+  es:[['','—'],['exceso','Exceso'],['falta','Insuficiente']],
+  en:[['','—'],['exceso','Over'],['falta','Under']],
+  it:[['','—'],['exceso','Eccesso'],['falta','Insufficiente']]
+};
+const PRECIO_PERCEP_OPTS = {
+  es:[['','—'],['caro','Demasiado caro'],['competitivo','Muy competitivo']],
+  en:[['','—'],['caro','Too expensive'],['competitivo','Very competitive']],
+  it:[['','—'],['caro','Troppo caro'],['competitivo','Molto competitivo']]
+};
+const PRECIO_PERDIDA_OPTS = {
+  es:[['','—'],['no','No'],['algunas','Algunas'],['si','Sí, varias']],
+  en:[['','—'],['no','No'],['algunas','A few'],['si','Yes, several']],
+  it:[['','—'],['no','No'],['algunas','Alcune'],['si','Sì, diverse']]
 };
 
 const UI = {
   es:{ header_meta:'AW26 · Por familia', i_eyebrow:'AW26 — Informe de fin de temporada',
-    i_title:'Feedback <em>familia a familia</em>', i_desc:'Valora el cuestionario completo para cada familia que trabajes. Desactiva arriba las que no vendas y sus columnas se bloquean. Puntúa de 1 (flojo) a 5 (excelente).',
+    i_title:'Feedback <em>familia a familia</em>', i_desc:'Valora el cuestionario completo para cada familia que trabajes. Desactiva arriba las que no vendas y sus columnas se bloquean.',
     l_agent:'Agente comercial', l_country:'País / zona', l_date:'Fecha', l_season:'Temporada',
     l_famctrl:'Marca las familias que NO trabajas — se anula su columna entera:',
-    sec_rat:'01 — Valoración general', sec_rat_h:'Impresión global de cada familia.',
-    sec_rng:'02 — Rangos de producto', sec_rng_h:'Cómo ha funcionado cada tipo de prenda en cada familia.',
-    sec_car:'03 — Carencias', sec_car_h:'Marca las prendas que faltan o se quedan cortas en cada familia.',
-    sec_fit:'04 — Calidad / fit', sec_fit_h:'Marca dónde hay problemas en cada familia.',
-    sec_pre:'05 — Precio', sec_pre_h:'',  pre_lost:'¿Ventas perdidas por precio?',
-    sec_com:'06 — Comentario por familia', sec_com_h:'Una nota libre por familia: surtido, oportunidades, lo que quieras.',
-    com_ph:'Comentario…',
+    sec_rat:'01 — Valoración general', sec_rat_h:'Impresión global de cada familia (1 flojo · 5 excelente).',
+    sec_rng:'02 — Rangos de producto', sec_rng_h:'Ordena las prendas por orden de selección en cada familia (1 = la más relevante).', rank_key:'Número = orden de selección · 1 = primera.',
+    sec_sur:'03 — Análisis del surtido', sec_sur_h:'Por prenda y familia: ¿estaba excesivamente o insuficientemente representada?',
+    sec_pre:'04 — Precio', sec_pre_h:'Por prenda: percepción de precio en cada familia. Al final, ventas perdidas por precio.', pre_lost:'¿Ventas perdidas por posicionamiento de precio?',
+    sec_fit:'05 — Calidad / fit', sec_fit_h:'Marca los aspectos sobre los que has recibido comentarios en cada familia, y añade lo que quieras.', fit_comlbl:'Comentarios recibidos', com_ph:'Comentario…',
+    sec_ref:'06 — Referencias echadas en falta', sec_ref_h:'Productos o referencias que te habría gustado tener y no estaban, por familia.', ref_rowlbl:'Referencias echadas en falta', ref_ph:'Referencias que faltaron…',
     x_eyebrow:'07 — Visión de mercado', x_title:'Transversal (no por familia)', x_hint:'Aplica al conjunto, se pregunta una vez.',
     l_comp:'Principales competidores', l_trend:'Tendencias que funcionan', l_rec:'Recomendaciones próxima colección', l_final:'Comentarios finales',
     ph_brand:'Marca…', ph_trend:'Tendencia…', ph_rec:'Recomendación…', ph_final:'Lo que quieras añadir…',
@@ -326,16 +336,15 @@ const UI = {
     ok_title:'¡Recibido!', ok_desc:'Hemos guardado tu valoración. Gracias por tu tiempo.', ok_btn:'Cerrar',
     scale:'Escala: 1 flojo · 5 excelente · — sin valorar' },
   en:{ header_meta:'AW26 · By family', i_eyebrow:'AW26 — End of season report',
-    i_title:'Feedback <em>family by family</em>', i_desc:'Fill the full questionnaire for each family you carry. Disable the ones you don’t — their columns lock. Score 1 (poor) to 5 (excellent).',
+    i_title:'Feedback <em>family by family</em>', i_desc:'Fill the full questionnaire for each family you carry. Disable the ones you don’t — their columns lock.',
     l_agent:'Sales agent', l_country:'Country / area', l_date:'Date', l_season:'Season',
     l_famctrl:'Tick the families you do NOT carry — their whole column is voided:',
-    sec_rat:'01 — Overall rating', sec_rat_h:'Overall impression of each family.',
-    sec_rng:'02 — Product ranges', sec_rng_h:'How each garment type performed in each family.',
-    sec_car:'03 — Gaps', sec_car_h:'Tick the garments missing or too thin in each family.',
-    sec_fit:'04 — Quality / fit', sec_fit_h:'Tick where there are issues in each family.',
-    sec_pre:'05 — Price', sec_pre_h:'', pre_lost:'Sales lost to price?',
-    sec_com:'06 — Comment per family', sec_com_h:'A free note per family: assortment, opportunities, anything.',
-    com_ph:'Comment…',
+    sec_rat:'01 — Overall rating', sec_rat_h:'Overall impression of each family (1 poor · 5 excellent).',
+    sec_rng:'02 — Product ranges', sec_rng_h:'Rank the garments by selection order in each family (1 = most relevant).', rank_key:'Number = selection order · 1 = first.',
+    sec_sur:'03 — Assortment analysis', sec_sur_h:'Per garment and family: over- or under-represented?',
+    sec_pre:'04 — Price', sec_pre_h:'Per garment: price perception in each family. At the end, sales lost to price.', pre_lost:'Sales lost to price positioning?',
+    sec_fit:'05 — Quality / fit', sec_fit_h:'Tick the aspects you received comments about in each family, and add anything.', fit_comlbl:'Comments received', com_ph:'Comment…',
+    sec_ref:'06 — References you missed', sec_ref_h:'Products or references you wish you had had, per family.', ref_rowlbl:'References missed', ref_ph:'References that were missing…',
     x_eyebrow:'07 — Market view', x_title:'Cross-cutting (not per family)', x_hint:'Applies overall, asked once.',
     l_comp:'Main competitors', l_trend:'Trends that work', l_rec:'Recommendations next collection', l_final:'Final comments',
     ph_brand:'Brand…', ph_trend:'Trend…', ph_rec:'Recommendation…', ph_final:'Anything to add…',
@@ -344,16 +353,15 @@ const UI = {
     ok_title:'Received!', ok_desc:'Your feedback has been saved. Thank you.', ok_btn:'Close',
     scale:'Scale: 1 poor · 5 excellent · — not rated' },
   it:{ header_meta:'AW26 · Per famiglia', i_eyebrow:'AW26 — Report di fine stagione',
-    i_title:'Feedback <em>famiglia per famiglia</em>', i_desc:'Compila il questionario completo per ogni famiglia che tratti. Disattiva le altre: le colonne si bloccano. Punteggio da 1 (scarso) a 5 (eccellente).',
+    i_title:'Feedback <em>famiglia per famiglia</em>', i_desc:'Compila il questionario completo per ogni famiglia che tratti. Disattiva le altre: le colonne si bloccano.',
     l_agent:'Agente di vendita', l_country:'Paese / zona', l_date:'Data', l_season:'Stagione',
     l_famctrl:'Spunta le famiglie che NON tratti — l\u2019intera colonna viene annullata:',
-    sec_rat:'01 — Valutazione generale', sec_rat_h:'Impressione generale di ogni famiglia.',
-    sec_rng:'02 — Gamme di prodotto', sec_rng_h:'Come ha funzionato ogni tipo di capo in ogni famiglia.',
-    sec_car:'03 — Mancanze', sec_car_h:'Segna i capi che mancano o scarseggiano in ogni famiglia.',
-    sec_fit:'04 — Qualità / vestibilità', sec_fit_h:'Segna dove ci sono problemi in ogni famiglia.',
-    sec_pre:'05 — Prezzo', sec_pre_h:'', pre_lost:'Vendite perse per il prezzo?',
-    sec_com:'06 — Commento per famiglia', sec_com_h:'Una nota libera per famiglia: assortimento, opportunità, ecc.',
-    com_ph:'Commento…',
+    sec_rat:'01 — Valutazione generale', sec_rat_h:'Impressione generale di ogni famiglia (1 scarso · 5 eccellente).',
+    sec_rng:'02 — Gamme di prodotto', sec_rng_h:'Ordina i capi per ordine di selezione in ogni famiglia (1 = il più rilevante).', rank_key:'Numero = ordine di selezione · 1 = primo.',
+    sec_sur:'03 — Analisi dell\u2019assortimento', sec_sur_h:'Per capo e famiglia: era eccessivo o insufficiente?',
+    sec_pre:'04 — Prezzo', sec_pre_h:'Per capo: percezione del prezzo in ogni famiglia. Alla fine, vendite perse per il prezzo.', pre_lost:'Vendite perse per posizionamento di prezzo?',
+    sec_fit:'05 — Qualità / vestibilità', sec_fit_h:'Segna gli aspetti su cui hai ricevuto commenti in ogni famiglia, e aggiungi ciò che vuoi.', fit_comlbl:'Commenti ricevuti', com_ph:'Commento…',
+    sec_ref:'06 — Referenze mancate', sec_ref_h:'Prodotti o referenze che avresti voluto avere e non c\u2019erano, per famiglia.', ref_rowlbl:'Referenze mancate', ref_ph:'Referenze mancanti…',
     x_eyebrow:'07 — Visione di mercato', x_title:'Trasversale (non per famiglia)', x_hint:'Vale nel complesso, chiesto una volta.',
     l_comp:'Principali concorrenti', l_trend:'Tendenze che funzionano', l_rec:'Consigli prossima collezione', l_final:'Commenti finali',
     ph_brand:'Marca…', ph_trend:'Tendenza…', ph_rec:'Consiglio…', ph_final:'Cosa vuoi aggiungere…',
@@ -394,55 +402,39 @@ function colHeader(){
   band += '</tr>';
   return `<thead>${band}</thead>`;
 }
-function matrixSection(eyebrow, title, hint, rows, type, group){
-  // type: 'rating' | 'check'
+function cellHTML(type, id, opts){
+  if(type==='rating'){ let o='<option value="">—</option>'; for(let i=1;i<=5;i++)o+=`<option value="${i}">${i}</option>`; return `<select id="${id}">${o}</select>`; }
+  if(type==='rank'){ return `<input type="number" min="1" max="20" class="rank" id="${id}">`; }
+  if(type==='select'){ let o=''; opts.forEach(([v,l])=>o+=`<option value="${v}">${l}</option>`); return `<select id="${id}" style="width:auto">${o}</select>`; }
+  if(type==='check'){ return `<input type="checkbox" id="${id}">`; }
+  if(type==='text'){ return `<input type="text" class="txt" id="${id}" placeholder="${opts||''}">`; }
+  return '';
+}
+function buildTable(rows, type, group, opts){
   let tb='';
   rows.forEach(r => {
     tb += `<tr><td class="rowlab">${esc(nm(r))}</td>`;
-    SEGMENTS.forEach(s => {
-      const off = skipped.has(s.id)?' off':'';
-      if (type==='rating'){
-        let opts='<option value="">—</option>'; for(let i=1;i<=5;i++) opts+=`<option value="${i}">${i}</option>`;
-        tb += `<td class="mcell${off}" data-fam="${s.id}"><select id="${group}_${r.id}_${s.id}">${opts}</select></td>`;
-      } else {
-        tb += `<td class="mcell${off}" data-fam="${s.id}"><input type="checkbox" id="${group}_${r.id}_${s.id}"></td>`;
-      }
-    });
+    SEGMENTS.forEach(s => { const off=skipped.has(s.id)?' off':''; tb += `<td class="mcell${off}" data-fam="${s.id}">${cellHTML(type,`${group}_${r.id}_${s.id}`,opts)}</td>`; });
     tb += '</tr>';
   });
-  return `<div class="section"><p class="s-eyebrow">${eyebrow}</p><h2 class="s-title">${title}</h2>${hint?`<p class="s-hint">${hint}</p>`:''}
-    <div class="matrix-wrap"><table class="matrix">${colHeader()}<tbody>${tb}</tbody></table></div>${type==='rating'?`<p class="scale-key">${U().scale}</p>`:''}</div>`;
+  return `<table class="matrix">${colHeader()}<tbody>${tb}</tbody></table>`;
 }
-function precioSection(){
-  const u=U();
-  let tb=`<tr><td class="rowlab">${u.pre_lost}</td>`;
-  SEGMENTS.forEach(s => {
-    const off=skipped.has(s.id)?' off':'';
-    let opts=''; PRECIO_OPTS[currentLang].forEach(([v,l])=>opts+=`<option value="${v}">${l}</option>`);
-    tb += `<td class="mcell${off}" data-fam="${s.id}"><select id="pre_${s.id}" style="width:auto">${opts}</select></td>`;
-  });
-  tb+='</tr>';
-  return `<div class="section"><p class="s-eyebrow">${u.sec_pre}</p><h2 class="s-title">Precio</h2>
-    <div class="matrix-wrap"><table class="matrix">${colHeader()}<tbody>${tb}</tbody></table></div></div>`;
+function bare(t){ return t.replace(/^\d+\s*—\s*/,''); }
+function sectionWrap(eyebrow, title, hint, inner, foot){
+  return `<div class="section"><p class="s-eyebrow">${eyebrow}</p><h2 class="s-title">${title}</h2>${hint?`<p class="s-hint">${hint}</p>`:''}<div class="matrix-wrap">${inner}</div>${foot||''}</div>`;
 }
-function commentSection(){
-  const u=U();
-  let tb=`<tr><td class="rowlab">${u.sec_com.replace(/^\d+\s*—\s*/,'')}</td>`;
-  SEGMENTS.forEach(s => { const off=skipped.has(s.id)?' off':''; tb+=`<td class="mcell${off}" data-fam="${s.id}"><input type="text" class="txt" id="com_${s.id}" placeholder="${u.com_ph}"></td>`; });
-  tb+='</tr>';
-  return `<div class="section"><p class="s-eyebrow">${u.sec_com}</p><h2 class="s-title">${u.sec_com.replace(/^\d+\s*—\s*/,'')}</h2><p class="s-hint">${u.sec_com_h}</p>
-    <div class="matrix-wrap"><table class="matrix">${colHeader()}<tbody>${tb}</tbody></table></div></div>`;
-}
+function oneRow(label, id){ return [{id:id, es:label, en:label, it:label}]; }
 function renderSections(){
-  const u=U();
-  let html='';
-  html += matrixSection(u.sec_rat, u.sec_rat.replace(/^\d+\s*—\s*/,''), u.sec_rat_h, RATINGS, 'rating', 'rat');
-  html += matrixSection(u.sec_rng, u.sec_rng.replace(/^\d+\s*—\s*/,''), u.sec_rng_h, RANGES, 'rating', 'rng');
-  html += matrixSection(u.sec_car, u.sec_car.replace(/^\d+\s*—\s*/,''), u.sec_car_h, RANGES, 'check', 'car');
-  html += matrixSection(u.sec_fit, u.sec_fit.replace(/^\d+\s*—\s*/,''), u.sec_fit_h, FIT, 'check', 'fit');
-  html += precioSection();
-  html += commentSection();
-  document.getElementById('sections').innerHTML = html;
+  const u=U(); let h='';
+  h += sectionWrap(u.sec_rat, bare(u.sec_rat), u.sec_rat_h, buildTable(RATINGS,'rating','rat'), `<p class="scale-key">${u.scale}</p>`);
+  h += sectionWrap(u.sec_rng, bare(u.sec_rng), u.sec_rng_h, buildTable(RANGES,'rank','rng'), `<p class="scale-key">${u.rank_key}</p>`);
+  h += sectionWrap(u.sec_sur, bare(u.sec_sur), u.sec_sur_h, buildTable(RANGES,'select','sur',SURTIDO_OPTS[currentLang]));
+  h += sectionWrap(u.sec_pre, bare(u.sec_pre), u.sec_pre_h,
+        buildTable(RANGES,'select','pre',PRECIO_PERCEP_OPTS[currentLang]) + buildTable(oneRow(u.pre_lost,'perdida'),'select','prl',PRECIO_PERDIDA_OPTS[currentLang]));
+  h += sectionWrap(u.sec_fit, bare(u.sec_fit), u.sec_fit_h,
+        buildTable(FIT,'check','fit') + buildTable(oneRow(u.fit_comlbl,'com'),'text','fitc',u.com_ph));
+  h += sectionWrap(u.sec_ref, bare(u.sec_ref), u.sec_ref_h, buildTable(oneRow(u.ref_rowlbl,'falta'),'text','ref',u.ref_ph));
+  document.getElementById('sections').innerHTML = h;
 }
 function renderFamControls(){
   let html='';
@@ -513,19 +505,21 @@ function updateProgress(){
 // ═══════════════ COLLECT + SUBMIT ═══════════════
 function txt(id){ const e=document.getElementById(id); return e?e.value.trim():''; }
 function selVal(id){ const e=document.getElementById(id); return e&&e.value?parseInt(e.value):0; }
+function valOf(id){ const e=document.getElementById(id); return e?e.value:''; }
 function collectFamilies(){
   const fams={};
   SEGMENTS.forEach(s=>{
     if (skipped.has(s.id)) return;
-    const ratings={}; let has=false;
-    RATINGS.forEach(r=>{ const v=selVal(`rat_${r.id}_${s.id}`); ratings[r.id]=v; if(v) has=true; });
-    const ranges={}; RANGES.forEach(r=>{ const v=selVal(`rng_${r.id}_${s.id}`); ranges[r.id]=v; if(v) has=true; });
-    const carencias=RANGES.filter(r=>{const e=document.getElementById(`car_${r.id}_${s.id}`);return e&&e.checked;}).map(r=>r.id);
-    const fit=FIT.filter(r=>{const e=document.getElementById(`fit_${r.id}_${s.id}`);return e&&e.checked;}).map(r=>r.id);
-    const precio=(document.getElementById(`pre_${s.id}`)||{}).value||'';
-    const comentario=txt(`com_${s.id}`);
-    if (carencias.length||fit.length||precio||comentario) has=true;
-    if (has) fams[s.id]={ ratings, ranges, carencias, fit, precio_perdida:precio, comentario };
+    let has=false;
+    const ratings={}; RATINGS.forEach(r=>{ const v=selVal(`rat_${r.id}_${s.id}`); if(v){ ratings[r.id]=v; has=true; } });
+    const ranges={};  RANGES.forEach(r=>{ const v=selVal(`rng_${r.id}_${s.id}`); if(v){ ranges[r.id]=v; has=true; } });
+    const surtido={}; RANGES.forEach(r=>{ const v=valOf(`sur_${r.id}_${s.id}`); if(v){ surtido[r.id]=v; has=true; } });
+    const precio={};  RANGES.forEach(r=>{ const v=valOf(`pre_${r.id}_${s.id}`); if(v){ precio[r.id]=v; has=true; } });
+    const precio_perdida=valOf(`prl_perdida_${s.id}`); if(precio_perdida) has=true;
+    const fit=FIT.filter(r=>{const e=document.getElementById(`fit_${r.id}_${s.id}`);return e&&e.checked;}).map(r=>r.id); if(fit.length) has=true;
+    const fit_com=txt(`fitc_com_${s.id}`); if(fit_com) has=true;
+    const referencias=txt(`ref_falta_${s.id}`); if(referencias) has=true;
+    if (has) fams[s.id]={ ratings, ranges, surtido, precio, precio_perdida, fit, fit_com, referencias };
   });
   return fams;
 }
@@ -620,9 +614,10 @@ function renderRangeHeat(rows){
   const w=document.getElementById('rangeHeatWrap'); if(!rows.length){w.innerHTML='<div class="no-data">Sin datos.</div>';return;}
   const st={}; RANGES.forEach(r=>{st[r.id]={};SEGMENTS.forEach(s=>st[r.id][s.id]={sum:0,cnt:0});});
   rows.forEach(row=>{ const f=row.families||{}; SEGMENTS.forEach(s=>{ const o=f[s.id]; if(!o)return; const rg=o.ranges||{}; RANGES.forEach(r=>{ if(rg[r.id]>0){st[r.id][s.id].sum+=rg[r.id];st[r.id][s.id].cnt++;} }); }); });
+  const N=RANGES.length;
   let body='';
   RANGES.forEach(r=>{ body+=`<tr><td class="l">${esc(nm(r))}</td>`; SEGMENTS.forEach(s=>{ const c=st[r.id][s.id]; const a=c.cnt?(c.sum/c.cnt):0;
-    const bg=a?`background:rgba(10,10,10,${(a/5*0.16).toFixed(3)})`:''; body+=`<td class="heat" style="${bg}">${a?a.toFixed(1):'·'}</td>`; }); body+='</tr>'; });
+    const alpha=a?(1-(a-1)/(N-1))*0.16:0; const bg=a?`background:rgba(10,10,10,${alpha.toFixed(3)})`:''; body+=`<td class="heat" style="${bg}">${a?a.toFixed(1):'·'}</td>`; }); body+='</tr>'; });
   w.innerHTML=`<table class="atable">${colHeadAdmin()}<tbody>${body}</tbody></table>`;
 }
 function renderTable(rows){
@@ -642,17 +637,24 @@ function viewDetail(key){
 function formatResponse(r){
   const S='──────────────────────────────────────────────────', H='══════════════════════════════════════════════════';
   const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES'):'—';
+  const rnm=id=>{const r2=RANGES.find(z=>z.id===id);return r2?nm(r2):id;};
   let o=`${H}\nLOSAN — Feedback AW26 por familia\n${H}\nAgente: ${r.agente||'—'}  ·  País: ${r.pais||'—'}  ·  ${r.temporada||''}\nEnviado: ${dt}\n`;
   const f=r.families||{};
   SEGMENTS.forEach(s=>{ const x=f[s.id]; if(!x)return;
     o+=`\n${S}\n${segName(s.id)}\n${S}\n`;
     o+='Valoración: '+RATINGS.map(d=>`${nm(d)} ${(x.ratings||{})[d.id]||'—'}`).join(' · ')+'\n';
-    const rg=RANGES.filter(r2=>(x.ranges||{})[r2.id]>0).map(r2=>`${nm(r2)} ${x.ranges[r2.id]}`);
-    o+='Rangos: '+(rg.length?rg.join(' · '):'—')+'\n';
-    o+='Carencias: '+((x.carencias||[]).map(id=>{const r2=RANGES.find(z=>z.id===id);return r2?nm(r2):id;}).join(', ')||'—')+'\n';
-    o+='Fit/calidad: '+((x.fit||[]).map(id=>{const r2=FIT.find(z=>z.id===id);return r2?nm(r2):id;}).join(', ')||'—')+'\n';
-    o+='Ventas perdidas precio: '+(x.precio_perdida||'—')+'\n';
-    if(x.comentario) o+=`« ${x.comentario} »\n`;
+    const ord=Object.entries(x.ranges||{}).filter(([,v])=>v>0).sort((a,b)=>a[1]-b[1]).map(([id,v])=>`${v}. ${rnm(id)}`);
+    o+='Orden de rangos: '+(ord.length?ord.join('  '):'—')+'\n';
+    const exc=Object.entries(x.surtido||{}).filter(([,v])=>v==='exceso').map(([id])=>rnm(id));
+    const fal=Object.entries(x.surtido||{}).filter(([,v])=>v==='falta').map(([id])=>rnm(id));
+    o+='Surtido — Exceso: '+(exc.join(', ')||'—')+' | Insuficiente: '+(fal.join(', ')||'—')+'\n';
+    const caro=Object.entries(x.precio||{}).filter(([,v])=>v==='caro').map(([id])=>rnm(id));
+    const comp=Object.entries(x.precio||{}).filter(([,v])=>v==='competitivo').map(([id])=>rnm(id));
+    o+='Precio — Caros: '+(caro.join(', ')||'—')+' | Competitivos: '+(comp.join(', ')||'—')+'\n';
+    o+='Ventas perdidas por precio: '+(x.precio_perdida||'—')+'\n';
+    o+='Comentarios recibidos (fit/calidad): '+((x.fit||[]).map(id=>{const a=FIT.find(z=>z.id===id);return a?nm(a):id;}).join(', ')||'—')+'\n';
+    if(x.fit_com) o+=`   « ${x.fit_com} »\n`;
+    if(x.referencias) o+='Referencias echadas en falta: '+x.referencias+'\n';
   });
   o+=`\n${S}\nTransversal\n${S}\nCompetidores: ${(r.competidores||[]).join(', ')||'—'}\nTendencias: ${(r.tendencias||[]).join(', ')||'—'}\nRecomendaciones: ${(r.recomendaciones||[]).join(', ')||'—'}\nComentarios: ${r.comentarios||'—'}\n${H}`;
   return o;
@@ -665,24 +667,25 @@ function exportCSV(){
   if(!adminRows.length){alert('No hay respuestas.');return;}
   const rows=adminRows.slice().sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
   const hdr=['Enviado','Idioma','Agente','Pais','Temporada','Familia','Banda',
-    ...RATINGS.map(d=>'V_'+d.id), ...RANGES.map(r=>'R_'+r.id), 'Carencias','Fit','VentasPerdidasPrecio','Comentario'].join(';');
+    ...RATINGS.map(d=>'V_'+d.id), 'VentasPerdidasPrecio','ComentariosFit','ComentarioLibreFit','ReferenciasEnFalta'].join(';');
   const lines=[];
   rows.forEach(r=>{ const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES'):''; const f=r.families||{};
     SEGMENTS.forEach(s=>{ const x=f[s.id]; if(!x)return;
       lines.push([dt,(r.lang||'').toUpperCase(),r.agente,r.pais,r.temporada,s.es,s.band,
-        ...RATINGS.map(d=>(x.ratings||{})[d.id]||''), ...RANGES.map(rr=>(x.ranges||{})[rr.id]||''),
-        (x.carencias||[]).join(' | '),(x.fit||[]).join(' | '),x.precio_perdida||'',x.comentario||''].map(sc).join(';')); }); });
+        ...RATINGS.map(d=>(x.ratings||{})[d.id]||''),
+        x.precio_perdida||'',(x.fit||[]).join(' | '),x.fit_com||'',x.referencias||''].map(sc).join(';')); }); });
   if(!lines.length){alert('Sin datos por familia.');return;}
   dl('\uFEFF'+hdr+'\n'+lines.join('\n'),`LOSAN_AW26_familias_${new Date().toISOString().slice(0,10)}.csv`);
 }
 function exportRangesCSV(){
   if(!adminRows.length){alert('No hay respuestas.');return;}
   const rows=adminRows.slice().sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
-  const hdr=['Enviado','Agente','Pais','Familia','Banda','Rango','Puntuacion'].join(';');
+  const hdr=['Enviado','Agente','Pais','Familia','Banda','Rango','OrdenSeleccion','Surtido','PercepcionPrecio'].join(';');
   const lines=[];
   rows.forEach(r=>{ const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES'):''; const f=r.families||{};
-    SEGMENTS.forEach(s=>{ const x=f[s.id]; if(!x)return; const rg=x.ranges||{};
-      RANGES.forEach(rr=>{ if(rg[rr.id]>0) lines.push([dt,r.agente,r.pais,s.es,s.band,rr.es,rg[rr.id]].map(sc).join(';')); }); }); });
+    SEGMENTS.forEach(s=>{ const x=f[s.id]; if(!x)return; const rg=x.ranges||{}, su=x.surtido||{}, pr=x.precio||{};
+      RANGES.forEach(rr=>{ const orden=rg[rr.id]||'', sur=su[rr.id]||'', pre=pr[rr.id]||'';
+        if(orden||sur||pre) lines.push([dt,r.agente,r.pais,s.es,s.band,rr.es,orden,sur,pre].map(sc).join(';')); }); }); });
   if(!lines.length){alert('Sin datos de rangos.');return;}
   dl('\uFEFF'+hdr+'\n'+lines.join('\n'),`LOSAN_AW26_rangos_${new Date().toISOString().slice(0,10)}.csv`);
 }
