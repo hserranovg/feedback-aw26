@@ -119,6 +119,25 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-we
   .lang-btn{padding:0.25rem 0.5rem;}
   .header-meta{display:none;}
 }
+/* ── SUBMIT SUCCESS OVERLAY ── */
+.submit-overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:2rem;}
+.submit-overlay.active{display:flex;}
+.submit-icon{font-size:2.5rem;margin-bottom:1.5rem;}
+.submit-title{font-size:clamp(1.4rem,4vw,2rem);font-weight:400;letter-spacing:-0.02em;margin-bottom:0.75rem;}
+.submit-desc{font-size:0.9rem;color:var(--muted);line-height:1.65;max-width:400px;margin-bottom:2.5rem;}
+/* ── ADMIN VIEW ── */
+#admin-view{display:none;min-height:100vh;}
+.admin-header{padding:1.25rem 2rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:1rem;background:var(--bg);}
+.admin-badge{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--danger);border:1px solid var(--danger);padding:0.15rem 0.5rem;margin-left:0.75rem;}
+.admin-body{max-width:780px;margin:0 auto;padding:3rem 2rem 6rem;}
+.admin-section-title{font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem;}
+.admin-pre{white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:0.78rem;line-height:1.8;color:var(--text);background:var(--surface);padding:1.5rem;border:1px solid var(--line);max-height:70vh;overflow-y:auto;}
+.admin-actions{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1.25rem;}
+.admin-note{font-size:0.75rem;color:var(--muted);margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--line);line-height:1.65;}
+@media(max-width:580px){
+  .admin-header{padding:1rem 1.25rem;}
+  .admin-body{padding:2rem 1.25rem 5rem;}
+}
 @media print{
   .actions-bar,.modal-overlay,.progress-bar,.lang-switcher{display:none!important;}
   .header{position:static;}
@@ -368,9 +387,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-we
 </main>
 
 <div class="actions-bar">
-  <button class="btn btn-primary" onclick="exportar()" data-i18n="btn_export"></button>
+  <button class="btn btn-primary" onclick="submitForm()" data-i18n="btn_submit"></button>
   <button class="btn" onclick="window.print()" data-i18n="btn_print"></button>
   <button class="btn-ghost btn" onclick="limpiar()" data-i18n="btn_clear"></button>
+</div>
+
+<!-- SUBMIT SUCCESS OVERLAY -->
+<div class="submit-overlay" id="submitOverlay">
+  <div class="submit-icon">✓</div>
+  <h2 class="submit-title" data-i18n="submit_ok_title"></h2>
+  <p class="submit-desc" data-i18n="submit_ok_desc"></p>
+  <button class="btn" onclick="closeSubmitOverlay()" data-i18n="submit_ok_btn"></button>
 </div>
 
 <div class="modal-overlay" id="modalOverlay">
@@ -388,6 +415,33 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-we
       <button class="btn" onclick="enviarEmail()" data-i18n="btn_email"></button>
       <button class="btn-ghost btn" onclick="cerrarModal()" data-i18n="btn_close"></button>
     </div>
+  </div>
+</div>
+
+<!-- ADMIN VIEW -->
+<div id="admin-view">
+  <header class="admin-header">
+    <div style="display:flex;align-items:center;">
+      <span class="logo-wordmark">LOSAN</span>
+      <span class="admin-badge" data-i18n="admin_badge"></span>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
+      </div>
+      <button class="btn" onclick="goToForm()" data-i18n="admin_back"></button>
+    </div>
+  </header>
+  <div class="admin-body">
+    <p class="admin-section-title" data-i18n="admin_section_lbl"></p>
+    <pre class="admin-pre" id="adminPre"></pre>
+    <div class="admin-actions">
+      <button class="btn btn-primary" onclick="adminCopy()" id="adminCopyBtn" data-i18n="btn_copy"></button>
+      <button class="btn" onclick="adminDownload()" data-i18n="admin_download"></button>
+    </div>
+    <p class="admin-note" data-i18n="admin_note"></p>
   </div>
 </div>
 
@@ -437,7 +491,10 @@ const LANGS = {
     s9_eyebrow:'Sección 9 de 10',s9_title:'Tendencias y<br><em>oportunidades de mercado.</em>',s9_hint:'Las 5 tendencias que detectas en tu mercado que deberían incorporarse en futuras colecciones.',td_ph:'Tendencia de mercado',
     s10_eyebrow:'Sección 10 de 10',s10_title:'Referencias<br><em>echadas en falta.</em>',s10_hint:'Pensando en toda la campaña de ventas.',s10_falta_lbl:'¿Qué referencias o productos has echado de menos? Indica ejemplos concretos.',s10_falta_ph:'Sé específico: tejidos, siluetas, precios, categorías...',s10_oport_lbl:'¿Qué oportunidades crees que hemos perdido?',s10_oport_ph:'Estima el impacto si puedes...',key_badge:'Pregunta clave',
     sc_eyebrow:'Para cerrar',sc_title:'Top 5 recomendaciones<br><em>para la próxima temporada.</em>',rc_ph:'Tu recomendación',sc_com_lbl:'Comentarios finales',sc_com_ph:'Cualquier observación adicional que pueda ayudarnos a mejorar...',
-    btn_export:'Exportar respuestas →',btn_print:'Imprimir',btn_clear:'Limpiar',
+    btn_submit:'Enviar respuesta →',btn_print:'Imprimir',btn_clear:'Limpiar',
+    submit_ok_title:'¡Respuesta enviada!',submit_ok_desc:'Se ha abierto tu cliente de correo con las respuestas listas para enviar. Gracias por tu feedback.',submit_ok_btn:'Cerrar',
+    submit_warn:'Por favor, introduce tu nombre antes de enviar.',
+    admin_badge:'Admin',admin_back:'← Formulario',admin_section_lbl:'Exportar respuestas del formulario actual',admin_download:'Descargar .txt',admin_note:'Esta vista muestra los datos del formulario cargado en este navegador. Accede añadiendo #admin a la URL.',
     modal_title:'Respuestas — AW26',modal_note:'Copia el texto y pégalo en un email, o usa el botón de envío directo.',btn_copy:'Copiar texto',btn_email:'Abrir en email',btn_close:'Cerrar',
     // Export labels
     xl_title:'FEEDBACK FIN DE TEMPORADA AW26',xl_season:'Temporada',xl_agent:'Agente',xl_country:'País',xl_date:'Fecha',
@@ -471,7 +528,10 @@ const LANGS = {
     s9_eyebrow:'Section 9 of 10',s9_title:'Market trends and<br><em>opportunities.</em>',s9_hint:'The 5 trends in your market that should be incorporated in future collections.',td_ph:'Market trend',
     s10_eyebrow:'Section 10 of 10',s10_title:'Missing<br><em>references.</em>',s10_hint:'Thinking about the entire sales campaign.',s10_falta_lbl:'What references or products did you miss? Give specific examples.',s10_falta_ph:'Be specific: fabrics, silhouettes, prices, categories...',s10_oport_lbl:'What sales opportunities do you think we lost?',s10_oport_ph:'Estimate the impact if you can...',key_badge:'Key question',
     sc_eyebrow:'To close',sc_title:'Top 5 recommendations<br><em>for next season.</em>',rc_ph:'Your recommendation',sc_com_lbl:'Final comments',sc_com_ph:'Any additional observations that could help us improve...',
-    btn_export:'Export responses →',btn_print:'Print',btn_clear:'Clear',
+    btn_submit:'Send response →',btn_print:'Print',btn_clear:'Clear',
+    submit_ok_title:'Response sent!',submit_ok_desc:'Your email client has opened with the responses ready to send. Thank you for your feedback.',submit_ok_btn:'Close',
+    submit_warn:'Please enter your name before sending.',
+    admin_badge:'Admin',admin_back:'← Form',admin_section_lbl:'Export current form responses',admin_download:'Download .txt',admin_note:'This view shows data from the form currently loaded in this browser. Access by adding #admin to the URL.',
     modal_title:'Responses — AW26',modal_note:'Copy the text and paste it into an email, or use the direct send button.',btn_copy:'Copy text',btn_email:'Open in email',btn_close:'Close',
     xl_title:'END OF SEASON FEEDBACK AW26',xl_season:'Season',xl_agent:'Agent',xl_country:'Country',xl_date:'Date',
     xl_s1:'1. OVERALL RATING (1–5)',xl_atractivo:'Overall appeal',xl_moda:'Fashion level',xl_comercial:'Commercial potential',xl_precio:'Price positioning',xl_equilibrio:'Balance',xl_color:'Colour palette',xl_relacion:'Fashion/basics',
@@ -503,7 +563,10 @@ const LANGS = {
     s9_eyebrow:'Sezione 9 di 10',s9_title:'Tendenze e<br><em>opportunità di mercato.</em>',s9_hint:'Le 5 tendenze che rilevi nel tuo mercato e che dovrebbero essere incorporate nelle prossime collezioni.',td_ph:'Tendenza di mercato',
     s10_eyebrow:'Sezione 10 di 10',s10_title:'Riferimenti<br><em>mancanti.</em>',s10_hint:"Pensando all'intera campagna vendite.",s10_falta_lbl:'Quali riferimenti o prodotti le sono mancati? Indica esempi concreti.',s10_falta_ph:'Sii specifico: tessuti, silhouette, prezzi, categorie...',s10_oport_lbl:'Quali opportunità di vendita ritieni che abbiamo perso?',s10_oport_ph:"Stima l'impatto se puoi...",key_badge:'Domanda chiave',
     sc_eyebrow:'Per concludere',sc_title:'Top 5 raccomandazioni<br><em>per la prossima stagione.</em>',rc_ph:'La tua raccomandazione',sc_com_lbl:'Commenti finali',sc_com_ph:'Qualsiasi osservazione aggiuntiva che possa aiutarci a migliorare...',
-    btn_export:'Esporta risposte →',btn_print:'Stampa',btn_clear:'Cancella',
+    btn_submit:'Invia risposta →',btn_print:'Stampa',btn_clear:'Cancella',
+    submit_ok_title:'Risposta inviata!',submit_ok_desc:"Il tuo client di posta è stato aperto con le risposte pronte per l'invio. Grazie per il tuo feedback.",submit_ok_btn:'Chiudi',
+    submit_warn:'Inserisci il tuo nome prima di inviare.',
+    admin_badge:'Admin',admin_back:'← Modulo',admin_section_lbl:'Esporta le risposte del modulo attuale',admin_download:'Scarica .txt',admin_note:"Questa vista mostra i dati del modulo caricato in questo browser. Accedi aggiungendo #admin all'URL.",
     modal_title:'Risposte — AW26',modal_note:"Copia il testo e incollalo in un'email, oppure usa il pulsante di invio diretto.",btn_copy:'Copia testo',btn_email:'Apri in email',btn_close:'Chiudi',
     xl_title:'FEEDBACK FINE STAGIONE AW26',xl_season:'Stagione',xl_agent:'Agente',xl_country:'Paese',xl_date:'Data',
     xl_s1:'1. VALUTAZIONE GENERALE (1–5)',xl_atractivo:'Attrattività generale',xl_moda:'Livello moda',xl_comercial:'Potenziale commerciale',xl_precio:'Posiz. prezzo',xl_equilibrio:'Equilibrio',xl_color:'Palette colori',xl_relacion:'Moda/basic',
@@ -535,6 +598,7 @@ function setLang(lang) {
   renderFamilyGrid('grid-success','success');
   renderFamilyGrid('grid-weak','weak');
   updateProgress();
+  if (location.hash === '#admin') renderAdmin();
 }
 
 function applyI18n() {
@@ -557,11 +621,10 @@ function renderFamilyGrid(containerId, type) {
   container.innerHTML = FAMILIES.map(f => {
     const rank = ranked[type][f.id];
     const isRanked = rank !== undefined;
-    return `<label class="fam-row${isRanked?' ranked':''}" onclick="toggleFamily('${f.id}','${type}')">
-      <input type="checkbox"${isRanked?' checked':''}>
+    return `<div class="fam-row${isRanked?' ranked':''}" onclick="toggleFamily('${f.id}','${type}')">
       <span class="fam-indicator">${isRanked ? rank : '—'}</span>
       <span class="fam-name">${d[f.id] || f.es}</span>
-    </label>`;
+    </div>`;
   }).join('');
 }
 
@@ -778,12 +841,106 @@ function limpiar(){
 document.getElementById('modalOverlay').addEventListener('click',e=>{ if(e.target===e.currentTarget) cerrarModal(); });
 
 // ═══════════════════════════════════════════════
+// SUBMIT FORM
+// ═══════════════════════════════════════════════
+function submitForm() {
+  const agentName = document.getElementById('m_agente').value.trim();
+  const d = LANGS[currentLang];
+  if (!agentName) {
+    alert(d.submit_warn || 'Please enter your name before sending.');
+    document.getElementById('m_agente').focus();
+    return;
+  }
+  // Build text and open email
+  exportar(); // builds textoExportado
+  enviarEmail();
+  // Show success overlay
+  applyI18n();
+  document.getElementById('submitOverlay').classList.add('active');
+}
+
+function closeSubmitOverlay() {
+  document.getElementById('submitOverlay').classList.remove('active');
+  cerrarModal();
+}
+
+// ═══════════════════════════════════════════════
+// ADMIN ROUTING
+// ═══════════════════════════════════════════════
+function route() {
+  const isAdmin = location.hash === '#admin';
+  const mainEl = document.querySelector('.progress-bar');
+  const formEl = document.querySelector('main.form-body');
+  const actionsEl = document.querySelector('.actions-bar');
+  const headerEl = document.querySelector('header.header');
+
+  if (isAdmin) {
+    if(mainEl) mainEl.style.display='none';
+    if(formEl) formEl.style.display='none';
+    if(actionsEl) actionsEl.style.display='none';
+    if(headerEl) headerEl.style.display='none';
+    document.getElementById('admin-view').style.display='block';
+    renderAdmin();
+    // sync lang buttons in admin header
+    document.querySelectorAll('#admin-view .lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
+  } else {
+    if(mainEl) mainEl.style.display='';
+    if(formEl) formEl.style.display='';
+    if(actionsEl) actionsEl.style.display='';
+    if(headerEl) headerEl.style.display='';
+    document.getElementById('admin-view').style.display='none';
+  }
+}
+
+function goToForm() {
+  history.pushState('', document.title, location.pathname + location.search);
+  route();
+}
+
+function renderAdmin() {
+  const d = LANGS[currentLang];
+  // sync lang buttons
+  document.querySelectorAll('#admin-view .lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
+  // apply i18n inside admin view
+  document.querySelectorAll('#admin-view [data-i18n]').forEach(el => { const k=el.getAttribute('data-i18n'); if(d[k]!==undefined) el.textContent=d[k]; });
+  // generate export text
+  exportar(); // populates textoExportado
+  const txt = document.getElementById('textoExportado').textContent;
+  document.getElementById('adminPre').textContent = txt;
+  cerrarModal(); // close the modal that exportar() opened
+}
+
+function adminCopy() {
+  const txt = document.getElementById('adminPre').textContent;
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = document.getElementById('adminCopyBtn');
+    const orig = btn.textContent;
+    btn.textContent = '✓ '+(currentLang==='it'?'Copiato!':currentLang==='en'?'Copied!':'Copiado');
+    setTimeout(()=>{ btn.textContent=orig; }, 2200);
+  });
+}
+
+function adminDownload() {
+  const txt = document.getElementById('adminPre').textContent;
+  const agent = document.getElementById('m_agente').value.trim() || 'agente';
+  const blob = new Blob([txt], {type:'text/plain;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `LOSAN_AW26_${agent.replace(/\s+/g,'_')}.txt`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+window.addEventListener('hashchange', route);
+
+// ═══════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('m_fecha').valueAsDate = new Date();
   const nav = (navigator.language||'es').toLowerCase().split('-')[0];
   setLang(['es','en','it'].includes(nav) ? nav : 'es');
+  route();
 });
 </script>
 </body>
