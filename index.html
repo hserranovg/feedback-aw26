@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<!-- saved from url=(0039)file:///Users/hermes/Downloads/aaa.html -->
-<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="es">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="LOSAN MEN — AW26 End of Season Feedback">
 <title>LOSAN — Feedback AW26</title>
-<script src="./index_files/firebase-app-compat.js"></script>
-<script src="./index_files/firebase-database-compat.js"></script>
-<link href="./index_files/css2" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#fff;--surface:#fafafa;--text:#0a0a0a;--muted:#8a8a8a;--line:#e8e8e8;--line-dark:#d0d0d0;--danger:#c8102e;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -176,384 +176,288 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-we
 <header class="header">
   <span class="logo-wordmark">LOSAN</span>
   <div class="header-right">
-    <span class="header-meta" id="hd-meta">6 / 10</span>
+    <span class="header-meta" id="hd-meta"></span>
     <div class="lang-switcher">
-      <button class="lang-btn active" data-lang="es" onclick="setLang(&#39;es&#39;)">ES</button>
-      <button class="lang-btn" data-lang="en" onclick="setLang(&#39;en&#39;)">EN</button>
-      <button class="lang-btn" data-lang="it" onclick="setLang(&#39;it&#39;)">IT</button>
+      <button class="lang-btn active" data-lang="es" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
     </div>
   </div>
 </header>
 
-<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 60%;"></div></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
 <main class="form-body">
 
   <div class="intro">
-    <span class="eyebrow" data-i18n="intro_eyebrow">AW26 — Informe de feedback comercial</span>
-    <h1 class="intro-title" data-i18n-html="intro_title">Tu visión de mercado<br><em>hace mejores colecciones.</em></h1>
-    <p class="intro-desc" data-i18n="intro_desc">Rellena este formulario al finalizar la campaña de ventas. Tus respuestas, junto con las del resto de agentes, nos permitirán tomar decisiones de producto y colección mucho más precisas. 15–20 minutos.</p>
+    <span class="eyebrow" data-i18n="intro_eyebrow"></span>
+    <h1 class="intro-title" data-i18n-html="intro_title"></h1>
+    <p class="intro-desc" data-i18n="intro_desc"></p>
   </div>
 
   <div class="meta-grid">
-    <div class="meta-cell"><label data-i18n="lbl_season">Temporada</label><input type="text" id="m_temporada" value="AW26"></div>
-    <div class="meta-cell"><label data-i18n="lbl_agent">Agente</label><input type="text" id="m_agente" data-i18n-placeholder="ph_agent" placeholder="Tu nombre completo"></div>
-    <div class="meta-cell"><label data-i18n="lbl_country">País / Mercado</label><input type="text" id="m_pais" data-i18n-placeholder="ph_country" placeholder="País o territorio"></div>
-    <div class="meta-cell"><label data-i18n="lbl_date">Fecha</label><input type="date" id="m_fecha"></div>
+    <div class="meta-cell"><label data-i18n="lbl_season"></label><input type="text" id="m_temporada" value="AW26"></div>
+    <div class="meta-cell"><label data-i18n="lbl_agent"></label><input type="text" id="m_agente" data-i18n-placeholder="ph_agent"></div>
+    <div class="meta-cell"><label data-i18n="lbl_country"></label><input type="text" id="m_pais" data-i18n-placeholder="ph_country"></div>
+    <div class="meta-cell"><label data-i18n="lbl_date"></label><input type="date" id="m_fecha"></div>
   </div>
 
   <!-- S1 -->
   <div class="section" data-sec="1">
-    <p class="s-eyebrow" data-i18n="s1_eyebrow">Sección 1 de 10</p>
-    <h2 class="s-title" data-i18n-html="s1_title">Valoración general<br><em>de la colección.</em></h2>
-    <p class="s-hint" data-i18n="s1_hint">Puntúa cada área de 1 (muy bajo) a 5 (excelente).</p>
+    <p class="s-eyebrow" data-i18n="s1_eyebrow"></p>
+    <h2 class="s-title" data-i18n-html="s1_title"></h2>
+    <p class="s-hint" data-i18n="s1_hint"></p>
     <div class="rating-block">
-      <div class="rating-row"><span class="rating-label" data-i18n="r_atractivo">Atractivo general</span><div class="rating-opts"><input type="radio" name="r_atractivo" id="r_at1" value="1"><label for="r_at1">1</label><input type="radio" name="r_atractivo" id="r_at2" value="2"><label for="r_at2">2</label><input type="radio" name="r_atractivo" id="r_at3" value="3"><label for="r_at3">3</label><input type="radio" name="r_atractivo" id="r_at4" value="4"><label for="r_at4">4</label><input type="radio" name="r_atractivo" id="r_at5" value="5"><label for="r_at5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_moda">Nivel de moda</span><div class="rating-opts"><input type="radio" name="r_moda" id="r_mo1" value="1"><label for="r_mo1">1</label><input type="radio" name="r_moda" id="r_mo2" value="2"><label for="r_mo2">2</label><input type="radio" name="r_moda" id="r_mo3" value="3"><label for="r_mo3">3</label><input type="radio" name="r_moda" id="r_mo4" value="4"><label for="r_mo4">4</label><input type="radio" name="r_moda" id="r_mo5" value="5"><label for="r_mo5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_comercial">Potencial comercial</span><div class="rating-opts"><input type="radio" name="r_comercial" id="r_co1" value="1"><label for="r_co1">1</label><input type="radio" name="r_comercial" id="r_co2" value="2"><label for="r_co2">2</label><input type="radio" name="r_comercial" id="r_co3" value="3"><label for="r_co3">3</label><input type="radio" name="r_comercial" id="r_co4" value="4"><label for="r_co4">4</label><input type="radio" name="r_comercial" id="r_co5" value="5"><label for="r_co5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_precio">Posicionamiento de precio</span><div class="rating-opts"><input type="radio" name="r_precio" id="r_pr1" value="1"><label for="r_pr1">1</label><input type="radio" name="r_precio" id="r_pr2" value="2"><label for="r_pr2">2</label><input type="radio" name="r_precio" id="r_pr3" value="3"><label for="r_pr3">3</label><input type="radio" name="r_precio" id="r_pr4" value="4"><label for="r_pr4">4</label><input type="radio" name="r_precio" id="r_pr5" value="5"><label for="r_pr5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_equilibrio">Equilibrio de la colección</span><div class="rating-opts"><input type="radio" name="r_equilibrio" id="r_eq1" value="1"><label for="r_eq1">1</label><input type="radio" name="r_equilibrio" id="r_eq2" value="2"><label for="r_eq2">2</label><input type="radio" name="r_equilibrio" id="r_eq3" value="3"><label for="r_eq3">3</label><input type="radio" name="r_equilibrio" id="r_eq4" value="4"><label for="r_eq4">4</label><input type="radio" name="r_equilibrio" id="r_eq5" value="5"><label for="r_eq5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_color">Paleta de color</span><div class="rating-opts"><input type="radio" name="r_color" id="r_cl1" value="1"><label for="r_cl1">1</label><input type="radio" name="r_color" id="r_cl2" value="2"><label for="r_cl2">2</label><input type="radio" name="r_color" id="r_cl3" value="3"><label for="r_cl3">3</label><input type="radio" name="r_color" id="r_cl4" value="4"><label for="r_cl4">4</label><input type="radio" name="r_color" id="r_cl5" value="5"><label for="r_cl5">5</label></div></div>
-      <div class="rating-row"><span class="rating-label" data-i18n="r_relacion">Relación moda / básico</span><div class="rating-opts"><input type="radio" name="r_relacion" id="r_re1" value="1"><label for="r_re1">1</label><input type="radio" name="r_relacion" id="r_re2" value="2"><label for="r_re2">2</label><input type="radio" name="r_relacion" id="r_re3" value="3"><label for="r_re3">3</label><input type="radio" name="r_relacion" id="r_re4" value="4"><label for="r_re4">4</label><input type="radio" name="r_relacion" id="r_re5" value="5"><label for="r_re5">5</label></div></div>
+      <div class="rating-row"><span class="rating-label" data-i18n="r_atractivo"></span><div class="rating-opts"><input type="radio" name="r_atractivo" id="r_at1" value="1"><label for="r_at1">1</label><input type="radio" name="r_atractivo" id="r_at2" value="2"><label for="r_at2">2</label><input type="radio" name="r_atractivo" id="r_at3" value="3"><label for="r_at3">3</label><input type="radio" name="r_atractivo" id="r_at4" value="4"><label for="r_at4">4</label><input type="radio" name="r_atractivo" id="r_at5" value="5"><label for="r_at5">5</label></div></div>
+      <div class="rating-row"><span class="rating-label" data-i18n="r_moda"></span><div class="rating-opts"><input type="radio" name="r_moda" id="r_mo1" value="1"><label for="r_mo1">1</label><input type="radio" name="r_moda" id="r_mo2" value="2"><label for="r_mo2">2</label><input type="radio" name="r_moda" id="r_mo3" value="3"><label for="r_mo3">3</label><input type="radio" name="r_moda" id="r_mo4" value="4"><label for="r_mo4">4</label><input type="radio" name="r_moda" id="r_mo5" value="5"><label for="r_mo5">5</label></div></div>
+      <div class="rating-row"><span class="rating-label" data-i18n="r_comercial"></span><div class="rating-opts"><input type="radio" name="r_comercial" id="r_co1" value="1"><label for="r_co1">1</label><input type="radio" name="r_comercial" id="r_co2" value="2"><label for="r_co2">2</label><input type="radio" name="r_comercial" id="r_co3" value="3"><label for="r_co3">3</label><input type="radio" name="r_comercial" id="r_co4" value="4"><label for="r_co4">4</label><input type="radio" name="r_comercial" id="r_co5" value="5"><label for="r_co5">5</label></div></div>
+      <div class="rating-row"><span class="rating-label" data-i18n="r_precio"></span><div class="rating-opts"><input type="radio" name="r_precio" id="r_pr1" value="1"><label for="r_pr1">1</label><input type="radio" name="r_precio" id="r_pr2" value="2"><label for="r_pr2">2</label><input type="radio" name="r_precio" id="r_pr3" value="3"><label for="r_pr3">3</label><input type="radio" name="r_precio" id="r_pr4" value="4"><label for="r_pr4">4</label><input type="radio" name="r_precio" id="r_pr5" value="5"><label for="r_pr5">5</label></div></div>
+      <div class="rating-row"><span class="rating-label" data-i18n="r_equilibrio"></span><div class="rating-opts"><input type="radio" name="r_equilibrio" id="r_eq1" value="1"><label for="r_eq1">1</label><input type="radio" name="r_equilibrio" id="r_eq2" value="2"><label for="r_eq2">2</label><input type="radio" name="r_equilibrio" id="r_eq3" value="3"><label for="r_eq3">3</label><input type="radio" name="r_equilibrio" id="r_eq4" value="4"><label for="r_eq4">4</label><input type="radio" name="r_equilibrio" id="r_eq5" value="5"><label for="r_eq5">5</label></div></div>
+      <div class="rating-row"><span class="rating-label" data-i18n="r_color"></span><div class="rating-opts"><input type="radio" name="r_color" id="r_cl1" value="1"><label for="r_cl1">1</label><input type="radio" name="r_color" id="r_cl2" value="2"><label for="r_cl2">2</label><input type="radio" name="r_color" id="r_cl3" value="3"><label for="r_cl3">3</label><input type="radio" name="r_color" id="r_cl4" value="4"><label for="r_cl4">4</label><input type="radio" name="r_color" id="r_cl5" value="5"><label for="r_cl5">5</label></div></div>
+      <div class="rating-row"><span class="rating-label" data-i18n="r_relacion"></span><div class="rating-opts"><input type="radio" name="r_relacion" id="r_re1" value="1"><label for="r_re1">1</label><input type="radio" name="r_relacion" id="r_re2" value="2"><label for="r_re2">2</label><input type="radio" name="r_relacion" id="r_re3" value="3"><label for="r_re3">3</label><input type="radio" name="r_relacion" id="r_re4" value="4"><label for="r_re4">4</label><input type="radio" name="r_relacion" id="r_re5" value="5"><label for="r_re5">5</label></div></div>
     </div>
   </div>
 
   <!-- S2 -->
   <div class="section" data-sec="2">
-    <p class="s-eyebrow" data-i18n="s2_eyebrow">Sección 2 de 10</p>
-    <h2 class="s-title" data-i18n-html="s2_title">Rangos de producto<br><em>más exitosos.</em></h2>
-    <p class="s-hint" data-i18n="s2_hint">Selecciona los rangos que mejor acogida han tenido. El número indica el orden de selección.</p>
-    <div class="family-grid" id="grid-success"><div class="fam-row" onclick="toggleFamily(&#39;f_basic_tee&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Camiseta básica</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_graphic_tee&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Camiseta estampada</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_polo&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Polo</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_casual_shirt&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Camisa casual</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_dress_shirt&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Camisa vestir</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_overshirt&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Sobrecamisa</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_sweatshirt&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Sudadera</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_hoodie&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Sudadera capucha</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_knitwear&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Jersey / Punto</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_cardigan&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Cardigan</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_denim&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Denim / Vaquero</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_chino&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Pantalón chino</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_knit_trs&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Pantalón punto</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_coat&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Abrigo</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_jacket&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Chaqueta</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_wind&#39;,&#39;success&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Cortavientos</span>
-    </div></div>
+    <p class="s-eyebrow" data-i18n="s2_eyebrow"></p>
+    <h2 class="s-title" data-i18n-html="s2_title"></h2>
+    <p class="s-hint" data-i18n="s2_hint"></p>
+    <div class="family-grid" id="grid-success"></div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s2_why_lbl">¿Por qué han funcionado especialmente bien?</span>
-      <textarea class="textarea-field" id="ex_porque" data-i18n-placeholder="s2_why_ph" placeholder="Explica los factores de éxito..."></textarea>
+      <span class="field-label" data-i18n="s2_why_lbl"></span>
+      <textarea class="textarea-field" id="ex_porque" data-i18n-placeholder="s2_why_ph"></textarea>
     </div>
   </div>
 
   <!-- S3 -->
   <div class="section" data-sec="3">
-    <p class="s-eyebrow" data-i18n="s3_eyebrow">Sección 3 de 10</p>
-    <h2 class="s-title" data-i18n-html="s3_title">Rangos de producto<br><em>más débiles.</em></h2>
-    <p class="s-hint" data-i18n="s3_hint">Selecciona los rangos que han generado menor interés. El número indica el orden de selección.</p>
-    <div class="family-grid" id="grid-weak"><div class="fam-row" onclick="toggleFamily(&#39;f_basic_tee&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Camiseta básica</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_graphic_tee&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Camiseta estampada</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_polo&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Polo</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_casual_shirt&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Camisa casual</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_dress_shirt&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Camisa vestir</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_overshirt&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Sobrecamisa</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_sweatshirt&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Sudadera</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_hoodie&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Sudadera capucha</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_knitwear&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Jersey / Punto</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_cardigan&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Cardigan</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_denim&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Denim / Vaquero</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_chino&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Pantalón chino</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_knit_trs&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Pantalón punto</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_coat&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Abrigo</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_jacket&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Chaqueta</span>
-    </div><div class="fam-row" onclick="toggleFamily(&#39;f_wind&#39;,&#39;weak&#39;)">
-      <span class="fam-indicator">—</span>
-      <span class="fam-name">Cortavientos</span>
-    </div></div>
+    <p class="s-eyebrow" data-i18n="s3_eyebrow"></p>
+    <h2 class="s-title" data-i18n-html="s3_title"></h2>
+    <p class="s-hint" data-i18n="s3_hint"></p>
+    <div class="family-grid" id="grid-weak"></div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s3_why_lbl">¿Cuáles han sido los motivos?</span>
+      <span class="field-label" data-i18n="s3_why_lbl"></span>
       <div class="check-group check-group-2col">
-        <label class="check-row"><input type="checkbox" name="motivo" value="precio"><span class="check-ind"></span><span class="check-label" data-i18n="mot_precio">Precio</span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="diseno"><span class="check-ind"></span><span class="check-label" data-i18n="mot_diseno">Diseño</span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="tendencia"><span class="check-ind"></span><span class="check-label" data-i18n="mot_tendencia">Falta de tendencia</span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="colorido"><span class="check-ind"></span><span class="check-label" data-i18n="mot_color">Colorido</span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="tejido"><span class="check-ind"></span><span class="check-label" data-i18n="mot_tejido">Tejido</span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="fit"><span class="check-ind"></span><span class="check-label" data-i18n="mot_fit">Fit / Patronaje</span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="competencia"><span class="check-ind"></span><span class="check-label" data-i18n="mot_competencia">Competencia</span></label>
-        <label class="check-row"><input type="checkbox" name="motivo" value="otro"><span class="check-ind"></span><span class="check-label" data-i18n="mot_otro">Otro</span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="precio"><span class="check-ind"></span><span class="check-label" data-i18n="mot_precio"></span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="diseno"><span class="check-ind"></span><span class="check-label" data-i18n="mot_diseno"></span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="tendencia"><span class="check-ind"></span><span class="check-label" data-i18n="mot_tendencia"></span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="colorido"><span class="check-ind"></span><span class="check-label" data-i18n="mot_color"></span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="tejido"><span class="check-ind"></span><span class="check-label" data-i18n="mot_tejido"></span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="fit"><span class="check-ind"></span><span class="check-label" data-i18n="mot_fit"></span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="competencia"><span class="check-ind"></span><span class="check-label" data-i18n="mot_competencia"></span></label>
+        <label class="check-row"><input type="checkbox" name="motivo" value="otro"><span class="check-ind"></span><span class="check-label" data-i18n="mot_otro"></span></label>
       </div>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s3_com_lbl">Comentarios adicionales</span>
-      <textarea class="textarea-field" id="db_com" data-i18n-placeholder="s3_com_ph" placeholder="Detalla si lo consideras necesario..."></textarea>
+      <span class="field-label" data-i18n="s3_com_lbl"></span>
+      <textarea class="textarea-field" id="db_com" data-i18n-placeholder="s3_com_ph"></textarea>
     </div>
   </div>
 
   <!-- S4 -->
   <div class="section" data-sec="4">
-    <p class="s-eyebrow" data-i18n="s4_eyebrow">Sección 4 de 10</p>
-    <h2 class="s-title" data-i18n-html="s4_title">Carencias<br><em>de producto.</em></h2>
-    <p class="s-hint" data-i18n="s4_hint">¿Qué productos han solicitado los clientes que no estaban suficientemente representados?</p>
+    <p class="s-eyebrow" data-i18n="s4_eyebrow"></p>
+    <h2 class="s-title" data-i18n-html="s4_title"></h2>
+    <p class="s-hint" data-i18n="s4_hint"></p>
     <div class="check-group check-group-2col">
-      <label class="check-row"><input type="checkbox" name="carencia" value="basic_tee"><span class="check-ind"></span><span class="check-label" data-i18n="f_basic_tee">Camiseta básica</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="graphic_tee"><span class="check-ind"></span><span class="check-label" data-i18n="f_graphic_tee">Camiseta estampada</span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="basic_tee"><span class="check-ind"></span><span class="check-label" data-i18n="f_basic_tee"></span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="graphic_tee"><span class="check-ind"></span><span class="check-label" data-i18n="f_graphic_tee"></span></label>
       <label class="check-row"><input type="checkbox" name="carencia" value="polo"><span class="check-ind"></span><span class="check-label">Polo</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="casual_shirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_casual_shirt">Camisa casual</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="dress_shirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_dress_shirt">Camisa vestir</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="overshirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_overshirt">Sobrecamisa</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="sweatshirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_sweatshirt">Sudadera</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="hoodie"><span class="check-ind"></span><span class="check-label" data-i18n="f_hoodie">Sudadera capucha</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="knitwear"><span class="check-ind"></span><span class="check-label" data-i18n="f_knitwear">Jersey / Punto</span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="casual_shirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_casual_shirt"></span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="dress_shirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_dress_shirt"></span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="overshirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_overshirt"></span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="sweatshirt"><span class="check-ind"></span><span class="check-label" data-i18n="f_sweatshirt"></span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="hoodie"><span class="check-ind"></span><span class="check-label" data-i18n="f_hoodie"></span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="knitwear"><span class="check-ind"></span><span class="check-label" data-i18n="f_knitwear"></span></label>
       <label class="check-row"><input type="checkbox" name="carencia" value="cardigan"><span class="check-ind"></span><span class="check-label">Cardigan</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="denim"><span class="check-ind"></span><span class="check-label" data-i18n="f_denim">Denim / Vaquero</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="chino"><span class="check-ind"></span><span class="check-label" data-i18n="f_chino">Pantalón chino</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="knit_trs"><span class="check-ind"></span><span class="check-label" data-i18n="f_knit_trs">Pantalón punto</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="coat"><span class="check-ind"></span><span class="check-label" data-i18n="f_coat">Abrigo</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="jacket"><span class="check-ind"></span><span class="check-label" data-i18n="f_jacket">Chaqueta</span></label>
-      <label class="check-row"><input type="checkbox" name="carencia" value="windbreaker"><span class="check-ind"></span><span class="check-label" data-i18n="f_wind">Cortavientos</span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="denim"><span class="check-ind"></span><span class="check-label" data-i18n="f_denim"></span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="chino"><span class="check-ind"></span><span class="check-label" data-i18n="f_chino"></span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="knit_trs"><span class="check-ind"></span><span class="check-label" data-i18n="f_knit_trs"></span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="coat"><span class="check-ind"></span><span class="check-label" data-i18n="f_coat"></span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="jacket"><span class="check-ind"></span><span class="check-label" data-i18n="f_jacket"></span></label>
+      <label class="check-row"><input type="checkbox" name="carencia" value="windbreaker"><span class="check-ind"></span><span class="check-label" data-i18n="f_wind"></span></label>
     </div>
     <div class="input-wrap">
-      <label class="field-label" data-i18n="s4_otros_lbl">Otros productos no listados</label>
-      <input type="text" class="input-line" id="car_otros" data-i18n-placeholder="s4_otros_ph" placeholder="Especifica...">
+      <label class="field-label" data-i18n="s4_otros_lbl"></label>
+      <input type="text" class="input-line" id="car_otros" data-i18n-placeholder="s4_otros_ph">
     </div>
   </div>
 
   <!-- S5 -->
   <div class="section" data-sec="5">
-    <p class="s-eyebrow" data-i18n="s5_eyebrow">Sección 5 de 10</p>
-    <h2 class="s-title" data-i18n-html="s5_title">Análisis<br><em>del surtido.</em></h2>
-    <p class="s-hint" data-i18n="s5_hint">¿Qué categorías considera que estaban mal representadas en amplitud o profundidad?</p>
+    <p class="s-eyebrow" data-i18n="s5_eyebrow"></p>
+    <h2 class="s-title" data-i18n-html="s5_title"></h2>
+    <p class="s-hint" data-i18n="s5_hint"></p>
     <div class="textarea-wrap" style="margin-top:0;">
-      <span class="field-label" data-i18n="s5_exceso_lbl">Excesivamente representadas</span>
-      <textarea class="textarea-field" id="sur_exceso" data-i18n-placeholder="s5_exceso_ph" placeholder="Categorías con demasiado surtido..."></textarea>
+      <span class="field-label" data-i18n="s5_exceso_lbl"></span>
+      <textarea class="textarea-field" id="sur_exceso" data-i18n-placeholder="s5_exceso_ph"></textarea>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s5_falta_lbl">Insuficientemente representadas</span>
-      <textarea class="textarea-field" id="sur_falta" data-i18n-placeholder="s5_falta_ph" placeholder="Categorías con poco surtido..."></textarea>
+      <span class="field-label" data-i18n="s5_falta_lbl"></span>
+      <textarea class="textarea-field" id="sur_falta" data-i18n-placeholder="s5_falta_ph"></textarea>
     </div>
   </div>
 
   <!-- S6 -->
   <div class="section" data-sec="6">
-    <p class="s-eyebrow" data-i18n="s6_eyebrow">Sección 6 de 10</p>
-    <h2 class="s-title" data-i18n-html="s6_title">Feedback<br><em>sobre precios.</em></h2>
+    <p class="s-eyebrow" data-i18n="s6_eyebrow"></p>
+    <h2 class="s-title" data-i18n-html="s6_title"></h2>
     <div class="textarea-wrap" style="margin-top:0;">
-      <span class="field-label" data-i18n="s6_caros_lbl">¿Qué rangos se perciben como demasiado caros?</span>
-      <textarea class="textarea-field" id="pre_caros" data-i18n-placeholder="s6_caros_ph" placeholder="Indica los rangos..."></textarea>
+      <span class="field-label" data-i18n="s6_caros_lbl"></span>
+      <textarea class="textarea-field" id="pre_caros" data-i18n-placeholder="s6_caros_ph"></textarea>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s6_comp_lbl">¿Qué rangos se perciben como especialmente competitivos?</span>
-      <textarea class="textarea-field" id="pre_comp" data-i18n-placeholder="s6_comp_ph" placeholder="Indica los rangos..."></textarea>
+      <span class="field-label" data-i18n="s6_comp_lbl"></span>
+      <textarea class="textarea-field" id="pre_comp" data-i18n-placeholder="s6_comp_ph"></textarea>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s6_perdida_lbl">¿Ha perdido ventas por posicionamiento de precio?</span>
+      <span class="field-label" data-i18n="s6_perdida_lbl"></span>
       <div class="yesno-row">
-        <input type="radio" name="pre_perdida" id="yn_si" value="si"><label for="yn_si" data-i18n="yn_yes">Sí</label>
-        <input type="radio" name="pre_perdida" id="yn_no" value="no"><label for="yn_no" data-i18n="yn_no">No</label>
-        <input type="radio" name="pre_perdida" id="yn_av" value="algunos"><label for="yn_av" data-i18n="yn_some">En algunos casos</label>
+        <input type="radio" name="pre_perdida" id="yn_si" value="si"><label for="yn_si" data-i18n="yn_yes"></label>
+        <input type="radio" name="pre_perdida" id="yn_no" value="no"><label for="yn_no" data-i18n="yn_no"></label>
+        <input type="radio" name="pre_perdida" id="yn_av" value="algunos"><label for="yn_av" data-i18n="yn_some"></label>
       </div>
-      <textarea class="textarea-field" id="pre_explica" data-i18n-placeholder="s6_explica_ph" placeholder="Si aplica, detalla los casos..."></textarea>
+      <textarea class="textarea-field" id="pre_explica" data-i18n-placeholder="s6_explica_ph"></textarea>
     </div>
   </div>
 
   <!-- S7 -->
   <div class="section" data-sec="7">
-    <p class="s-eyebrow" data-i18n="s7_eyebrow">Sección 7 de 10</p>
-    <h2 class="s-title" data-i18n-html="s7_title">Fit, calidad<br><em>y tejidos.</em></h2>
-    <p class="s-hint" data-i18n="s7_hint">¿Ha recibido comentarios de clientes sobre alguno de estos aspectos?</p>
+    <p class="s-eyebrow" data-i18n="s7_eyebrow"></p>
+    <h2 class="s-title" data-i18n-html="s7_title"></h2>
+    <p class="s-hint" data-i18n="s7_hint"></p>
     <div class="check-group check-group-2col">
-      <label class="check-row"><input type="checkbox" name="fit" value="tallaje"><span class="check-ind"></span><span class="check-label" data-i18n="ft_tallaje">Tallaje</span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="patronaje"><span class="check-ind"></span><span class="check-label" data-i18n="ft_patronaje">Patronaje</span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="largo"><span class="check-ind"></span><span class="check-label" data-i18n="ft_largo">Largo de prendas</span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="calidad"><span class="check-ind"></span><span class="check-label" data-i18n="ft_calidad">Calidad percibida</span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="tejidos"><span class="check-ind"></span><span class="check-label" data-i18n="ft_tejidos">Tejidos</span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="acabados"><span class="check-ind"></span><span class="check-label" data-i18n="ft_acabados">Acabados</span></label>
+      <label class="check-row"><input type="checkbox" name="fit" value="tallaje"><span class="check-ind"></span><span class="check-label" data-i18n="ft_tallaje"></span></label>
+      <label class="check-row"><input type="checkbox" name="fit" value="patronaje"><span class="check-ind"></span><span class="check-label" data-i18n="ft_patronaje"></span></label>
+      <label class="check-row"><input type="checkbox" name="fit" value="largo"><span class="check-ind"></span><span class="check-label" data-i18n="ft_largo"></span></label>
+      <label class="check-row"><input type="checkbox" name="fit" value="calidad"><span class="check-ind"></span><span class="check-label" data-i18n="ft_calidad"></span></label>
+      <label class="check-row"><input type="checkbox" name="fit" value="tejidos"><span class="check-ind"></span><span class="check-label" data-i18n="ft_tejidos"></span></label>
+      <label class="check-row"><input type="checkbox" name="fit" value="acabados"><span class="check-ind"></span><span class="check-label" data-i18n="ft_acabados"></span></label>
       <label class="check-row"><input type="checkbox" name="fit" value="packaging"><span class="check-ind"></span><span class="check-label">Packaging</span></label>
-      <label class="check-row"><input type="checkbox" name="fit" value="etiquetado"><span class="check-ind"></span><span class="check-label" data-i18n="ft_etiquetado">Etiquetado</span></label>
+      <label class="check-row"><input type="checkbox" name="fit" value="etiquetado"><span class="check-ind"></span><span class="check-label" data-i18n="ft_etiquetado"></span></label>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s7_com_lbl">Detalle los comentarios más repetidos</span>
-      <textarea class="textarea-field" id="fit_com" data-i18n-placeholder="s7_com_ph" placeholder="¿Qué es lo que más han mencionado?"></textarea>
+      <span class="field-label" data-i18n="s7_com_lbl"></span>
+      <textarea class="textarea-field" id="fit_com" data-i18n-placeholder="s7_com_ph"></textarea>
     </div>
   </div>
 
   <!-- S8 -->
   <div class="section" data-sec="8">
-    <p class="s-eyebrow" data-i18n="s8_eyebrow">Sección 8 de 10</p>
-    <h2 class="s-title" data-i18n-html="s8_title">Análisis<br><em>de la competencia.</em></h2>
-    <p class="s-hint" data-i18n="s8_hint">Marcas más frecuentes en las comparaciones de los clientes.</p>
+    <p class="s-eyebrow" data-i18n="s8_eyebrow"></p>
+    <h2 class="s-title" data-i18n-html="s8_title"></h2>
+    <p class="s-hint" data-i18n="s8_hint"></p>
     <div class="num-list">
-      <label class="num-row"><span class="num-badge">01</span><input type="text" id="cp1" data-i18n-placeholder="cp_ph" placeholder="Marca competidora"></label>
-      <label class="num-row"><span class="num-badge">02</span><input type="text" id="cp2" data-i18n-placeholder="cp_ph" placeholder="Marca competidora"></label>
-      <label class="num-row"><span class="num-badge">03</span><input type="text" id="cp3" data-i18n-placeholder="cp_ph" placeholder="Marca competidora"></label>
-      <label class="num-row"><span class="num-badge">04</span><input type="text" id="cp4" data-i18n-placeholder="cp_ph" placeholder="Marca competidora"></label>
-      <label class="num-row"><span class="num-badge">05</span><input type="text" id="cp5" data-i18n-placeholder="cp_ph" placeholder="Marca competidora"></label>
+      <label class="num-row"><span class="num-badge">01</span><input type="text" id="cp1" data-i18n-placeholder="cp_ph"></label>
+      <label class="num-row"><span class="num-badge">02</span><input type="text" id="cp2" data-i18n-placeholder="cp_ph"></label>
+      <label class="num-row"><span class="num-badge">03</span><input type="text" id="cp3" data-i18n-placeholder="cp_ph"></label>
+      <label class="num-row"><span class="num-badge">04</span><input type="text" id="cp4" data-i18n-placeholder="cp_ph"></label>
+      <label class="num-row"><span class="num-badge">05</span><input type="text" id="cp5" data-i18n-placeholder="cp_ph"></label>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s8_better_lbl">¿Qué hacen mejor que LOSAN?</span>
-      <textarea class="textarea-field" id="cp_mejor" data-i18n-placeholder="s8_better_ph" placeholder="Puntos fuertes de la competencia..."></textarea>
+      <span class="field-label" data-i18n="s8_better_lbl"></span>
+      <textarea class="textarea-field" id="cp_mejor" data-i18n-placeholder="s8_better_ph"></textarea>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s8_losan_lbl">¿Qué hacemos mejor que ellos?</span>
-      <textarea class="textarea-field" id="cp_losan" data-i18n-placeholder="s8_losan_ph" placeholder="Ventajas diferenciales de LOSAN..."></textarea>
+      <span class="field-label" data-i18n="s8_losan_lbl"></span>
+      <textarea class="textarea-field" id="cp_losan" data-i18n-placeholder="s8_losan_ph"></textarea>
     </div>
   </div>
 
   <!-- S9 -->
   <div class="section" data-sec="9">
-    <p class="s-eyebrow" data-i18n="s9_eyebrow">Sección 9 de 10</p>
-    <h2 class="s-title" data-i18n-html="s9_title">Tendencias y<br><em>oportunidades de mercado.</em></h2>
-    <p class="s-hint" data-i18n="s9_hint">Las 5 tendencias que detectas en tu mercado que deberían incorporarse en futuras colecciones.</p>
+    <p class="s-eyebrow" data-i18n="s9_eyebrow"></p>
+    <h2 class="s-title" data-i18n-html="s9_title"></h2>
+    <p class="s-hint" data-i18n="s9_hint"></p>
     <div class="num-list">
-      <label class="num-row"><span class="num-badge">01</span><input type="text" id="td1" data-i18n-placeholder="td_ph" placeholder="Tendencia de mercado"></label>
-      <label class="num-row"><span class="num-badge">02</span><input type="text" id="td2" data-i18n-placeholder="td_ph" placeholder="Tendencia de mercado"></label>
-      <label class="num-row"><span class="num-badge">03</span><input type="text" id="td3" data-i18n-placeholder="td_ph" placeholder="Tendencia de mercado"></label>
-      <label class="num-row"><span class="num-badge">04</span><input type="text" id="td4" data-i18n-placeholder="td_ph" placeholder="Tendencia de mercado"></label>
-      <label class="num-row"><span class="num-badge">05</span><input type="text" id="td5" data-i18n-placeholder="td_ph" placeholder="Tendencia de mercado"></label>
+      <label class="num-row"><span class="num-badge">01</span><input type="text" id="td1" data-i18n-placeholder="td_ph"></label>
+      <label class="num-row"><span class="num-badge">02</span><input type="text" id="td2" data-i18n-placeholder="td_ph"></label>
+      <label class="num-row"><span class="num-badge">03</span><input type="text" id="td3" data-i18n-placeholder="td_ph"></label>
+      <label class="num-row"><span class="num-badge">04</span><input type="text" id="td4" data-i18n-placeholder="td_ph"></label>
+      <label class="num-row"><span class="num-badge">05</span><input type="text" id="td5" data-i18n-placeholder="td_ph"></label>
     </div>
   </div>
 
   <!-- S10 -->
   <div class="section" data-sec="10">
-    <p class="s-eyebrow"><span data-i18n="s10_eyebrow">Sección 10 de 10</span> <span class="key-badge" data-i18n="key_badge">Pregunta clave</span></p>
-    <h2 class="s-title" data-i18n-html="s10_title">Referencias<br><em>echadas en falta.</em></h2>
-    <p class="s-hint" data-i18n="s10_hint">Pensando en toda la campaña de ventas.</p>
+    <p class="s-eyebrow"><span data-i18n="s10_eyebrow"></span> <span class="key-badge" data-i18n="key_badge"></span></p>
+    <h2 class="s-title" data-i18n-html="s10_title"></h2>
+    <p class="s-hint" data-i18n="s10_hint"></p>
     <div class="textarea-wrap" style="margin-top:0;">
-      <span class="field-label" data-i18n="s10_falta_lbl">¿Qué referencias o productos has echado de menos? Indica ejemplos concretos.</span>
-      <textarea class="textarea-field" id="ref_falta" data-i18n-placeholder="s10_falta_ph" placeholder="Sé específico: tejidos, siluetas, precios, categorías..."></textarea>
+      <span class="field-label" data-i18n="s10_falta_lbl"></span>
+      <textarea class="textarea-field" id="ref_falta" data-i18n-placeholder="s10_falta_ph"></textarea>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="s10_oport_lbl">¿Qué oportunidades crees que hemos perdido?</span>
-      <textarea class="textarea-field" id="ref_oport" data-i18n-placeholder="s10_oport_ph" placeholder="Estima el impacto si puedes..."></textarea>
+      <span class="field-label" data-i18n="s10_oport_lbl"></span>
+      <textarea class="textarea-field" id="ref_oport" data-i18n-placeholder="s10_oport_ph"></textarea>
     </div>
   </div>
 
   <!-- CIERRE -->
   <div class="section">
-    <p class="s-eyebrow" data-i18n="sc_eyebrow">Para cerrar</p>
-    <h2 class="s-title" data-i18n-html="sc_title">Top 5 recomendaciones<br><em>para la próxima temporada.</em></h2>
+    <p class="s-eyebrow" data-i18n="sc_eyebrow"></p>
+    <h2 class="s-title" data-i18n-html="sc_title"></h2>
     <div class="num-list">
-      <label class="num-row"><span class="num-badge">01</span><input type="text" id="rc1" data-i18n-placeholder="rc_ph" placeholder="Tu recomendación"></label>
-      <label class="num-row"><span class="num-badge">02</span><input type="text" id="rc2" data-i18n-placeholder="rc_ph" placeholder="Tu recomendación"></label>
-      <label class="num-row"><span class="num-badge">03</span><input type="text" id="rc3" data-i18n-placeholder="rc_ph" placeholder="Tu recomendación"></label>
-      <label class="num-row"><span class="num-badge">04</span><input type="text" id="rc4" data-i18n-placeholder="rc_ph" placeholder="Tu recomendación"></label>
-      <label class="num-row"><span class="num-badge">05</span><input type="text" id="rc5" data-i18n-placeholder="rc_ph" placeholder="Tu recomendación"></label>
+      <label class="num-row"><span class="num-badge">01</span><input type="text" id="rc1" data-i18n-placeholder="rc_ph"></label>
+      <label class="num-row"><span class="num-badge">02</span><input type="text" id="rc2" data-i18n-placeholder="rc_ph"></label>
+      <label class="num-row"><span class="num-badge">03</span><input type="text" id="rc3" data-i18n-placeholder="rc_ph"></label>
+      <label class="num-row"><span class="num-badge">04</span><input type="text" id="rc4" data-i18n-placeholder="rc_ph"></label>
+      <label class="num-row"><span class="num-badge">05</span><input type="text" id="rc5" data-i18n-placeholder="rc_ph"></label>
     </div>
     <div class="textarea-wrap">
-      <span class="field-label" data-i18n="sc_com_lbl">Comentarios finales</span>
-      <textarea class="textarea-field" id="comentarios" data-i18n-placeholder="sc_com_ph" placeholder="Cualquier observación adicional que pueda ayudarnos a mejorar..."></textarea>
+      <span class="field-label" data-i18n="sc_com_lbl"></span>
+      <textarea class="textarea-field" id="comentarios" data-i18n-placeholder="sc_com_ph"></textarea>
     </div>
   </div>
 
 </main>
 
 <div class="actions-bar">
-  <button class="btn btn-primary" id="submitBtn" onclick="submitForm()" data-i18n="btn_submit">Enviar respuesta →</button>
-  <button class="btn" onclick="window.print()" data-i18n="btn_print">Imprimir</button>
-  <button class="btn-ghost btn" onclick="limpiar()" data-i18n="btn_clear">Limpiar</button>
+  <button class="btn btn-primary" id="submitBtn" onclick="submitForm()" data-i18n="btn_submit"></button>
+  <button class="btn" onclick="window.print()" data-i18n="btn_print"></button>
+  <button class="btn-ghost btn" onclick="limpiar()" data-i18n="btn_clear"></button>
 </div>
 
 <!-- SUBMIT SUCCESS OVERLAY -->
 <div class="submit-overlay" id="submitOverlay">
   <div class="submit-icon">✓</div>
-  <h2 class="submit-title" data-i18n="submit_ok_title">¡Respuesta enviada!</h2>
-  <p class="submit-desc" data-i18n="submit_ok_desc">Se ha abierto tu cliente de correo con las respuestas listas para enviar. Gracias por tu feedback.</p>
-  <button class="btn" onclick="closeSubmitOverlay()" data-i18n="submit_ok_btn">Cerrar</button>
+  <h2 class="submit-title" data-i18n="submit_ok_title"></h2>
+  <p class="submit-desc" data-i18n="submit_ok_desc"></p>
+  <button class="btn" onclick="closeSubmitOverlay()" data-i18n="submit_ok_btn"></button>
 </div>
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-head">
-      <h2 id="modalTitle" data-i18n="modal_title">Respuestas — AW26</h2>
+      <h2 id="modalTitle" data-i18n="modal_title"></h2>
       <button class="modal-close" onclick="cerrarModal()">×</button>
     </div>
     <div class="modal-body">
-      <p class="modal-note" id="modalNote" data-i18n="modal_note">Copia el texto y pégalo en un email, o usa el botón de envío directo.</p>
+      <p class="modal-note" id="modalNote" data-i18n="modal_note"></p>
       <pre class="modal-pre" id="textoExportado"></pre>
     </div>
     <div class="modal-foot">
-      <button class="btn btn-primary" onclick="copiar()" data-i18n="btn_copy">Copiar texto</button>
-      <button class="btn-ghost btn" onclick="cerrarModal()" data-i18n="btn_close">Cerrar</button>
+      <button class="btn btn-primary" onclick="copiar()" data-i18n="btn_copy"></button>
+      <button class="btn-ghost btn" onclick="cerrarModal()" data-i18n="btn_close"></button>
     </div>
   </div>
 </div>
 
 <!-- ADMIN VIEW -->
-<div id="admin-view" style="display: none;">
+<div id="admin-view">
   <header class="admin-header">
     <div style="display:flex;align-items:center;">
       <span class="logo-wordmark">LOSAN</span>
-      <span class="admin-badge" data-i18n="admin_badge">Admin</span>
+      <span class="admin-badge" data-i18n="admin_badge"></span>
     </div>
     <div style="display:flex;align-items:center;gap:1rem;">
       <div class="lang-switcher">
-        <button class="lang-btn active" data-lang="es" onclick="setLang(&#39;es&#39;)">ES</button>
-        <button class="lang-btn" data-lang="en" onclick="setLang(&#39;en&#39;)">EN</button>
-        <button class="lang-btn" data-lang="it" onclick="setLang(&#39;it&#39;)">IT</button>
+        <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
       </div>
-      <button class="btn" onclick="goToForm()" data-i18n="admin_back">← Formulario</button>
+      <button class="btn" onclick="goToForm()" data-i18n="admin_back"></button>
     </div>
   </header>
   <div class="admin-body">
@@ -617,7 +521,7 @@ const LANGS = {
     s10_eyebrow:'Sección 10 de 10',s10_title:'Referencias<br><em>echadas en falta.</em>',s10_hint:'Pensando en toda la campaña de ventas.',s10_falta_lbl:'¿Qué referencias o productos has echado de menos? Indica ejemplos concretos.',s10_falta_ph:'Sé específico: tejidos, siluetas, precios, categorías...',s10_oport_lbl:'¿Qué oportunidades crees que hemos perdido?',s10_oport_ph:'Estima el impacto si puedes...',key_badge:'Pregunta clave',
     sc_eyebrow:'Para cerrar',sc_title:'Top 5 recomendaciones<br><em>para la próxima temporada.</em>',rc_ph:'Tu recomendación',sc_com_lbl:'Comentarios finales',sc_com_ph:'Cualquier observación adicional que pueda ayudarnos a mejorar...',
     btn_submit:'Enviar respuesta →',btn_print:'Imprimir',btn_clear:'Limpiar',
-    submit_ok_title:'¡Respuesta enviada!',submit_ok_desc:'Se ha abierto tu cliente de correo con las respuestas listas para enviar. Gracias por tu feedback.',submit_ok_btn:'Cerrar',
+    submit_ok_title:'¡Respuesta enviada!',submit_ok_desc:'Hemos recibido tus respuestas. Gracias por tu feedback.',submit_ok_btn:'Cerrar',
     submit_warn:'Por favor, introduce tu nombre antes de enviar.',
     admin_badge:'Admin',admin_back:'← Formulario',admin_section_lbl:'Exportar respuestas del formulario actual',admin_download:'Descargar .txt',admin_note:'Esta vista muestra los datos del formulario cargado en este navegador. Accede añadiendo #admin a la URL.',
     modal_title:'Respuestas — AW26',modal_note:'Copia el texto y pégalo en un email, o usa el botón de envío directo.',btn_copy:'Copiar texto',btn_email:'Abrir en email',btn_close:'Cerrar',
@@ -654,7 +558,7 @@ const LANGS = {
     s10_eyebrow:'Section 10 of 10',s10_title:'Missing<br><em>references.</em>',s10_hint:'Thinking about the entire sales campaign.',s10_falta_lbl:'What references or products did you miss? Give specific examples.',s10_falta_ph:'Be specific: fabrics, silhouettes, prices, categories...',s10_oport_lbl:'What sales opportunities do you think we lost?',s10_oport_ph:'Estimate the impact if you can...',key_badge:'Key question',
     sc_eyebrow:'To close',sc_title:'Top 5 recommendations<br><em>for next season.</em>',rc_ph:'Your recommendation',sc_com_lbl:'Final comments',sc_com_ph:'Any additional observations that could help us improve...',
     btn_submit:'Send response →',btn_print:'Print',btn_clear:'Clear',
-    submit_ok_title:'Response sent!',submit_ok_desc:'Your email client has opened with the responses ready to send. Thank you for your feedback.',submit_ok_btn:'Close',
+    submit_ok_title:'Response sent!',submit_ok_desc:'We have received your responses. Thank you for your feedback.',submit_ok_btn:'Close',
     submit_warn:'Please enter your name before sending.',
     admin_badge:'Admin',admin_back:'← Form',admin_section_lbl:'Export current form responses',admin_download:'Download .txt',admin_note:'This view shows data from the form currently loaded in this browser. Access by adding #admin to the URL.',
     modal_title:'Responses — AW26',modal_note:'Copy the text and paste it into an email, or use the direct send button.',btn_copy:'Copy text',btn_email:'Open in email',btn_close:'Close',
@@ -689,7 +593,7 @@ const LANGS = {
     s10_eyebrow:'Sezione 10 di 10',s10_title:'Riferimenti<br><em>mancanti.</em>',s10_hint:"Pensando all'intera campagna vendite.",s10_falta_lbl:'Quali riferimenti o prodotti le sono mancati? Indica esempi concreti.',s10_falta_ph:'Sii specifico: tessuti, silhouette, prezzi, categorie...',s10_oport_lbl:'Quali opportunità di vendita ritieni che abbiamo perso?',s10_oport_ph:"Stima l'impatto se puoi...",key_badge:'Domanda chiave',
     sc_eyebrow:'Per concludere',sc_title:'Top 5 raccomandazioni<br><em>per la prossima stagione.</em>',rc_ph:'La tua raccomandazione',sc_com_lbl:'Commenti finali',sc_com_ph:'Qualsiasi osservazione aggiuntiva che possa aiutarci a migliorare...',
     btn_submit:'Invia risposta →',btn_print:'Stampa',btn_clear:'Cancella',
-    submit_ok_title:'Risposta inviata!',submit_ok_desc:"Il tuo client di posta è stato aperto con le risposte pronte per l'invio. Grazie per il tuo feedback.",submit_ok_btn:'Chiudi',
+    submit_ok_title:'Risposta inviata!',submit_ok_desc:'Abbiamo ricevuto le tue risposte. Grazie per il tuo feedback.',submit_ok_btn:'Chiudi',
     submit_warn:'Inserisci il tuo nome prima di inviare.',
     admin_badge:'Admin',admin_back:'← Modulo',admin_section_lbl:'Esporta le risposte del modulo attuale',admin_download:'Scarica .txt',admin_note:"Questa vista mostra i dati del modulo caricato in questo browser. Accedi aggiungendo #admin all'URL.",
     modal_title:'Risposte — AW26',modal_note:"Copia il testo e incollalo in un'email, oppure usa il pulsante di invio diretto.",btn_copy:'Copia testo',btn_email:'Apri in email',btn_close:'Chiudi',
@@ -725,8 +629,13 @@ const firebaseConfig = {
   appId: "1:883937975350:web:4905dde97938f1b6ca8c97"
 };
 const FEEDBACK_PATH = 'surveys/aw26_feedback';
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+let db = null;
+try {
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.database();
+} catch (e) {
+  console.error('Firebase no disponible. Revisa que los <script> de Firebase del <head> cargan bien (no deben dar 404):', e);
+}
 
 let adminRows = [];
 let adminListening = false;
@@ -1046,6 +955,12 @@ async function submitForm() {
     return;
   }
   const btn = document.getElementById('submitBtn');
+  if (!db) {
+    alert({es:'No hay conexión con la base de datos. Inténtalo más tarde o avisa al administrador.',
+           en:'No database connection. Try again later or contact the administrator.',
+           it:'Nessuna connessione al database. Riprova più tardi o contatta l\'amministratore.'}[currentLang]);
+    return;
+  }
   const savingTxt = {es:'Guardando…',en:'Saving…',it:'Salvataggio…'}[currentLang] || 'Guardando…';
   const origTxt = btn.textContent;
   btn.disabled = true;
@@ -1121,6 +1036,11 @@ function avgRating(r){ const vals=Object.values(r.ratings||{}).filter(n=>n>0); r
 // ADMIN — LOAD + RENDER
 // ═══════════════════════════════════════════════
 function loadAdmin(){
+  if (!db) {
+    document.getElementById('adminMeta').textContent = 'Sin conexión con la base de datos.';
+    document.getElementById('tableWrap').innerHTML = '<div class="no-data">No se ha podido conectar con Firebase. Abre la consola (F12): si ves errores 404 en <strong>firebase-app-compat.js</strong>, los scripts del &lt;head&gt; no se están cargando.</div>';
+    return;
+  }
   if (adminListening) { refreshAdmin(); return; }
   adminListening = true;
   document.getElementById('adminMeta').textContent = 'Cargando…';
@@ -1359,6 +1279,5 @@ window.addEventListener('DOMContentLoaded',()=>{
   route();
 });
 </script>
-
-
-</body></html>
+</body>
+</html>
