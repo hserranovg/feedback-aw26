@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="LOSAN — AW26 Feedback por familia (matriz)">
+<meta name="description" content="LOSAN — AW26 Feedback por línea (matriz)">
 <title>LOSAN — Feedback AW26</title>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
@@ -245,20 +245,20 @@ td.off select,td.off input{opacity:.25;pointer-events:none;}
   </div>
   <div class="admin-body">
     <div class="admin-toolbar">
-      <div><h2 class="admin-title">Resultados — AW26 por familia</h2><p class="admin-meta" id="adminMeta">Cargando…</p></div>
+      <div><h2 class="admin-title">Resultados — AW26 por línea</h2><p class="admin-meta" id="adminMeta">Cargando…</p></div>
       <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
-        <button class="export-btn" onclick="exportCSV()">CSV por familia</button>
+        <button class="export-btn" onclick="exportCSV()">CSV por línea</button>
         <button class="export-btn alt" onclick="exportRangesCSV()">CSV rangos</button>
       </div>
     </div>
     <div id="summaryWrap"></div>
-    <p class="admin-block-title">Medias por familia</p>
+    <p class="admin-block-title">Medias por línea</p>
     <div class="admin-scroll"><div id="famAvgWrap"><div class="no-data">Cargando…</div></div></div>
-    <p class="admin-block-title">Orden medio de selección de rangos por familia (menor = más prioritario)</p>
+    <p class="admin-block-title">Orden medio de selección de rangos por línea (menor = más prioritario)</p>
     <div class="admin-scroll"><div id="rangeHeatWrap"><div class="no-data">Cargando…</div></div></div>
     <p class="admin-block-title">Respuestas</p>
     <div class="admin-scroll"><div id="tableWrap"><div class="no-data">Cargando respuestas…</div></div></div>
-    <p class="admin-note">Acceso al panel: <strong>?admin=losan27</strong>. Los CSV se exportan en formato largo (una fila por agente y familia) para tablas dinámicas. Datos guardados en tiempo real.</p>
+    <p class="admin-note">Acceso al panel: <strong>?admin=losan27</strong>. Los CSV se exportan en formato largo (una fila por agente y línea) para tablas dinámicas. Datos guardados en tiempo real.</p>
   </div>
 </div>
 
@@ -329,55 +329,55 @@ const PRECIO_PERDIDA_OPTS = {
 };
 
 const UI = {
-  es:{ header_meta:'AW26 · Por familia', i_eyebrow:'AW26 — Informe de fin de temporada',
-    i_title:'Feedback <em>familia a familia</em>', i_desc:'Valora el cuestionario completo para cada familia que trabajes. Desactiva arriba las que no vendas y sus columnas se bloquean.',
+  es:{ header_meta:'AW26 · Por línea', i_eyebrow:'AW26 — Informe de fin de temporada',
+    i_title:'Feedback <em>línea a línea</em>', i_desc:'Valora el cuestionario completo para cada línea que trabajes. Desactiva arriba las que no vendas y sus columnas se bloquean.',
     l_agent:'Agente comercial', l_country:'País / zona', l_date:'Fecha', l_season:'Temporada',
-    l_famctrl:'Marca las familias que <span class="hl">NO trabajas</span> — se anula su columna entera:',
-    sec_rat:'01 — Valoración general', sec_rat_h:'Impresión global de cada familia (1 flojo · 5 excelente).',
-    sec_rng:'02 — Rangos de producto', sec_rng_h:'Ordena las prendas por orden de selección en cada familia (1 = la más relevante).', rank_key:'Número = orden de selección · 1 = primera.', rng_success:'Rangos más exitosos — ¿por qué?', rng_weak:'Rangos más débiles — ¿por qué?', rng_why_ph:'Cuáles y por qué…', pre_caros_lbl:'Demasiado caros — cuáles e importes', pre_comp_lbl:'Especialmente competitivos — cuáles e importes', pre_txt_ph:'Prendas / importes…', l_compbetter:'¿Qué hace la competencia mejor que LOSAN?', l_losanbetter:'¿Qué hace LOSAN mejor que la competencia?', ph_compbetter:'Lo que hacen mejor…', ph_losanbetter:'Lo que hacemos mejor…',
-    sec_sur:'03 — Análisis del surtido', sec_sur_h:'Por prenda y familia: ¿estaba excesivamente o insuficientemente representada?',
-    sec_pre:'04 — Precio', sec_pre_h:'Por prenda y familia: percepción de precio + a qué precio ya es caro y qué precio sería competitivo. Al final, ventas perdidas por precio.', pre_lost:'¿Ventas perdidas por posicionamiento de precio?', pre_amount:'Importe aproximado perdido', pre_amount_ph:'€ aprox.', pcaro_ph:'caro ≥ €', pcomp_ph:'comp. €', pre_key:'Por prenda: caro/competitivo, el precio al que ya resulta caro y un precio competitivo.',
-    sec_fit:'05 — Calidad / fit', sec_fit_h:'Marca los aspectos sobre los que has recibido comentarios en cada familia, y añade lo que quieras.', fit_comlbl:'Comentarios recibidos', com_ph:'Comentario…',
-    sec_ref:'06 — Referencias echadas en falta', sec_ref_h:'Productos o referencias que te habría gustado tener y no estaban, por familia.', ref_rowlbl:'Referencias echadas en falta', ref_ph:'Referencias que faltaron…',
-    x_eyebrow:'07 — Visión de mercado', x_title:'Transversal (no por familia)', x_hint:'Aplica al conjunto, se pregunta una vez.',
+    l_famctrl:'Marca las líneas que <span class="hl">NO trabajas</span> — se anula su columna entera:',
+    sec_rat:'01 — Valoración general', sec_rat_h:'Impresión global de cada línea (1 flojo · 5 excelente).',
+    sec_rng:'02 — Rangos de producto', sec_rng_h:'Ordena las prendas por orden de selección en cada línea (1 = la más relevante).', rank_key:'Número = orden de selección · 1 = primera.', rng_success:'Rangos más exitosos — ¿por qué?', rng_weak:'Rangos más débiles — ¿por qué?', rng_why_ph:'Cuáles y por qué…', pre_caros_lbl:'Demasiado caros — cuáles e importes', pre_comp_lbl:'Especialmente competitivos — cuáles e importes', pre_txt_ph:'Prendas / importes…', l_compbetter:'¿Qué hace la competencia mejor que LOSAN?', l_losanbetter:'¿Qué hace LOSAN mejor que la competencia?', ph_compbetter:'Lo que hacen mejor…', ph_losanbetter:'Lo que hacemos mejor…',
+    sec_sur:'03 — Análisis del surtido', sec_sur_h:'Por prenda y línea: ¿estaba excesivamente o insuficientemente representada?',
+    sec_pre:'04 — Precio', sec_pre_h:'Por prenda y línea: percepción de precio + a qué precio ya es caro y qué precio sería competitivo. Al final, ventas perdidas por precio.', pre_lost:'¿Ventas perdidas por posicionamiento de precio?', pre_amount:'Importe aproximado perdido', pre_amount_ph:'€ aprox.', pcaro_ph:'caro ≥ €', pcomp_ph:'comp. €', pre_key:'Por prenda: caro/competitivo, el precio al que ya resulta caro y un precio competitivo.',
+    sec_fit:'05 — Calidad / fit', sec_fit_h:'Marca los aspectos sobre los que has recibido comentarios en cada línea, y añade lo que quieras.', fit_comlbl:'Comentarios recibidos', com_ph:'Comentario…',
+    sec_ref:'06 — Referencias echadas en falta', sec_ref_h:'Productos o referencias que te habría gustado tener y no estaban, por línea.', ref_rowlbl:'Referencias echadas en falta', ref_ph:'Referencias que faltaron…',
+    x_eyebrow:'07 — Visión de mercado', x_title:'Transversal (no por línea)', x_hint:'Aplica al conjunto, se pregunta una vez.',
     l_comp:'Principales competidores', l_trend:'Tendencias que funcionan', l_rec:'Recomendaciones próxima colección', l_final:'Comentarios finales',
     ph_brand:'Marca…', ph_trend:'Tendencia…', ph_rec:'Recomendación…', ph_final:'Lo que quieras añadir…',
     btn_submit:'Enviar valoración', btn_print:'Imprimir', btn_clear:'Limpiar',
-    warn_name:'Pon tu nombre antes de enviar.', warn_fam:'Activa y valora al menos una familia.',
+    warn_name:'Pon tu nombre antes de enviar.', warn_fam:'Activa y valora al menos una línea.',
     ok_title:'¡Recibido!', ok_desc:'Hemos guardado tu valoración. Gracias por tu tiempo.', ok_btn:'Cerrar',
     scale:'Escala: 1 flojo · 5 excelente · — sin valorar' },
-  en:{ header_meta:'AW26 · By family', i_eyebrow:'AW26 — End of season report',
-    i_title:'Feedback <em>family by family</em>', i_desc:'Fill the full questionnaire for each family you carry. Disable the ones you don’t — their columns lock.',
+  en:{ header_meta:'AW26 · By line', i_eyebrow:'AW26 — End of season report',
+    i_title:'Feedback <em>line by line</em>', i_desc:'Fill the full questionnaire for each line you carry. Disable the ones you don’t — their columns lock.',
     l_agent:'Sales agent', l_country:'Country / area', l_date:'Date', l_season:'Season',
-    l_famctrl:'Tick the families you do <span class="hl">NOT carry</span> — their whole column is voided:',
-    sec_rat:'01 — Overall rating', sec_rat_h:'Overall impression of each family (1 poor · 5 excellent).',
-    sec_rng:'02 — Product ranges', sec_rng_h:'Rank the garments by selection order in each family (1 = most relevant).', rank_key:'Number = selection order · 1 = first.', rng_success:'Most successful ranges — why?', rng_weak:'Weakest ranges — why?', rng_why_ph:'Which ones and why…', pre_caros_lbl:'Too expensive — which & amounts', pre_comp_lbl:'Especially competitive — which & amounts', pre_txt_ph:'Garments / amounts…', l_compbetter:'What do competitors do better than LOSAN?', l_losanbetter:'What does LOSAN do better than them?', ph_compbetter:'What they do better…', ph_losanbetter:'What we do better…',
-    sec_sur:'03 — Assortment analysis', sec_sur_h:'Per garment and family: over- or under-represented?',
-    sec_pre:'04 — Price', sec_pre_h:'Per garment and family: price perception + the price at which it’s already expensive and a competitive price. At the end, sales lost to price.', pre_lost:'Sales lost to price positioning?', pre_amount:'Approx. amount lost', pre_amount_ph:'approx. €', pcaro_ph:'pricey ≥ €', pcomp_ph:'comp. €', pre_key:'Per garment: too dear / competitive, the price at which it’s already expensive and a competitive price.',
-    sec_fit:'05 — Quality / fit', sec_fit_h:'Tick the aspects you received comments about in each family, and add anything.', fit_comlbl:'Comments received', com_ph:'Comment…',
-    sec_ref:'06 — References you missed', sec_ref_h:'Products or references you wish you had had, per family.', ref_rowlbl:'References missed', ref_ph:'References that were missing…',
-    x_eyebrow:'07 — Market view', x_title:'Cross-cutting (not per family)', x_hint:'Applies overall, asked once.',
+    l_famctrl:'Tick the lines you do <span class="hl">NOT carry</span> — their whole column is voided:',
+    sec_rat:'01 — Overall rating', sec_rat_h:'Overall impression of each line (1 poor · 5 excellent).',
+    sec_rng:'02 — Product ranges', sec_rng_h:'Rank the garments by selection order in each line (1 = most relevant).', rank_key:'Number = selection order · 1 = first.', rng_success:'Most successful ranges — why?', rng_weak:'Weakest ranges — why?', rng_why_ph:'Which ones and why…', pre_caros_lbl:'Too expensive — which & amounts', pre_comp_lbl:'Especially competitive — which & amounts', pre_txt_ph:'Garments / amounts…', l_compbetter:'What do competitors do better than LOSAN?', l_losanbetter:'What does LOSAN do better than them?', ph_compbetter:'What they do better…', ph_losanbetter:'What we do better…',
+    sec_sur:'03 — Assortment analysis', sec_sur_h:'Per garment and line: over- or under-represented?',
+    sec_pre:'04 — Price', sec_pre_h:'Per garment and line: price perception + the price at which it’s already expensive and a competitive price. At the end, sales lost to price.', pre_lost:'Sales lost to price positioning?', pre_amount:'Approx. amount lost', pre_amount_ph:'approx. €', pcaro_ph:'pricey ≥ €', pcomp_ph:'comp. €', pre_key:'Per garment: too dear / competitive, the price at which it’s already expensive and a competitive price.',
+    sec_fit:'05 — Quality / fit', sec_fit_h:'Tick the aspects you received comments about in each line, and add anything.', fit_comlbl:'Comments received', com_ph:'Comment…',
+    sec_ref:'06 — References you missed', sec_ref_h:'Products or references you wish you had had, per line.', ref_rowlbl:'References missed', ref_ph:'References that were missing…',
+    x_eyebrow:'07 — Market view', x_title:'Cross-cutting (not per line)', x_hint:'Applies overall, asked once.',
     l_comp:'Main competitors', l_trend:'Trends that work', l_rec:'Recommendations next collection', l_final:'Final comments',
     ph_brand:'Brand…', ph_trend:'Trend…', ph_rec:'Recommendation…', ph_final:'Anything to add…',
     btn_submit:'Send feedback', btn_print:'Print', btn_clear:'Clear',
-    warn_name:'Enter your name before sending.', warn_fam:'Enable and rate at least one family.',
+    warn_name:'Enter your name before sending.', warn_fam:'Enable and rate at least one line.',
     ok_title:'Received!', ok_desc:'Your feedback has been saved. Thank you.', ok_btn:'Close',
     scale:'Scale: 1 poor · 5 excellent · — not rated' },
-  it:{ header_meta:'AW26 · Per famiglia', i_eyebrow:'AW26 — Report di fine stagione',
-    i_title:'Feedback <em>famiglia per famiglia</em>', i_desc:'Compila il questionario completo per ogni famiglia che tratti. Disattiva le altre: le colonne si bloccano.',
+  it:{ header_meta:'AW26 · Per linea', i_eyebrow:'AW26 — Report di fine stagione',
+    i_title:'Feedback <em>linea per linea</em>', i_desc:'Compila il questionario completo per ogni linea che tratti. Disattiva le altre: le colonne si bloccano.',
     l_agent:'Agente di vendita', l_country:'Paese / zona', l_date:'Data', l_season:'Stagione',
-    l_famctrl:'Spunta le famiglie che <span class="hl">NON tratti</span> — l\u2019intera colonna viene annullata:',
-    sec_rat:'01 — Valutazione generale', sec_rat_h:'Impressione generale di ogni famiglia (1 scarso · 5 eccellente).',
-    sec_rng:'02 — Gamme di prodotto', sec_rng_h:'Ordina i capi per ordine di selezione in ogni famiglia (1 = il più rilevante).', rank_key:'Numero = ordine di selezione · 1 = primo.', rng_success:'Gamme di maggior successo — perché?', rng_weak:'Gamme più deboli — perché?', rng_why_ph:'Quali e perché…', pre_caros_lbl:'Troppo care — quali e importi', pre_comp_lbl:'Molto competitive — quali e importi', pre_txt_ph:'Capi / importi…', l_compbetter:'Cosa fanno i concorrenti meglio di LOSAN?', l_losanbetter:'Cosa fa LOSAN meglio di loro?', ph_compbetter:'Cosa fanno meglio…', ph_losanbetter:'Cosa facciamo meglio…',
-    sec_sur:'03 — Analisi dell\u2019assortimento', sec_sur_h:'Per capo e famiglia: era eccessivo o insufficiente?',
-    sec_pre:'04 — Prezzo', sec_pre_h:'Per capo e famiglia: percezione del prezzo + a quale prezzo è già caro e quale sarebbe competitivo. Alla fine, vendite perse per il prezzo.', pre_lost:'Vendite perse per posizionamento di prezzo?', pre_amount:'Importo approssimativo perso', pre_amount_ph:'€ circa', pcaro_ph:'caro ≥ €', pcomp_ph:'comp. €', pre_key:'Per capo: caro/competitivo, il prezzo a cui è già caro e un prezzo competitivo.',
-    sec_fit:'05 — Qualità / vestibilità', sec_fit_h:'Segna gli aspetti su cui hai ricevuto commenti in ogni famiglia, e aggiungi ciò che vuoi.', fit_comlbl:'Commenti ricevuti', com_ph:'Commento…',
-    sec_ref:'06 — Referenze mancate', sec_ref_h:'Prodotti o referenze che avresti voluto avere e non c\u2019erano, per famiglia.', ref_rowlbl:'Referenze mancate', ref_ph:'Referenze mancanti…',
-    x_eyebrow:'07 — Visione di mercato', x_title:'Trasversale (non per famiglia)', x_hint:'Vale nel complesso, chiesto una volta.',
+    l_famctrl:'Spunta le linee che <span class="hl">NON tratti</span> — l\u2019intera colonna viene annullata:',
+    sec_rat:'01 — Valutazione generale', sec_rat_h:'Impressione generale di ogni linea (1 scarso · 5 eccellente).',
+    sec_rng:'02 — Gamme di prodotto', sec_rng_h:'Ordina i capi per ordine di selezione in ogni linea (1 = il più rilevante).', rank_key:'Numero = ordine di selezione · 1 = primo.', rng_success:'Gamme di maggior successo — perché?', rng_weak:'Gamme più deboli — perché?', rng_why_ph:'Quali e perché…', pre_caros_lbl:'Troppo care — quali e importi', pre_comp_lbl:'Molto competitive — quali e importi', pre_txt_ph:'Capi / importi…', l_compbetter:'Cosa fanno i concorrenti meglio di LOSAN?', l_losanbetter:'Cosa fa LOSAN meglio di loro?', ph_compbetter:'Cosa fanno meglio…', ph_losanbetter:'Cosa facciamo meglio…',
+    sec_sur:'03 — Analisi dell\u2019assortimento', sec_sur_h:'Per capo e linea: era eccessivo o insufficiente?',
+    sec_pre:'04 — Prezzo', sec_pre_h:'Per capo e linea: percezione del prezzo + a quale prezzo è già caro e quale sarebbe competitivo. Alla fine, vendite perse per il prezzo.', pre_lost:'Vendite perse per posizionamento di prezzo?', pre_amount:'Importo approssimativo perso', pre_amount_ph:'€ circa', pcaro_ph:'caro ≥ €', pcomp_ph:'comp. €', pre_key:'Per capo: caro/competitivo, il prezzo a cui è già caro e un prezzo competitivo.',
+    sec_fit:'05 — Qualità / vestibilità', sec_fit_h:'Segna gli aspetti su cui hai ricevuto commenti in ogni linea, e aggiungi ciò che vuoi.', fit_comlbl:'Commenti ricevuti', com_ph:'Commento…',
+    sec_ref:'06 — Referenze mancate', sec_ref_h:'Prodotti o referenze che avresti voluto avere e non c\u2019erano, per linea.', ref_rowlbl:'Referenze mancate', ref_ph:'Referenze mancanti…',
+    x_eyebrow:'07 — Visione di mercato', x_title:'Trasversale (non per linea)', x_hint:'Vale nel complesso, chiesto una volta.',
     l_comp:'Principali concorrenti', l_trend:'Tendenze che funzionano', l_rec:'Consigli prossima collezione', l_final:'Commenti finali',
     ph_brand:'Marca…', ph_trend:'Tendenza…', ph_rec:'Consiglio…', ph_final:'Cosa vuoi aggiungere…',
     btn_submit:'Invia valutazione', btn_print:'Stampa', btn_clear:'Pulisci',
-    warn_name:'Inserisci il tuo nome prima di inviare.', warn_fam:'Attiva e valuta almeno una famiglia.',
+    warn_name:'Inserisci il tuo nome prima di inviare.', warn_fam:'Attiva e valuta almeno una linea.',
     ok_title:'Ricevuto!', ok_desc:'La tua valutazione è stata salvata. Grazie.', ok_btn:'Chiudi',
     scale:'Scala: 1 scarso · 5 eccellente · — non valutato' }
 };
@@ -392,7 +392,7 @@ const firebaseConfig = {
   databaseURL:"https://traductorlosan-default-rtdb.europe-west1.firebasedatabase.app", projectId:"traductorlosan",
   storageBucket:"traductorlosan.firebasestorage.app", messagingSenderId:"883937975350", appId:"1:883937975350:web:4905dde97938f1b6ca8c97"
 };
-const FEEDBACK_PATH = 'surveys/aw26_familias';
+const FEEDBACK_PATH = 'surveys/aw26_líneas';
 let db = null;
 try { firebase.initializeApp(firebaseConfig); db = firebase.database(); }
 catch(e){ console.error('Firebase no disponible (revisa los <script> del <head>, no deben dar 404):', e); }
@@ -629,8 +629,8 @@ function renderSummary(rows){
   w.innerHTML=`<div class="summary-grid">
     <div class="summary-card"><div class="summary-label">Respuestas</div><div class="summary-value">${rows.length}</div><div class="summary-sub">agentes</div></div>
     <div class="summary-card"><div class="summary-label">Valoración media</div><div class="summary-value">${avg}</div><div class="summary-sub">sobre 5</div></div>
-    <div class="summary-card"><div class="summary-label">Familia mejor</div><div class="summary-value" style="font-size:1.05rem;line-height:1.3">${best?esc(segName(best)):'—'}</div><div class="summary-sub">${best?st[best].global.toFixed(1)+' / 5':'—'}</div></div>
-    <div class="summary-card"><div class="summary-label">Familia peor</div><div class="summary-value" style="font-size:1.05rem;line-height:1.3">${worst?esc(segName(worst)):'—'}</div><div class="summary-sub">${worst?st[worst].global.toFixed(1)+' / 5':'—'}</div></div>
+    <div class="summary-card"><div class="summary-label">Línea mejor</div><div class="summary-value" style="font-size:1.05rem;line-height:1.3">${best?esc(segName(best)):'—'}</div><div class="summary-sub">${best?st[best].global.toFixed(1)+' / 5':'—'}</div></div>
+    <div class="summary-card"><div class="summary-label">Línea peor</div><div class="summary-value" style="font-size:1.05rem;line-height:1.3">${worst?esc(segName(worst)):'—'}</div><div class="summary-sub">${worst?st[worst].global.toFixed(1)+' / 5':'—'}</div></div>
   </div>`;
 }
 function colHeadAdmin(){
@@ -661,7 +661,7 @@ function renderTable(rows){
     const f=r.families||{}; const ids=Object.keys(f); let all=[]; ids.forEach(id=>RATINGS.forEach(d=>{const v=(f[id].ratings||{})[d.id];if(v>0)all.push(v);}));
     const avg=all.length?(all.reduce((a,b)=>a+b,0)/all.length).toFixed(1):'·';
     return `<tr><td style="white-space:nowrap">${dt}</td><td>${(r.lang||'—').toUpperCase()}</td><td class="l"><strong>${esc(r.agente)||'—'}</strong></td><td class="l">${esc(r.pais)||'—'}</td><td>${ids.length||'·'}</td><td><strong>${avg}</strong></td><td><button class="view-btn" onclick="viewDetail('${r._key}')">Ver</button></td><td><button class="del-btn" onclick="deleteResponse('${r._key}')">Borrar</button></td></tr>`; }).join('');
-  w.innerHTML=`<table class="atable"><thead><tr><th class="l">Fecha</th><th>Idioma</th><th class="l">Agente</th><th class="l">País</th><th>Familias</th><th>Media</th><th>Detalle</th><th></th></tr></thead><tbody>${trs}</tbody></table>`;
+  w.innerHTML=`<table class="atable"><thead><tr><th class="l">Fecha</th><th>Idioma</th><th class="l">Agente</th><th class="l">País</th><th>Líneas</th><th>Media</th><th>Detalle</th><th></th></tr></thead><tbody>${trs}</tbody></table>`;
 }
 function deleteResponse(key){
   if(!db) return;
@@ -679,7 +679,7 @@ function formatResponse(r){
   const S='──────────────────────────────────────────────────', H='══════════════════════════════════════════════════';
   const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES'):'—';
   const rnm=id=>{const r2=RANGES.find(z=>z.id===id);return r2?nm(r2):id;};
-  let o=`${H}\nLOSAN — Feedback AW26 por familia\n${H}\nAgente: ${r.agente||'—'}  ·  País: ${r.pais||'—'}  ·  ${r.temporada||''}\nEnviado: ${dt}\n`;
+  let o=`${H}\nLOSAN — Feedback AW26 por línea\n${H}\nAgente: ${r.agente||'—'}  ·  País: ${r.pais||'—'}  ·  ${r.temporada||''}\nEnviado: ${dt}\n`;
   const f=r.families||{};
   SEGMENTS.forEach(s=>{ const x=f[s.id]; if(!x)return;
     o+=`\n${S}\n${segName(s.id)}\n${S}\n`;
@@ -711,7 +711,7 @@ function sc(s){ return String(s==null?'':s).replace(/[\r\n;]+/g,' ').trim(); }
 function exportCSV(){
   if(!adminRows.length){alert('No hay respuestas.');return;}
   const rows=adminRows.slice().sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
-  const hdr=['Enviado','Idioma','Agente','Pais','Temporada','Familia','Banda',
+  const hdr=['Enviado','Idioma','Agente','Pais','Temporada','Línea','Banda',
     ...RATINGS.map(d=>'V_'+d.id), 'RangosExitososMotivo','RangosDebilesMotivo','VentasPerdidasPrecio','ImporteAproxPerdido','ComentariosFit','ComentarioLibreFit','ReferenciasEnFalta'].join(';');
   const lines=[];
   rows.forEach(r=>{ const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES'):''; const f=r.families||{};
@@ -720,13 +720,13 @@ function exportCSV(){
         ...RATINGS.map(d=>(x.ratings||{})[d.id]||''),
         x.rng_exito||'',x.rng_debil||'',
         x.precio_perdida||'',x.precio_importe||'',(x.fit||[]).join(' | '),x.fit_com||'',x.referencias||''].map(sc).join(';')); }); });
-  if(!lines.length){alert('Sin datos por familia.');return;}
-  dl('\uFEFF'+hdr+'\n'+lines.join('\n'),`LOSAN_AW26_familias_${new Date().toISOString().slice(0,10)}.csv`);
+  if(!lines.length){alert('Sin datos por línea.');return;}
+  dl('\uFEFF'+hdr+'\n'+lines.join('\n'),`LOSAN_AW26_líneas_${new Date().toISOString().slice(0,10)}.csv`);
 }
 function exportRangesCSV(){
   if(!adminRows.length){alert('No hay respuestas.');return;}
   const rows=adminRows.slice().sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
-  const hdr=['Enviado','Agente','Pais','Familia','Banda','Rango','OrdenSeleccion','Surtido','PercepcionPrecio','PrecioYaCaro','PrecioCompetitivo'].join(';');
+  const hdr=['Enviado','Agente','Pais','Línea','Banda','Rango','OrdenSeleccion','Surtido','PercepcionPrecio','PrecioYaCaro','PrecioCompetitivo'].join(';');
   const lines=[];
   rows.forEach(r=>{ const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES'):''; const f=r.families||{};
     SEGMENTS.forEach(s=>{ const x=f[s.id]; if(!x)return; const rg=x.ranges||{}, su=x.surtido||{}, pr=x.precio||{}, pc=x.precio_caro||{}, pk=x.precio_comp||{};
