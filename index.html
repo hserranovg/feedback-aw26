@@ -53,7 +53,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-we
 .s-eyebrow{font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;}
 .s-title{font-size:1.15rem;font-weight:400;letter-spacing:-0.01em;margin-bottom:0.5rem;}
 .s-hint{font-size:0.82rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.5;}
-.matrix-wrap{overflow-x:auto;border:1px solid var(--line);scrollbar-width:thin;}
+.matrix-wrap{overflow-x:auto;border:1px solid var(--line);scrollbar-width:thin;-webkit-overflow-scrolling:touch;}
 .matrix-wrap::-webkit-scrollbar{height:7px;}
 .matrix-wrap::-webkit-scrollbar-thumb{background:var(--line-dark);}
 .matrix{border-collapse:collapse;font-size:0.8rem;}
@@ -68,6 +68,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-we
 .matrix input[type=checkbox]{width:16px;height:16px;accent-color:var(--text);cursor:pointer;}
 .matrix .txt{width:130px;border:none;border-bottom:1px solid var(--line-dark);font-family:inherit;font-size:0.78rem;padding:0.2rem;background:transparent;outline:none;}
 .matrix input.rank{width:48px;border:1px solid var(--line-dark);font-family:inherit;font-size:0.8rem;padding:0.18rem;text-align:center;background:var(--bg);}
+.pcell{display:flex;flex-direction:column;gap:3px;align-items:center;min-width:78px;}
+.pcell select{width:100%;}
+.pcell .pin{width:72px;border:1px solid var(--line-dark);font-family:inherit;font-size:0.7rem;padding:0.12rem 0.2rem;text-align:center;background:var(--bg);}
+.pcell .pin::placeholder{color:var(--muted);font-size:0.62rem;}
 .matrix .txt:focus{border-bottom-color:var(--text);}
 td.off,.matrix tbody tr:nth-child(even) td.off{background:var(--off);}
 td.off select,td.off input{opacity:.25;pointer-events:none;}
@@ -139,6 +143,8 @@ td.off select,td.off input{opacity:.25;pointer-events:none;}
   .meta-grid{grid-template-columns:1fr;}
   .meta-cell:nth-child(2){border-right:none;}
   .header-meta{display:none;}
+  .matrix th.rowlab,.matrix td.rowlab{position:static;left:auto;min-width:120px;box-shadow:none;z-index:auto;}
+  .matrix thead th.rowlab{z-index:auto;}
 }
 @media print{.actions-bar,.modal-overlay,.progress-bar,.lang-switcher,.fam-controls{display:none!important;}}
 </style>
@@ -330,7 +336,7 @@ const UI = {
     sec_rat:'01 — Valoración general', sec_rat_h:'Impresión global de cada familia (1 flojo · 5 excelente).',
     sec_rng:'02 — Rangos de producto', sec_rng_h:'Ordena las prendas por orden de selección en cada familia (1 = la más relevante).', rank_key:'Número = orden de selección · 1 = primera.', rng_success:'Rangos más exitosos — ¿por qué?', rng_weak:'Rangos más débiles — ¿por qué?', rng_why_ph:'Cuáles y por qué…', pre_caros_lbl:'Demasiado caros — cuáles e importes', pre_comp_lbl:'Especialmente competitivos — cuáles e importes', pre_txt_ph:'Prendas / importes…', l_compbetter:'¿Qué hace la competencia mejor que LOSAN?', l_losanbetter:'¿Qué hace LOSAN mejor que la competencia?', ph_compbetter:'Lo que hacen mejor…', ph_losanbetter:'Lo que hacemos mejor…',
     sec_sur:'03 — Análisis del surtido', sec_sur_h:'Por prenda y familia: ¿estaba excesivamente o insuficientemente representada?',
-    sec_pre:'04 — Precio', sec_pre_h:'Por prenda: percepción de precio en cada familia. Al final, ventas perdidas por precio.', pre_lost:'¿Ventas perdidas por posicionamiento de precio?', pre_amount:'Importe aproximado perdido', pre_amount_ph:'€ aprox.',
+    sec_pre:'04 — Precio', sec_pre_h:'Por prenda y familia: percepción de precio + a qué precio ya es caro y qué precio sería competitivo. Al final, ventas perdidas por precio.', pre_lost:'¿Ventas perdidas por posicionamiento de precio?', pre_amount:'Importe aproximado perdido', pre_amount_ph:'€ aprox.', pcaro_ph:'caro ≥ €', pcomp_ph:'comp. €', pre_key:'Por prenda: caro/competitivo, el precio al que ya resulta caro y un precio competitivo.',
     sec_fit:'05 — Calidad / fit', sec_fit_h:'Marca los aspectos sobre los que has recibido comentarios en cada familia, y añade lo que quieras.', fit_comlbl:'Comentarios recibidos', com_ph:'Comentario…',
     sec_ref:'06 — Referencias echadas en falta', sec_ref_h:'Productos o referencias que te habría gustado tener y no estaban, por familia.', ref_rowlbl:'Referencias echadas en falta', ref_ph:'Referencias que faltaron…',
     x_eyebrow:'07 — Visión de mercado', x_title:'Transversal (no por familia)', x_hint:'Aplica al conjunto, se pregunta una vez.',
@@ -347,7 +353,7 @@ const UI = {
     sec_rat:'01 — Overall rating', sec_rat_h:'Overall impression of each family (1 poor · 5 excellent).',
     sec_rng:'02 — Product ranges', sec_rng_h:'Rank the garments by selection order in each family (1 = most relevant).', rank_key:'Number = selection order · 1 = first.', rng_success:'Most successful ranges — why?', rng_weak:'Weakest ranges — why?', rng_why_ph:'Which ones and why…', pre_caros_lbl:'Too expensive — which & amounts', pre_comp_lbl:'Especially competitive — which & amounts', pre_txt_ph:'Garments / amounts…', l_compbetter:'What do competitors do better than LOSAN?', l_losanbetter:'What does LOSAN do better than them?', ph_compbetter:'What they do better…', ph_losanbetter:'What we do better…',
     sec_sur:'03 — Assortment analysis', sec_sur_h:'Per garment and family: over- or under-represented?',
-    sec_pre:'04 — Price', sec_pre_h:'Per garment: price perception in each family. At the end, sales lost to price.', pre_lost:'Sales lost to price positioning?', pre_amount:'Approx. amount lost', pre_amount_ph:'approx. €',
+    sec_pre:'04 — Price', sec_pre_h:'Per garment and family: price perception + the price at which it’s already expensive and a competitive price. At the end, sales lost to price.', pre_lost:'Sales lost to price positioning?', pre_amount:'Approx. amount lost', pre_amount_ph:'approx. €', pcaro_ph:'pricey ≥ €', pcomp_ph:'comp. €', pre_key:'Per garment: too dear / competitive, the price at which it’s already expensive and a competitive price.',
     sec_fit:'05 — Quality / fit', sec_fit_h:'Tick the aspects you received comments about in each family, and add anything.', fit_comlbl:'Comments received', com_ph:'Comment…',
     sec_ref:'06 — References you missed', sec_ref_h:'Products or references you wish you had had, per family.', ref_rowlbl:'References missed', ref_ph:'References that were missing…',
     x_eyebrow:'07 — Market view', x_title:'Cross-cutting (not per family)', x_hint:'Applies overall, asked once.',
@@ -364,7 +370,7 @@ const UI = {
     sec_rat:'01 — Valutazione generale', sec_rat_h:'Impressione generale di ogni famiglia (1 scarso · 5 eccellente).',
     sec_rng:'02 — Gamme di prodotto', sec_rng_h:'Ordina i capi per ordine di selezione in ogni famiglia (1 = il più rilevante).', rank_key:'Numero = ordine di selezione · 1 = primo.', rng_success:'Gamme di maggior successo — perché?', rng_weak:'Gamme più deboli — perché?', rng_why_ph:'Quali e perché…', pre_caros_lbl:'Troppo care — quali e importi', pre_comp_lbl:'Molto competitive — quali e importi', pre_txt_ph:'Capi / importi…', l_compbetter:'Cosa fanno i concorrenti meglio di LOSAN?', l_losanbetter:'Cosa fa LOSAN meglio di loro?', ph_compbetter:'Cosa fanno meglio…', ph_losanbetter:'Cosa facciamo meglio…',
     sec_sur:'03 — Analisi dell\u2019assortimento', sec_sur_h:'Per capo e famiglia: era eccessivo o insufficiente?',
-    sec_pre:'04 — Prezzo', sec_pre_h:'Per capo: percezione del prezzo in ogni famiglia. Alla fine, vendite perse per il prezzo.', pre_lost:'Vendite perse per posizionamento di prezzo?', pre_amount:'Importo approssimativo perso', pre_amount_ph:'€ circa',
+    sec_pre:'04 — Prezzo', sec_pre_h:'Per capo e famiglia: percezione del prezzo + a quale prezzo è già caro e quale sarebbe competitivo. Alla fine, vendite perse per il prezzo.', pre_lost:'Vendite perse per posizionamento di prezzo?', pre_amount:'Importo approssimativo perso', pre_amount_ph:'€ circa', pcaro_ph:'caro ≥ €', pcomp_ph:'comp. €', pre_key:'Per capo: caro/competitivo, il prezzo a cui è già caro e un prezzo competitivo.',
     sec_fit:'05 — Qualità / vestibilità', sec_fit_h:'Segna gli aspetti su cui hai ricevuto commenti in ogni famiglia, e aggiungi ciò che vuoi.', fit_comlbl:'Commenti ricevuti', com_ph:'Commento…',
     sec_ref:'06 — Referenze mancate', sec_ref_h:'Prodotti o referenze che avresti voluto avere e non c\u2019erano, per famiglia.', ref_rowlbl:'Referenze mancate', ref_ph:'Referenze mancanti…',
     x_eyebrow:'07 — Visione di mercato', x_title:'Trasversale (non per famiglia)', x_hint:'Vale nel complesso, chiesto una volta.',
@@ -411,6 +417,8 @@ function cellHTML(type, id, opts){
   if(type==='rating'){ let o='<option value="">—</option>'; for(let i=1;i<=5;i++)o+=`<option value="${i}">${i}</option>`; return `<select id="${id}">${o}</select>`; }
   if(type==='rank'){ return `<input type="number" min="1" max="20" class="rank" id="${id}">`; }
   if(type==='select'){ let o=''; opts.forEach(([v,l])=>o+=`<option value="${v}">${l}</option>`); return `<select id="${id}" style="width:auto">${o}</select>`; }
+  if(type==='price'){ const u=U(); let o=''; opts.forEach(([v,l])=>o+=`<option value="${v}">${l}</option>`);
+    return `<div class="pcell"><select id="${id}">${o}</select><input type="text" class="pin" id="${id}_caro" placeholder="${u.pcaro_ph}"><input type="text" class="pin" id="${id}_comp" placeholder="${u.pcomp_ph}"></div>`; }
   if(type==='check'){ return `<input type="checkbox" id="${id}">`; }
   if(type==='text'){ return `<input type="text" class="txt" id="${id}" placeholder="${opts||''}">`; }
   return '';
@@ -441,13 +449,10 @@ function renderSections(){
         ],'text','rngm'), `<p class="scale-key">${u.rank_key}</p>`);
   h += sectionWrap(u.sec_sur, bare(u.sec_sur), u.sec_sur_h, buildTable(RANGES,'select','sur',SURTIDO_OPTS[currentLang]));
   h += sectionWrap(u.sec_pre, bare(u.sec_pre), u.sec_pre_h,
-        buildTable(RANGES,'select','pre',PRECIO_PERCEP_OPTS[currentLang]) + buildTable([
-          {id:'caros', es:u.pre_caros_lbl, en:u.pre_caros_lbl, it:u.pre_caros_lbl, _type:'text', _opts:u.pre_txt_ph, _bold:true},
-          {id:'comp', es:u.pre_comp_lbl, en:u.pre_comp_lbl, it:u.pre_comp_lbl, _type:'text', _opts:u.pre_txt_ph, _bold:true}
-        ],'text','pret') + buildTable([
+        buildTable(RANGES,'price','pre',PRECIO_PERCEP_OPTS[currentLang]) + buildTable([
           {id:'perdida', es:u.pre_lost, en:u.pre_lost, it:u.pre_lost, _type:'select', _opts:PRECIO_PERDIDA_OPTS[currentLang]},
           {id:'importe', es:u.pre_amount, en:u.pre_amount, it:u.pre_amount, _type:'text', _opts:u.pre_amount_ph}
-        ],'select','prl'));
+        ],'select','prl'), `<p class="scale-key">${u.pre_key}</p>`);
   h += sectionWrap(u.sec_fit, bare(u.sec_fit), u.sec_fit_h,
         buildTable(FIT,'check','fit') + buildTable(oneRow(u.fit_comlbl,'com'),'text','fitc',u.com_ph));
   h += sectionWrap(u.sec_ref, bare(u.sec_ref), u.sec_ref_h, buildTable(oneRow(u.ref_rowlbl,'falta'),'text','ref',u.ref_ph));
@@ -536,15 +541,18 @@ function collectFamilies(){
     const rng_exito=txt(`rngm_exito_${s.id}`); if(rng_exito) has=true;
     const rng_debil=txt(`rngm_debil_${s.id}`); if(rng_debil) has=true;
     const surtido={}; RANGES.forEach(r=>{ const v=valOf(`sur_${r.id}_${s.id}`); if(v){ surtido[r.id]=v; has=true; } });
-    const precio={};  RANGES.forEach(r=>{ const v=valOf(`pre_${r.id}_${s.id}`); if(v){ precio[r.id]=v; has=true; } });
-    const pre_caros=txt(`pret_caros_${s.id}`); if(pre_caros) has=true;
-    const pre_comp=txt(`pret_comp_${s.id}`); if(pre_comp) has=true;
+    const precio={}; const precio_caro={}; const precio_comp={};
+    RANGES.forEach(r=>{
+      const v=valOf(`pre_${r.id}_${s.id}`); if(v){ precio[r.id]=v; has=true; }
+      const c=txt(`pre_${r.id}_${s.id}_caro`); if(c){ precio_caro[r.id]=c; has=true; }
+      const k=txt(`pre_${r.id}_${s.id}_comp`); if(k){ precio_comp[r.id]=k; has=true; }
+    });
     const precio_perdida=valOf(`prl_perdida_${s.id}`); if(precio_perdida) has=true;
     const precio_importe=txt(`prl_importe_${s.id}`); if(precio_importe) has=true;
     const fit=FIT.filter(r=>{const e=document.getElementById(`fit_${r.id}_${s.id}`);return e&&e.checked;}).map(r=>r.id); if(fit.length) has=true;
     const fit_com=txt(`fitc_com_${s.id}`); if(fit_com) has=true;
     const referencias=txt(`ref_falta_${s.id}`); if(referencias) has=true;
-    if (has) fams[s.id]={ ratings, ranges, rng_exito, rng_debil, surtido, precio, pre_caros, pre_comp, precio_perdida, precio_importe, fit, fit_com, referencias };
+    if (has) fams[s.id]={ ratings, ranges, rng_exito, rng_debil, surtido, precio, precio_caro, precio_comp, precio_perdida, precio_importe, fit, fit_com, referencias };
   });
   return fams;
 }
@@ -686,8 +694,8 @@ function formatResponse(r){
     const caro=Object.entries(x.precio||{}).filter(([,v])=>v==='caro').map(([id])=>rnm(id));
     const comp=Object.entries(x.precio||{}).filter(([,v])=>v==='competitivo').map(([id])=>rnm(id));
     o+='Precio — Caros: '+(caro.join(', ')||'—')+' | Competitivos: '+(comp.join(', ')||'—')+'\n';
-    if(x.pre_caros) o+='  Detalle caros: '+x.pre_caros+'\n';
-    if(x.pre_comp) o+='  Detalle competitivos: '+x.pre_comp+'\n';
+    const prdet=RANGES.filter(rr=>(x.precio_caro||{})[rr.id]||(x.precio_comp||{})[rr.id]).map(rr=>{ const c=(x.precio_caro||{})[rr.id]||'—', k=(x.precio_comp||{})[rr.id]||'—'; return `${rnm(rr.id)} (caro≥${c} / comp ${k})`; });
+    if(prdet.length) o+='  Precios: '+prdet.join('; ')+'\n';
     o+='Ventas perdidas por precio: '+(x.precio_perdida||'—')+(x.precio_importe?` (importe aprox.: ${x.precio_importe})`:'')+'\n';
     o+='Comentarios recibidos (fit/calidad): '+((x.fit||[]).map(id=>{const a=FIT.find(z=>z.id===id);return a?nm(a):id;}).join(', ')||'—')+'\n';
     if(x.fit_com) o+=`   « ${x.fit_com} »\n`;
@@ -704,13 +712,13 @@ function exportCSV(){
   if(!adminRows.length){alert('No hay respuestas.');return;}
   const rows=adminRows.slice().sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
   const hdr=['Enviado','Idioma','Agente','Pais','Temporada','Familia','Banda',
-    ...RATINGS.map(d=>'V_'+d.id), 'RangosExitososMotivo','RangosDebilesMotivo','PrecioCarosDetalle','PrecioCompetitivosDetalle','VentasPerdidasPrecio','ImporteAproxPerdido','ComentariosFit','ComentarioLibreFit','ReferenciasEnFalta'].join(';');
+    ...RATINGS.map(d=>'V_'+d.id), 'RangosExitososMotivo','RangosDebilesMotivo','VentasPerdidasPrecio','ImporteAproxPerdido','ComentariosFit','ComentarioLibreFit','ReferenciasEnFalta'].join(';');
   const lines=[];
   rows.forEach(r=>{ const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES'):''; const f=r.families||{};
     SEGMENTS.forEach(s=>{ const x=f[s.id]; if(!x)return;
       lines.push([dt,(r.lang||'').toUpperCase(),r.agente,r.pais,r.temporada,s.es,s.band,
         ...RATINGS.map(d=>(x.ratings||{})[d.id]||''),
-        x.rng_exito||'',x.rng_debil||'',x.pre_caros||'',x.pre_comp||'',
+        x.rng_exito||'',x.rng_debil||'',
         x.precio_perdida||'',x.precio_importe||'',(x.fit||[]).join(' | '),x.fit_com||'',x.referencias||''].map(sc).join(';')); }); });
   if(!lines.length){alert('Sin datos por familia.');return;}
   dl('\uFEFF'+hdr+'\n'+lines.join('\n'),`LOSAN_AW26_familias_${new Date().toISOString().slice(0,10)}.csv`);
@@ -718,12 +726,12 @@ function exportCSV(){
 function exportRangesCSV(){
   if(!adminRows.length){alert('No hay respuestas.');return;}
   const rows=adminRows.slice().sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
-  const hdr=['Enviado','Agente','Pais','Familia','Banda','Rango','OrdenSeleccion','Surtido','PercepcionPrecio'].join(';');
+  const hdr=['Enviado','Agente','Pais','Familia','Banda','Rango','OrdenSeleccion','Surtido','PercepcionPrecio','PrecioYaCaro','PrecioCompetitivo'].join(';');
   const lines=[];
   rows.forEach(r=>{ const dt=r.timestamp?new Date(r.timestamp).toLocaleString('es-ES'):''; const f=r.families||{};
-    SEGMENTS.forEach(s=>{ const x=f[s.id]; if(!x)return; const rg=x.ranges||{}, su=x.surtido||{}, pr=x.precio||{};
-      RANGES.forEach(rr=>{ const orden=rg[rr.id]||'', sur=su[rr.id]||'', pre=pr[rr.id]||'';
-        if(orden||sur||pre) lines.push([dt,r.agente,r.pais,s.es,s.band,rr.es,orden,sur,pre].map(sc).join(';')); }); }); });
+    SEGMENTS.forEach(s=>{ const x=f[s.id]; if(!x)return; const rg=x.ranges||{}, su=x.surtido||{}, pr=x.precio||{}, pc=x.precio_caro||{}, pk=x.precio_comp||{};
+      RANGES.forEach(rr=>{ const orden=rg[rr.id]||'', sur=su[rr.id]||'', pre=pr[rr.id]||'', caro=pc[rr.id]||'', comp=pk[rr.id]||'';
+        if(orden||sur||pre||caro||comp) lines.push([dt,r.agente,r.pais,s.es,s.band,rr.es,orden,sur,pre,caro,comp].map(sc).join(';')); }); }); });
   if(!lines.length){alert('Sin datos de rangos.');return;}
   dl('\uFEFF'+hdr+'\n'+lines.join('\n'),`LOSAN_AW26_rangos_${new Date().toISOString().slice(0,10)}.csv`);
 }
