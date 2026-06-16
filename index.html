@@ -343,7 +343,7 @@ const UI = {
     l_comp:'Principales competidores', l_trend:'Tendencias que funcionan', l_rec:'Recomendaciones próxima colección', l_final:'Comentarios finales',
     ph_brand:'Marca…', ph_trend:'Tendencia…', ph_rec:'Recomendación…', ph_final:'Lo que quieras añadir…',
     btn_submit:'Enviar valoración', btn_print:'Imprimir', btn_clear:'Limpiar',
-    warn_name:'Pon tu nombre antes de enviar.', warn_fam:'Activa y valora al menos una línea.',
+    warn_name:'Pon tu nombre antes de enviar.', warn_fam:'Rellena al menos una parte de la encuesta antes de enviar.',
     ok_title:'¡Recibido!', ok_desc:'Hemos guardado tu valoración. Gracias por tu tiempo.', ok_btn:'Cerrar',
     scale:'Escala: 1 flojo · 5 excelente · — sin valorar' },
   en:{ header_meta:'AW26 · By line', i_eyebrow:'AW26 — End of season report',
@@ -360,7 +360,7 @@ const UI = {
     l_comp:'Main competitors', l_trend:'Trends that work', l_rec:'Recommendations next collection', l_final:'Final comments',
     ph_brand:'Brand…', ph_trend:'Trend…', ph_rec:'Recommendation…', ph_final:'Anything to add…',
     btn_submit:'Send feedback', btn_print:'Print', btn_clear:'Clear',
-    warn_name:'Enter your name before sending.', warn_fam:'Enable and rate at least one line.',
+    warn_name:'Enter your name before sending.', warn_fam:'Fill in at least part of the survey before sending.',
     ok_title:'Received!', ok_desc:'Your feedback has been saved. Thank you.', ok_btn:'Close',
     scale:'Scale: 1 poor · 5 excellent · — not rated' },
   it:{ header_meta:'AW26 · Per linea', i_eyebrow:'AW26 — Report di fine stagione',
@@ -377,7 +377,7 @@ const UI = {
     l_comp:'Principali concorrenti', l_trend:'Tendenze che funzionano', l_rec:'Consigli prossima collezione', l_final:'Commenti finali',
     ph_brand:'Marca…', ph_trend:'Tendenza…', ph_rec:'Consiglio…', ph_final:'Cosa vuoi aggiungere…',
     btn_submit:'Invia valutazione', btn_print:'Stampa', btn_clear:'Pulisci',
-    warn_name:'Inserisci il tuo nome prima di inviare.', warn_fam:'Attiva e valuta almeno una linea.',
+    warn_name:'Inserisci il tuo nome prima di inviare.', warn_fam:'Compila almeno una parte del questionario prima di inviare.',
     ok_title:'Ricevuto!', ok_desc:'La tua valutazione è stata salvata. Grazie.', ok_btn:'Chiudi',
     scale:'Scala: 1 scarso · 5 eccellente · — non valutato' }
 };
@@ -574,7 +574,9 @@ async function submitForm(){
   if (!db){ alert('Sin conexión con la base de datos.'); return; }
   if (!txt('m_agente')){ alert(u.warn_name); document.getElementById('m_agente').focus(); return; }
   const resp=collectResponse();
-  if (!Object.keys(resp.families).length){ alert(u.warn_fam); return; }
+  const anything = Object.keys(resp.families).length || resp.competidores.length || resp.tendencias.length ||
+                   resp.recomendaciones.length || resp.comp_better || resp.losan_better || resp.comentarios;
+  if (!anything){ alert(u.warn_fam); return; }
   const btn=document.getElementById('submitBtn'); const orig=btn.textContent;
   btn.disabled=true; btn.textContent={es:'Guardando…',en:'Saving…',it:'Salvataggio…'}[currentLang];
   try { await db.ref(FEEDBACK_PATH).push(resp); document.getElementById('submitOverlay').classList.add('active'); }
